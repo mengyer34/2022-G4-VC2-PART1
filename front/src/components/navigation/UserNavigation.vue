@@ -1,5 +1,5 @@
 <template>
-    <nav class="flex w-full p-2 bg-primary text-white justify-between items-center px-4 sticky top-0">
+    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 sticky top-0">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
                 <img src="../../assets/pnc_logo.png" alt="logo" class="w-[60px]">
