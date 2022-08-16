@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/user/HomeView.vue'
+import NewRequest from '../views/user/NewRequest/NewRequest.vue'
+import HistoryView from '../views/user/history/HistoryView.vue'
+import NotificatonView from '../views/user/notification/NotificationView.vue'
+
 
 const routes = [
   {
@@ -8,14 +12,19 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/history',
-    name: 'history',
-    component: () => import('../views/user/history/HistoryView.vue')
+    path: '/histories',
+    name: 'histories',
+    component: HistoryView
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../views/user/profile/ProfileView.vue')
+    path: '/newRequest',
+    name: 'newRequest',
+    component: NewRequest
+  },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: NotificatonView
   },
 ]
 

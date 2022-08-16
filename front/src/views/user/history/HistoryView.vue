@@ -1,5 +1,4 @@
 <template>
-    <h1>Hi</h1>
     <div class="bg-slate-300 w-9/12 p-6 m-auto rounded-md flex shadow-gray-600 shadow-sm">
         <div class="w-4/12">
             <label for="filter-status"><span class="text-red-600">*</span>Filter by status:</label><br>
@@ -75,4 +74,5 @@
         </div>
     </div>
     <h1></h1>
+
 </template>

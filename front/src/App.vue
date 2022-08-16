@@ -1,22 +1,21 @@
 <template>
   <div>
-    <router-link to="/">Home</router-link> | 
-    <router-link to="/history">History</router-link> |
-    <router-link to="/profile">Profile</router-link> |
+    <nav-component/>
   </div>
   <router-view></router-view>
 </template>
+<script>
+import UserNavigation from './components/navigation/UserNavigation.vue';
+export default {
+  components: {
+    'nav-component': UserNavigation
+  }
+}
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+</script>
+<style>
+nav a.router-link-exact-active {
+  background: orange;
+  color: #fff;
 }
 </style>
