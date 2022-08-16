@@ -1,5 +1,12 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <button @click="pre">Pre</button>
+  <button @click="next">Next</button>
+    <div class="home">
+      <h1>Hloo</h1>
+    </div>
+  <!-- <slot>
+  </slot> -->
 </template>
+<script>
+
+</script>
