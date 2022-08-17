@@ -19,36 +19,18 @@
             </select>
         </div>
     </div>
-    <div class="w-9/12 m-auto bg-slate-300 rounded-md mt-3 p-8 shadow-sm shadow-gray-600">
-        <p>Total: 3</p>
-        <div class="mt-4" v-for="leave of leaves" :key="leave">
-            <div  class="bg-slate-200 p-6 rounded-md">
-                <p>Reason: <span class="font-bold">{{leave.reason}}</span></p>
-                <div class="flex justify-between">
-                    <div class="">
-                        <p>Leave type: <span class="text-orange-500">{{leave.leaveType}}</span></p>
-                        <p>From: <span>{{leave.startDate}} - {{leave.endDate}}</span></p>
-                    </div>
-                    <div class="mr-5">
-                        <p>Duration: <span class="font-bold text-red-600">{{leave.duration}}</span></p>
-                        <p>Status: <span class="text-orange-500">{{leave.status}}</span></p>
-                    </div>
-
-                </div>
-            </div>
-            <p class="text-end">Requested: <span class="text-gray-500">{{leave.requestedDate}}</span></p>
-        </div>
-    </div>
+    <leave-history :leaves="leaves" :status="status" />
     <h1></h1>
 
 </template>
 
 <script>
 // @ is an alias to /src
-// import BaseCard from '@/components/BaseCard.vue'
+import UserLeaveHistory from '../../../components/UserLeaveHistory.vue'
 
 export default {
   components: {
+    'leave-history': UserLeaveHistory,
   },
   data() {
     return {
@@ -63,8 +45,20 @@ export default {
                 duration: 1,
                 requestedDate: "February 20, 2022 7:30 AM",
                 leaveType: "Family's Event",
-                reason: "Go to hometown",
+                reason: "Go to hometown sdf dfik sisi sfsd ksdf dkdsjid sfkdfd fesksdfsjd sdlfkd sidk fikd skfjsdf ie sdksfjsse sd ksfdjksdfjks",
                 status: "Panding",
+                isViewed: false
+            },
+            {
+                id: 1,
+                userId: 1,
+                startDate: "February 21, 2022",
+                endDate: "February 22, 2022",
+                duration: 1,
+                requestedDate: "February 20, 2022 7:30 AM",
+                leaveType: "Family's Event",
+                reason: "Go to hometown",
+                status: "Approve",
                 isViewed: false
             },
             {
