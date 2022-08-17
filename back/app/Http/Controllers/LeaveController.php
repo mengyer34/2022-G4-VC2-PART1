@@ -14,7 +14,14 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        return Leave::all();
+        $data = Leave::all();
+        $response = [
+            'success' => true,
+            'data' => $data,
+            'status' => 200,
+            'message' => 'Get leaves successfully'
+        ];
+        return Response()->json($response, 200);
     }
 
     /**
@@ -24,7 +31,14 @@ class LeaveController extends Controller
      */
     public function getLeavesUser()
     {
-        return Leave::with('user')->get();
+        $data = Leave::with('user')->get();
+        $response = [
+            'success' => true,
+            'data' => $data,
+            'status' => 200,
+            'message' => 'Get leaves with user successfully'
+        ];
+        return Response()->json($response, 200);
     }
 
     /**
@@ -46,7 +60,13 @@ class LeaveController extends Controller
         $leave->is_review = false;
         $leave->save();
 
-        return response()->json(['message'=>'Leave created successfully']);
+        $response = [
+            'success' => true,
+            'data' => $leave,
+            'status' => 200,
+            'message' => 'Create leave successfully'
+        ];
+        return Response()->json($response, 200);
     }
 
     /**
@@ -57,7 +77,13 @@ class LeaveController extends Controller
      */
     public function show(Leave $leave)
     {
-        return $leave;
+        $response = [
+            'success' => true,
+            'data' => $leave,
+            'status' => 200,
+            'message' => 'Get leave successfully'
+        ];
+        return Response()->json($response, 200);
     }
 
     /**
@@ -68,7 +94,14 @@ class LeaveController extends Controller
      */
     public function getLeaveUser($id)
     {
-        return Leave::with('user')->findOrFail($id);
+        $leave =  Leave::with('user')->findOrFail($id);
+        $response = [
+            'success' => true,
+            'data' => $leave,
+            'status' => 200,
+            'message' => 'Get leave with user successfully'
+        ];
+        return Response()->json($response, 200);
     }
 
     /**
@@ -83,7 +116,13 @@ class LeaveController extends Controller
         $leave->status = $request->status;
         $leave->save();
 
-        return response()->json(['message'=>'Leave updated successfully']);
+        $response = [
+            'success' => true,
+            'data' => $leave,
+            'status' => 200,
+            'message' => 'Update leave status successfully'
+        ];
+        return Response()->json($response, 200);
     }
 
     /** Update the specified resource in storage.
@@ -97,7 +136,13 @@ class LeaveController extends Controller
         $leave->is_review = true;
         $leave->save();
 
-        return response()->json(['message'=>'Leave updated successfully']);
+        $response = [
+            'success' => true,
+            'data' => $leave,
+            'status' => 200,
+            'message' => 'Update leave as reviewed successfully'
+        ];
+        return Response()->json($response, 200);
     }
 
     /**
@@ -108,6 +153,13 @@ class LeaveController extends Controller
      */
     public function destroy(Leave $leave)
     {
-        return $leave->delete();
+        $leave->delete();
+        $response = [
+            'success' => true,
+            'data' => $leave,
+            'status' => 200,
+            'message' => 'Delete leave successfully'
+        ];
+        return Response()->json($response, 200);
     }
 }
