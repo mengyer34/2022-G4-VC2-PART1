@@ -3,12 +3,10 @@
 </template>
 
 <script>
-
-    // export default{
-    //     components: {
-    //         "form-requestion": requestForm
-    //     }
-    // }                                                                           
+    import requestForm from "../../../components/user/RequestForm.vue"
+    export default{
+        components: {
+            "form-requestion": requestForm
+        }
+    }                                                                           
 </script>
-
-scri
