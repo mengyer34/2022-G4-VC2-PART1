@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-6 bg-slate-300 w-9/12 p-6 m-auto rounded-md flex shadow-gray-600 shadow-sm">
+    <div class="mt-28 bg-slate-300 w-9/12 p-6 m-auto rounded-md flex shadow-gray-600 shadow-sm">
         <div class="w-4/12">
             <label for="filter-status"><span class="text-red-600">*</span>Filter by status:</label><br>
             <select v-model="status" name="" id="filter-status" class="w-9/12 rounded p-2">

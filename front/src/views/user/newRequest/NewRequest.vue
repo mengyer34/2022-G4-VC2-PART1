@@ -1,3 +1,12 @@
 <template>
-    <h1>NewRequest</h1>
+    <form-requestion />
 </template>
+
+<script>
+    import requestForm from "../../../components/user/RequestForm.vue"
+    export default{
+        components: {
+            "form-requestion": requestForm
+        }
+    }                                                                           
+</script>

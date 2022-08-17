@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// Leaves routes
+Route::get('/leaves', [LeaveController::class, 'index']);
+Route::get('/leaves_user', [LeaveController::class, 'getLeavesUser']);
+Route::get('/leaves/{leave}', [LeaveController::class, 'show']);
+Route::get('/leaves_user/{id}', [LeaveController::class, 'getLeaveUser']);
+Route::post('/leaves', [LeaveController::class, 'store']);
+Route::put('/leaves/status/{leave}', [LeaveController::class, 'updateStatus']);
+Route::put('/leaves/review/{leave}', [LeaveController::class, 'updateAsViewed']);
+Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']);
+

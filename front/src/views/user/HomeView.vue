@@ -1,6 +1,5 @@
 <template>
-  <div class="home bg-[#ddd] w-full h-[90vh] pt-16">
-    <div class="card w-8/12 m-auto rounded-xl p-10 shadow- bg-[white]">
+    <div class="card w-8/12 m-auto mt-32 rounded-xl p-10 shadow- bg-white">
       <div class="card-header">
         <h1 class="text-4xl m-5 font-bold ">Student Leave Management System (SLMS)</h1>
       </div>
@@ -20,7 +19,6 @@
         </button>
       </div>
     </div>
-  </div>
 </template>
 // @ is an alias to /src
 

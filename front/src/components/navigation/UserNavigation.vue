@@ -1,12 +1,12 @@
 <template>
-    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 sticky top-0">
+    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0 b">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
                 <img src="../../assets/pnc_logo.png" alt="logo" class="w-[60px]">
                 <span class="text-3xl font-semibold">SLMS</span>
             </li>
         </ul>
-        <ul @click="show=false" class="flex">
+        <ul @click="show=false" id="animation" class="flex">
             <li>
                 <router-link class="p-2 px-6 flex" to="/">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-[1.35rem] w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -74,3 +74,12 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+    nav a.router-link-exact-active {
+    background: #FF6B00;
+    color: #fff;
+    }
+
+    
+</style>
