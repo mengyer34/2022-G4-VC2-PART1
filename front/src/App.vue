@@ -1,21 +1,36 @@
 <template>
   <div>
-    <router-link to="/">Home</router-link>
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view></router-view>
-</template>
+    <nav-component/>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+  <router-view v-slot="{Component}">
+    <transition name="grow-out">
+      <component :is="Component" />
+    </transition>
+  </router-view>
+  </div>
+</template>
+<script>
+import UserNavigation from './components/navigation/UserNavigation.vue';
+export default {
+  components: {
+    'nav-component': UserNavigation
+  }
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+</script>
+<style>
+body{
+  background: #dddd;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
+  .grow-out-enter-from, 
+  .grow-out-leave-to{
+    opacity: 0;
+    transform: scale(1.2);
+  }
+
+  .grow-out-enter-active,
+  .grow-out-leave-active{
+    transition: 0.3s ease-out;
+  }
 </style>
