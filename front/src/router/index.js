@@ -3,6 +3,7 @@ import HomeView from '../views/user/HomeView.vue'
 import NewRequest from '../views/user/NewRequest/NewRequest.vue'
 import HistoryView from '../views/user/history/HistoryView.vue'
 import NotificatonView from '../views/user/notification/NotificationView.vue'
+import ProfileView from '../views/user/profile/ProfileView.vue'
 
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: '/notifications',
     name: 'notifications',
     component: NotificatonView
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView
   },
 ]
 
