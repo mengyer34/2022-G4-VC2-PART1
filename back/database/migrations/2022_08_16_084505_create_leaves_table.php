@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('start_date');
             $table->string('end_date');
             $table->float('duration');
-            $table->string('request_date');
             $table->string('leave_type');
             $table->string('reason');
             $table->string('status');
