@@ -14,8 +14,8 @@ class Leave extends Model
         'is_review' => 'boolean',
         'start_date' => 'date:F j, Y',
         'end_date' => 'date:F j, Y',
-        'created_at' => 'date:F j, Y',
-        'updated_at' => 'date:F j, Y',
+        'created_at' => 'date:F j, Y H:i A',
+        'updated_at' => 'date:F j, Y H:i A',
     ];
 
     // Relationship
