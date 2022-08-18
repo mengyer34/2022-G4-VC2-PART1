@@ -50,9 +50,13 @@
             </tbody>
         </table>
     </div>
+    <requestForm />
 </template>
 
 <script>
+
+    import requestForm from "./RequestForm.vue"
+
     export default {
         props: ['leaves', 'status', 'type'],
         data() {
