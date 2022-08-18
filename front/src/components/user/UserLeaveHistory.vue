@@ -23,10 +23,10 @@
                         {{leave.leave_type}}
                     </td>
                     <td class="pl-12">
-                        {{date_format(leave.start_date)}} ({{isStartAt(leave.start_date, leave.end_date, leave.duration)}})
+                        {{date_format(leave.start_date)}} ({{leave.start_time}})
                     </td>
                     <td class="pl-20">
-                        {{date_format(leave.end_date)}} ({{isEndAt(leave.start_date, leave.end_date, leave.duration)}})
+                        {{date_format(leave.end_date)}} ({{leave.end_time}})
                     </td>
                     <td class="pl-20">
                         <p class="font-medium">{{leave.duration}}</p>
@@ -50,7 +50,6 @@
             </tbody>
         </table>
     </div>
-    <h1></h1>
 </template>
 
 <script>
@@ -58,11 +57,6 @@
 
     export default {
         props: ['leaves', 'status', 'type'],
-        data() {
-            return {
-
-            };
-        },
         computed: {
             leavesstatus() {
                 if (this.status != "All" && this.type == "All") {
@@ -82,8 +76,8 @@
                 if (leave.status == "Approved") {
                     return "bg-green-500";
                 }else if (leave.status == "Pending") {
-                    return "bg-orange-500";
-                }else if (leave.status == "Reject") {
+                    return "bg-yellow-400";
+                }else if (leave.status == "Rejected") {
                     return "bg-red-500";
                 }
             },
@@ -97,28 +91,6 @@
                     return moment(String(value)).format('MMMM DD, YYYY')
                 }
             },
-            parseDate(start, end) {
-                var date1 = new Date(start);
-                var date2 = new Date(end);
-                var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10); 
-                return diffDays;
-            },
-            isStartAt(start, end, duration) {
-                let day = this.parseDate(start, end);
-                if ( day < duration) {
-                    return "Morning";
-                }else if (day > duration) {
-                    return "Afternoon";
-                }
-            },
-            isEndAt(start, end, duration) {
-                let day = this.parseDate(start, end);
-                if ( day < duration) {
-                    return "Afternoon";
-                }else if (day > duration) {
-                    return "Morning";
-                }
-            }
         },
     }
 </script>

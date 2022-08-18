@@ -25,21 +25,19 @@
                 </div>
             </div>
             <div class="flex">
-                <div class="w-2/6">
+                <div class="w-2/12">
                     <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Filter by status:</label><br>
                     <select v-model="status" name="" id="filter-status" class="w-9/12 rounded p-1">
                         <option value="All">All</option>
                         <option value="Rejected">Rejected</option>
                         <option value="Approved">Approved</option>
-                        <option value="Cancel">Cancel</option>
                         <option value="Pending">Pending</option>
                     </select>
                 </div>
-                <div class="w-2/6">
+                <div class="w-2/12">
                     <label for="filter-leave-type font-normal "><span class="text-red-600">*</span>Filter by leaves type:</label><br>
                     <select v-model="type" name="" id="filter-leave-type" class="w-9/12 p-1 rounded">
                         <option value="All">All</option>
-                        <option value="Homesick">Home Sick</option>
                         <option value="Sick">Sick</option>
                         <option value="Family's events">Family's Event</option>
                     </select>
@@ -54,7 +52,7 @@
 
 <script>
 import axios from '../../../axios-http.js'
-import UserLeaveHistory from '../../../components/UserLeaveHistory.vue'
+import UserLeaveHistory from '../../../components/user/UserLeaveHistory.vue'
 
 export default {
   components: {
@@ -71,7 +69,7 @@ export default {
     getLeave() {
         axios.get('http://localhost:8000/api/leaves').then(res => {
             console.log(res);
-            this.leaves = res.data;
+            this.leaves = res.data.data;
         })
     }
   },
