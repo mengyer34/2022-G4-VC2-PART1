@@ -52,7 +52,9 @@ class LeaveController extends Controller
         $leave = new Leave();
         $leave->user_id = $request->user_id;
         $leave->start_date = $request->start_date;
+        $leave->start_time = $request->start_time;
         $leave->end_date = $request->end_date;
+        $leave->end_time = $request->end_time;
         $leave->duration = $request->duration;
         $leave->leave_type = $request->leave_type;
         $leave->reason = $request->reason;

@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('start_date');
+            $table->string('start_time');
             $table->string('end_date');
+            $table->string('end_time');
             $table->float('duration');
             $table->string('leave_type');
             $table->string('reason');
