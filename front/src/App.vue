@@ -3,7 +3,7 @@
     <nav-component/>
 
   <router-view v-slot="{Component}">
-    <transition name="grow-out">
+    <transition name="fade">
       <component :is="Component" />
     </transition>
   </router-view>
@@ -23,14 +23,14 @@ body{
   background: #dddd;
 }
 
-  .grow-out-enter-from, 
-  .grow-out-leave-to{
+  .fade-enter-from, 
+  .fade-leave-to{
     opacity: 0;
-    transform: scale(1.2);
+    transform: translateX(50px)
   }
 
-  .grow-out-enter-active,
-  .grow-out-leave-active{
-    transition: 0.3s ease-out;
+  .fade-enter-active,
+  .fade-leave-active{
+    transition:all 0.3s ease-out;
   }
 </style>

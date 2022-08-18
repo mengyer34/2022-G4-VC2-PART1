@@ -1,5 +1,6 @@
 <template>
-    <div class="card w-8/12 m-auto mt-32 rounded-xl p-10 shadow- bg-white">
+   <div>
+     <div class="card w-8/12 m-auto mt-32 rounded-xl p-10 shadow- bg-white">
       <div class="card-header">
         <h1 class="text-4xl m-5 font-bold ">Student Leave Management System (SLMS)</h1>
       </div>
@@ -12,13 +13,43 @@
         </p>
       </div>
       <div class="footer pt-10 pl-3.5">
-        <button class="bg-[#FF6B00] p-1.5 rounded-md text-white ">
-          <router-link class="p-2 px-6 flex" to="/newRequest">
+        <button id="btn_animated" class=" border border-[#FF6B00] px-3 py-3 text-lg  rounded-md text-warning uppercase font-bold " @click="showFormRequest">
             Create new request
-          </router-link>
         </button>
       </div>
     </div>
+    <form-requestion v-if="isShow" @close-popup="closePopup" />
+   </div>
 </template>
-// @ is an alias to /src
 
+<script>
+  import requestForm from "../../components/user/RequestForm.vue"
+  export default{
+      components: {
+          "form-requestion": requestForm
+      },
+      data(){
+        return {
+          isShow: false
+        }
+      },
+      methods: {
+        showFormRequest(){
+          this.isShow = true;
+      },
+      closePopup(){
+          this.isShow = false;
+      }
+  }
+  }
+</script>
+
+<style scoped>
+  #btn_animated:hover{
+    transition: all 1s ease-in-out;
+    background: #FF6B00;
+    color: #fff;
+    box-shadow: 2px 2px 6px 1px #ddd;
+    transform: translateY(-10px);
+  }
+</style>

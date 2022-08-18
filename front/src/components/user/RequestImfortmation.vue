@@ -21,42 +21,35 @@
               <tbody>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border p-3 text-center text-[13px] text-[#6E6E6E]">Reason</td>
-                  <td class="border  p-3 text-center w-[96%] text-[13px] font-bold">Headache</td>
+                  <td class="border  p-3 text-center w-[96%] text-[13px] font-bold">{{datas.reason}}</td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Leave Type</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#FF6B00]">Sick Leave</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#FF6B00]">{{datas.leave_type}} </td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Start Date</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">February 21, 2022(morning)</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{datas.start_date}} {{datas.start_time}}</td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">End Date</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">February 21, 2022(Afternoon)
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{datas.end_date}} {{datas.end_time}}
                   </td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Status</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E] text-[#FF6B00]">Panding</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px]   " :class="datas.status ==='Approved' ? 'text-[#0081CA]': 'text-[#FF0000]'">{{datas.status}} </td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Duration</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E] text-[#FF6B00]">0.5</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px]  text-[#FF6B00]">{{datas.duration}}</td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Requestoin</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">February 20, 2022 6:30 pm</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{datas.created_at}}</td>
                 </tr>
               </tbody>
             </table>
-            <!-- <p class="my-4 text-slate-500 text-lg leading-relaxed">
-              I always felt like I could do anything. That’s the main
-              thing people are controlled by! Thoughts- their perception
-              of themselves! They're slowed down by their perception of
-              themselves. If you're taught you can’t do anything, you
-              won’t do anything. I was taught I could do everything.
-            </p> -->
           </div>
           <!--footer-->
           <div class="flex items-center justify-end p-6 ">
@@ -86,6 +79,10 @@
 <script>
 export default {
   name: "regular-modal",
+  props:{
+    'datas':Object
+
+  },
   data() {
     return {
       showModal: false
