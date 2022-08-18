@@ -24,23 +24,26 @@
                     </button>
                 </div>
             </div>
-            <div class="flex">
-                <div class="w-2/12">
+            <div class="flex items-end ">
+                <div class="w-3/12">
                     <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Filter by status:</label><br>
-                    <select v-model="status" name="" id="filter-status" class="w-9/12 rounded p-1">
+                    <select v-model="status" name="" id="filter-status" class="w-9/12 rounded border p-2 focus:outline-none focus:border-primary">
                         <option value="All">All</option>
                         <option value="Rejected">Rejected</option>
                         <option value="Approved">Approved</option>
                         <option value="Pending">Pending</option>
                     </select>
                 </div>
-                <div class="w-2/12">
+                <div class="w-3/12">
                     <label for="filter-leave-type font-normal "><span class="text-red-600">*</span>Filter by leaves type:</label><br>
-                    <select v-model="type" name="" id="filter-leave-type" class="w-9/12 p-1 rounded">
+                    <select v-model="type" name="" id="filter-leave-type" class="w-9/12 p-2 border rounded focus:outline-none focus:border-primary">
                         <option value="All">All</option>
                         <option value="Sick">Sick</option>
                         <option value="Family's events">Family's Event</option>
                     </select>
+                </div>
+                <div class="w-6/12 text-right">
+                    <button class="bg-warning px-4 py-2 rounded text-white">Create New Request</button>
                 </div>
             </div>
 
@@ -69,7 +72,7 @@ export default {
     getLeave() {
         axios.get('http://localhost:8000/api/leaves').then(res => {
             console.log(res);
-            this.leaves = res.data.data;
+            this.leaves = res.data.data.reverse();
         })
     }
   },

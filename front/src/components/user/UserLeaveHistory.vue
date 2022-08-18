@@ -16,7 +16,7 @@
                 <tr  v-for="leave of leavesstatus" :key="leave" tabindex="0" class="focus:outline-none h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-200 border-b border-t border-gray-100">
                     <td class="pl-4 cursor-pointer">
                         <div class="flex items-center">
-                            <p class="font-medium">{{leave.reason}}</p>
+                            <p class="font-medium truncate w-16 hover:whitespace-pre-wrap  hover:absolute hover:font-normal hover:bg-gray-200 hover:p-3 hover:rounded hover:w-2/12">{{leave.reason}}</p>
                         </div>
                     </td>
                     <td class="pl-12">
@@ -57,6 +57,10 @@
 
     export default {
         props: ['leaves', 'status', 'type'],
+        data() {
+            return {
+            }
+        },
         computed: {
             leavesstatus() {
                 if (this.status != "All" && this.type == "All") {
