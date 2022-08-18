@@ -44,8 +44,6 @@
   }
 </script>
 
-// @ is an alias to /src
-
 <style scoped>
   #btn_animated:hover{
     transition: all 1s ease-in-out;
