@@ -1,78 +1,103 @@
 <template>
-    <div class="mt-28 bg-slate-300 w-9/12 p-6 m-auto rounded-md flex shadow-gray-600 shadow-sm">
-        <div class="w-4/12">
-            <label for="filter-status"><span class="text-red-600">*</span>Filter by status:</label><br>
-            <select name="" id="filter-status" class="w-9/12 rounded p-2">
-                <option value="">All</option>
-                <option value="">Reject</option>
-                <option value="">Approve</option>
-                <option value="">Cancel</option>
-            </select>
+    <div class="w-full sm:px-6 mt-24">
+      <div
+        class="px-4 md:px-10 py-4 md:py-7 bg-gray-100 rounded-tl-lg rounded-tr-lg">
+        <div class="sm:flex items-center justify-between">
+          <p
+            tabindex="0"
+            class="flex items-center focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+            </svg>
+            <span class="ml-1">
+                List all Leaves
+            </span>
+          </p>
+          <div>
+            <button
+              class="focus:ring-2 focus:ring-offset-2 focus:ring-primary inline-flex sm:ml-3 mt-4 sm:mt-0 items-start justify-start px-3 bg-primary focus:outline-none rounded">
+              <p class="text-sm font-medium leading-none text-white flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+                </svg>
+                <span>
+                    Print All
+                </span>
+              </p>
+            </button>
+          </div>
         </div>
-        <div class="w-4/12">
-            <label for="filter-leave-type"><span class="text-red-600">*</span>Filter by leaves type:</label><br>
-            <select name="" id="filter-leave-type" class="w-9/12 p-2 rounded">
-                <option value="">All</option>
-                <option value="">Reject</option>
-                <option value="">Approve</option>
-                <option value="">Cancel</option>
-            </select>
+        <div class="flex">
+            <div class="w-2/12">
+                <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Filter by status:</label><br>
+                <select name="" id="filter-status" class="w-9/12 rounded p-1">
+                    <option value="">All</option>
+                    <option value="">Reject</option>
+                    <option value="">Approve</option>
+                    <option value="">Cancel</option>
+                </select>
+            </div>
+            <div class="w-2/12">
+                <label for="filter-leave-type font-normal "><span class="text-red-600">*</span>Filter by leaves type:</label><br>
+                <select name="" id="filter-leave-type" class="w-9/12 p-1 rounded">
+                    <option value="">All</option>
+                    <option value="">Reject</option>
+                    <option value="">Approve</option>
+                    <option value="">Cancel</option>
+                </select>
+            </div>
         </div>
+      </div>
+      <div class="bg-white shadow md:px-5 pt-4 md:pt-7 pb-5 overflow-y-auto">
+        <table class="w-full whitespace-nowrap">
+          <thead>
+            <tr
+              tabindex="0"
+              class="focus:outline-none h-16 w-full text-sm leading-none text-gray-800 border-b-2 border-primary">
+              <th class="font-normal text-left pl-4">Reason</th>
+              <th class="font-normal text-left pl-12">Leave type</th>
+              <th class="font-normal text-left pl-12">Start Date</th>
+              <th class="font-normal text-left pl-20">End Date</th>
+              <th class="font-normal text-left pl-20">Duration</th>
+              <th class="font-normal text-left pl-16">Status</th>
+              <th class="font-normal text-left pl-16">Request Date</th>
+            </tr>
+          </thead>
+          <tbody class="w-full">
+            <tr
+              tabindex="0"
+              class="focus:outline-none h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100">
+              <td class="pl-4 cursor-pointer">
+                <div class="flex items-center">
+                    <p class="font-medium">Headache</p>
+                </div>
+              </td>
+              <td class="pl-12">
+                  Sick leave
+              </td>
+              <td class="pl-12">
+                February 21, 2022 (morning)
+              </td>
+              <td class="pl-20">
+                February 21, 2022 (afternoon)
+              </td>
+              <td class="pl-20">
+                <p class="font-medium">0.5</p>
+              </td>
+              <td class="pl-16">
+                <div class="flex items-center">
+                  <span class="bg-yellow-500 px-4 py-2 rounded-full text-white">Panding</span>
+                </div>
+              </td>
+              <td class="pl-16">
+                <div class="flex items-center">
+                  <span>February 20, 2022 6:30PM</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="w-9/12 m-auto bg-slate-300 rounded-md mt-3 p-8 shadow-sm shadow-gray-600">
-        <p>Total: 3</p>
-        <div class="mt-4">
-            <div class="bg-slate-200 p-6 rounded-md">
-                <p>Reason: <span class="font-bold">Go to hometown</span></p>
-                <div class="flex justify-between">
-                    <div class="">
-                        <p>Leave type: <span class="text-orange-500">Family's event</span></p>
-                        <p>From: <span>February 21, 2022 - February 22, 2022 (morning)</span></p>
-                    </div>
-                    <div class="mr-5">
-                        <p>Duration: <span class="font-bold text-red-600">0.5</span></p>
-                        <p>Status: <span class="text-orange-500">Panding</span></p>
-                    </div>
-
-                </div>
-            </div>
-            <p class="text-end">Requested: <span class="text-gray-500">February 20, 2022 7:00AM</span></p>
-        </div>
-        <div class="mt-4">
-            <div class="bg-slate-200 p-6 rounded-md">
-                <p>Reason: <span class="font-bold">Go to hometown</span></p>
-                <div class="flex justify-between">
-                    <div class="">
-                        <p>Leave type: <span class="text-orange-500">Family's event</span></p>
-                        <p>From: <span>February 21, 2022 - February 22, 2022 (morning)</span></p>
-                    </div>
-                    <div class="mr-5">
-                        <p>Duration: <span class="font-bold text-red-600">0.5</span></p>
-                        <p>Status: <span class="text-orange-500">Panding</span></p>
-                    </div>
-
-                </div>
-            </div>
-            <p class="text-end">Requested: <span class="text-gray-500">February 20, 2022 7:00AM</span></p>
-        </div>
-        <div class="mt-4">
-            <div class="bg-slate-200 p-6 rounded-md">
-                <p>Reason: <span class="font-bold">Go to hometown</span></p>
-                <div class="flex justify-between">
-                    <div class="">
-                        <p>Leave type: <span class="text-orange-500">Family's event</span></p>
-                        <p>From: <span>February 21, 2022 - February 22, 2022 (morning)</span></p>
-                    </div>
-                    <div class="mr-5">
-                        <p>Duration: <span class="font-bold text-red-600">0.5</span></p>
-                        <p>Status: <span class="text-orange-500">Panding</span></p>
-                    </div>
-
-                </div>
-            </div>
-            <p class="text-end">Requested: <span class="text-gray-500">February 20, 2022 7:00AM</span></p>
-        </div>
-    </div>
-    <h1></h1>
-
 </template>
