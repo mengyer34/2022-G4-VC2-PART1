@@ -12,10 +12,10 @@ class Leave extends Model
     // Change from number (1, 0) to (true, false)
     protected $casts = [
         'is_review' => 'boolean',
-        'start_date' => 'date:F j, Y',
-        'end_date' => 'date:F j, Y',
-        'created_at' => 'date:F j, Y',
-        'updated_at' => 'date:F j, Y',
+        'start_date' => 'date:F j, Y H:i A',
+        'end_date' => 'date:F j, Y H:i A',
+        'created_at' => 'date:F j, Y H:i A',
+        'updated_at' => 'date:F j, Y H:i A',
     ];
 
     // Relationship
