@@ -23,10 +23,10 @@
                         {{leave.leave_type}}
                     </td>
                     <td class="pl-12">
-                        {{date_format(leave.start_date)}} ({{leave.start_time}})
+                        {{leave.start_date}} ({{leave.start_time}})
                     </td>
                     <td class="pl-20">
-                        {{date_format(leave.end_date)}} ({{leave.end_time}})
+                        {{leave.end_date}} ({{leave.end_time}})
                     </td>
                     <td class="pl-20">
                         <p class="font-medium">{{leave.duration}}</p>
@@ -38,7 +38,7 @@
                     </td>
                     <td class="pl-16">
                         <div class="flex items-center">
-                            <span>{{format_date(leave.created_at)}}</span>
+                            <span>{{leave.created_at}}</span>
                         </div>
                     </td>
                 </tr>
@@ -53,8 +53,6 @@
 </template>
 
 <script>
-    import moment from 'moment'
-
     export default {
         props: ['leaves', 'status', 'type'],
         data() {
@@ -83,16 +81,6 @@
                     return "bg-yellow-400";
                 }else if (leave.status == "Rejected") {
                     return "bg-red-500";
-                }
-            },
-            format_date(value){
-                if (value) {
-                    return moment(String(value)).format('MMMM DD, YYYY hh:mm A')
-                }
-            },
-            date_format(value){
-                if (value) {
-                    return moment(String(value)).format('MMMM DD, YYYY')
                 }
             },
         },

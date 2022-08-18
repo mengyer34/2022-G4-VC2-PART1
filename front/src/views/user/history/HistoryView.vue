@@ -66,13 +66,13 @@ export default {
         status: "All",
         type: "All",
         leaves: [],
+        userId: 1,
     }
   },
   methods: {
     getLeave() {
-        axios.get('http://localhost:8000/api/leaves').then(res => {
-            console.log(res);
-            this.leaves = res.data.data.reverse();
+        axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
+            this.leaves = res.data.data.leaves.reverse();
         })
     }
   },
