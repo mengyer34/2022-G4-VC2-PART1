@@ -1,5 +1,5 @@
 <template>
-    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0 b">
+    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
                 <img src="../../assets/pnc_logo.png" alt="logo" class="w-[60px]">
@@ -13,14 +13,6 @@
                         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                     </svg>
                     Home
-                </router-link>
-            </li>
-            <li>
-                <router-link class="p-2 px-6 flex" to="/newRequest">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h10v7h-2l-1 2H8l-1-2H5V5z" clip-rule="evenodd" />
-                    </svg>
-                    New Request
                 </router-link>
             </li>
             <li>
