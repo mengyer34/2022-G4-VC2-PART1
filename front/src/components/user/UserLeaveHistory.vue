@@ -50,11 +50,12 @@
             </tbody>
         </table>
     </div>
+    <requestForm />
 </template>
 
 <script>
     import moment from 'moment'
-
+    import requestForm from "./RequestForm.vue"
     export default {
         props: ['leaves', 'status', 'type'],
         data() {
