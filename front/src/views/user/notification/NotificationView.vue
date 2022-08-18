@@ -50,6 +50,7 @@
 // @ is an alias to /src
 
 <script>
+    
     import requestImformation from "../../../components/user/RequestImfortmation.vue"
     export default{
         components: {
