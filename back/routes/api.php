@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\SendEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,7 @@ Route::post('/leaves', [LeaveController::class, 'store']);
 Route::put('/leaves/status/{leave}', [LeaveController::class, 'updateStatus']);
 Route::put('/leaves/review/{leave}', [LeaveController::class, 'updateAsViewed']);
 Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']);
+
+// Mail
+Route::get('send-email', [SendEmailController::class, 'sendMailRequest']);
 

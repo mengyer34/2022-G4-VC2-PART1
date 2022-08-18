@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Leave;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SendEmailController;
 
 class LeaveController extends Controller
 {
@@ -45,6 +46,9 @@ class LeaveController extends Controller
         $leave->status = 'Pending';
         $leave->is_review = false;
         $leave->save();
+
+        // Send Mail Request
+        $sendMail = (new SendEmailController)->sendMailRequest($request);
 
         return response()->json(['message'=>'Leave created successfully']);
     }
