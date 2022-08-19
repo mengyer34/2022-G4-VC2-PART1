@@ -12,7 +12,7 @@
           <!--header-->
           <div class="p-2">
             <h3 class="text-2xl font-semibold text-center">
-              Request Imformation
+              Request Information
             </h3>
           </div>
           <!--body-->

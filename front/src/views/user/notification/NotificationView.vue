@@ -57,6 +57,7 @@ export default {
         "imformation-requestion": requestImformation
     },
     data() {
+        
         return {
             datas: [],
         }

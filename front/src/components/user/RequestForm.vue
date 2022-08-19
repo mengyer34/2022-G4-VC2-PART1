@@ -8,7 +8,7 @@
                     Leave Types
                 </label>
                 <div class="inline-block relative w-full">
-                    <select class="block appearance-none w-full bg-white border border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isSelectedType }" v-model="leaveType">
+                    <select class="block appearance-none w-full bg-white border border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isSelectedType }" v-model="leaveType" @change="isSelectedType = false">
                         <option  value="Family's event">Family's Event</option>
                         <option value="Sick">Sick</option>
                     </select>
@@ -23,7 +23,7 @@
                     <label class="block text-gray-700 text-[16px] mb-1">
                         Start Date
                     </label>
-                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isStartDate }" v-model="startDate" type="date">
+                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isStartDate }" v-model="startDate" @change="isStartDate = false" type="date">
 
                 </div>
                 <div class="w-[50%] m-1">
@@ -31,7 +31,7 @@
                         Time of the day
                     </label>
                     <div class="inline-block relative w-full">
-                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isStartTime }" v-model="startTime">
+                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isStartTime }" v-model="startTime" @change="isStartTime = false">
                             <option selected value="Morning">Morning</option>
                             <option value="Afternoon">Afternoon</option>
                         </select>
@@ -47,7 +47,7 @@
                     <label class="block text-gray-700 text-[16px] mb-1">
                         End Date
                     </label>
-                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isEndDate }" v-model="endDate" type="date">
+                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isEndDate }" v-model="endDate"  @change="isEndDate = false" type="date">
 
                 </div>
 
@@ -56,7 +56,7 @@
                         Time of the day
                     </label>
                     <div class="inline-block relative w-full">
-                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isEndTime }" v-model="endTime">
+                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isEndTime }" v-model="endTime"  @change="isEndTime = false">
                             <option selected value="Morning">Morning</option>
                             <option value="Afternoon">Afternoon</option>
                         </select>
@@ -75,7 +75,7 @@
                 <label class="block text-gray-700 text-[16px] mb-1">
                     Drop an reasonable
                 </label>
-                <textarea placeholder="Give your reason here" :class="{'border-red-500 bg-red-100':isReasonInputted }" class="block resize-none h-16 required:border-red-500 border shadow appearance-none border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary"  v-model="reason" cols="30" rows="10"></textarea>
+                <textarea placeholder="Give your reason here" :class="{'border-red-500 bg-red-100':isReasonInputted }" class="block resize-none h-16 required:border-red-500 border shadow appearance-none border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" @change="isReasonInputted = false"  v-model="reason" cols="30" rows="10"></textarea>
             </div>
             <div class="flex  w-full mt-6">
                 <button class="bg-red-500  text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="closePopup">
@@ -104,12 +104,12 @@
                 startTime: null,
                 endTime: null,
                 reason: "",
-                isSelectedType: false,
-                isStartDate: false,
-                isStartTime: false,
-                isEndDate: false,
-                isEndTime: false,
-                isReasonInputted: false,
+                isSelectedType: null,
+                isStartDate: null,
+                isStartTime: null,
+                isEndDate: null,
+                isEndTime: null,
+                isReasonInputted: null,
                 duration: 0,
                 inValid: false,
 
