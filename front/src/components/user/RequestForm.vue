@@ -23,7 +23,7 @@
                     <label class="block text-gray-700 text-[16px] mb-1">
                         Start Date
                     </label>
-                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isStartDate }" v-model="startDate" @change="isStartDate = false" type="date">
+                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isStartDate }" v-model="startDate" @change="isStartDate = false" type="date" :min="inValidDate">
 
                 </div>
                 <div class="w-[50%] m-1">
@@ -47,7 +47,7 @@
                     <label class="block text-gray-700 text-[16px] mb-1">
                         End Date
                     </label>
-                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isEndDate }" v-model="endDate"  @change="isEndDate = false" type="date">
+                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isEndDate }" v-model="endDate"  @change="isEndDate = false" type="date" :min="startDate">
 
                 </div>
 
@@ -67,8 +67,8 @@
                     </div>
                 </div>
             </div>
-                <div v-if="inValid" class="alert text-red-600 w-full bg-red-200 p-2 rounded">Invalid Date</div>
-            <div class="mb-2 px-1">
+            <div v-if="inValid" class="alert text-red-600 w-full bg-red-200 p-2 rounded">Invalid Date</div>
+            <div class="mb-2 px-1"  v-if="calculateDay ">
                 <h1 class="text-lg">Duration: {{calculateDay}}</h1>
             </div>
             <div class="mb-2 w-full m-1">
@@ -112,16 +112,15 @@
                 isReasonInputted: null,
                 duration: 0,
                 inValid: false,
-
             }
         },
         methods: {
             requestLeave(){
                 if (this.checkFormRequest()){
                     let newRequest = {user_id: 1, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration}
-                    axios.post(url,newRequest);
+                    axios.post(url,newRequest).then(this.$router.push({name: "histories"}));
                     this.closePopup();
-                    this.$router.push({name: "histories"})
+                    
                 }
             },
             checkFormRequest(){
@@ -167,6 +166,7 @@
 
                 
                 if ((this.startDate != null && this.endDate != null) &&(this.startTime != null && this.endTime != null)){
+
                     var start = new Date(this.startDate);
                     var end = new Date(this.endDate);
                     if (end - start > -1){
@@ -196,7 +196,23 @@
                         this.inValid = true
                     }
                 }
-            }
+                return false
+            },
+
+            inValidDate(){
+                var date = new Date();
+                var tday = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getUTCFullYear();
+                if (tday < 10){
+                    tday = "0" + tday
+                }
+                if (month < 10){
+                    month = "0" + month
+                }
+
+                return year + "-" + month + "-" + tday
+            }   
         }
     })
 </script>
