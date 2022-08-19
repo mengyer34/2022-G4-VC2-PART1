@@ -11,7 +11,7 @@
           class="border-0  shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           <!--header-->
           <div class="p-2">
-            <h3 class="text-2xl font-semibold text-center">
+            <h3 class="text-2xl font-semibold text-center text-[#0081CA]">
               Request Information
             </h3>
           </div>
@@ -21,32 +21,35 @@
               <tbody>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border p-3 text-center text-[13px] text-[#6E6E6E]">Reason</td>
-                  <td class="border  p-3 text-center w-[96%] text-[13px] font-bold">{{datas.reason}}</td>
+                  <td class="border  p-3 text-center w-[96%] text-[13px] font-bold">{{ datas.reason }}</td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Leave Type</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#FF6B00]">{{datas.leave_type}} </td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#FF6B00]">{{ datas.leave_type }} </td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Start Date</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{datas.start_date}} {{datas.start_time}}</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{ datas.start_date }}
+                    {{ datas.start_time }}</td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">End Date</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{datas.end_date}} {{datas.end_time}}
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{ datas.end_date }}
+                    {{ datas.end_time }}
                   </td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Status</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px]   " :class="datas.status ==='Approved' ? 'text-[#0081CA]': 'text-[#FF0000]'">{{datas.status}} </td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px]   "
+                    :class="datas.status === 'Approved' ? 'text-[#0081CA]' : 'text-[#FF0000]'">{{ datas.status }} </td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Duration</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px]  text-[#FF6B00]">{{datas.duration}}</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px]  text-[#FF6B00]">{{ datas.duration }}</td>
                 </tr>
                 <tr class="hover:bg-[#F5F5F5]">
                   <td class="border text-center p-3 text-[13px] text-[#6E6E6E]">Requestoin</td>
-                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{datas.created_at}}</td>
+                  <td class="border text-center p-3 w-[96%]  text-[13px] text-[#6E6E6E]">{{ datas.created_at }}</td>
                 </tr>
               </tbody>
             </table>
@@ -80,8 +83,8 @@
 import html2pdf from "html2pdf.js";
 export default {
   name: "regular-modal",
-  props:{
-    'datas':Object
+  props: {
+    'datas': Object
 
   },
   data() {
@@ -90,13 +93,13 @@ export default {
     }
   },
   methods: {
-    toggleModal: function(){
+    toggleModal: function () {
       this.showModal = !this.showModal;
     },
     exportToPDF() {
       html2pdf(document.getElementById("element-to-convert"),
         {
-          
+
           margin: 5,
           filename: "imformation.pdf",
         });
