@@ -11,7 +11,7 @@
           class="border-0  shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           <!--header-->
           <div class="p-2">
-            <h3 class="text-2xl font-semibold text-center">
+            <h3 class="text-2xl font-semibold text-center text-[#0081CA]">
               Request Information
             </h3>
           </div>

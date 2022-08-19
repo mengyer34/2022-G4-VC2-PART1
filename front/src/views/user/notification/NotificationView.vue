@@ -1,11 +1,14 @@
 <template>
 
-    <div class="home bg-[#ddd] w-full h-[90vh] pt-[100px]">
-        <div v-for="data of dataOfImformation" :key="data" class="card w-8/12 m-auto  p-3  shadow- bg-[white]">
-            <div class="pr-3 pl-3">
-                <imformation-requestion :datas="data">
-                    <template #allow>
-                        <div class="bg-[#F5F5F5] rounded-l  flex justify-between ">
+    <div class=" bg-[#ddd] w-full h-full pt-[100px]">
+        <div class="card w-8/12 m-auto  shadow- bg-[white]">
+            <div class="card-header bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
+                <h1>Notifications</h1>
+            </div>
+            <div class="pr-3 pl-3" v-for="data of dataOfImformation" :key="data">
+                <imformation-requestion :datas="data" >
+                    <template #allow >
+                        <div class="bg-[#F5F5F5]  rounded-l  flex justify-between ">
                             <div class="p-2">
                                 <p class="text-[22px]">You are allowed to <span
                                         :class="data.status === 'Approved' ? 'text-[#7BE77B]' : 'text-[#FF0000]'">go to
@@ -28,7 +31,7 @@
                         </div>
                     </template>
                 </imformation-requestion>
-                <p class="text-[12px] text-[#AAAAAA] flex justify-end">From: Socail Affair</p>
+                <p class="text-[12px] text-[#AAAAAA] flex justify-end pb-2">From: Socail Affair</p>
             </div>
         </div>
     </div>
