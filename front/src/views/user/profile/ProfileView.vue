@@ -5,13 +5,11 @@
 import userProfile from "../../../components/user/UserProfileComponent.vue"
 export default {
     components: {
-        "user_profile": userProfile
+        "user-profile": userProfile
     }
 }
 </script>
 
-<style>
-</style>
 
 
 
