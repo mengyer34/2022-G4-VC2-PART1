@@ -63,12 +63,8 @@ class LeaveController extends Controller
         $leave->is_review = false;
         $leave->save();
 
-<<<<<<< HEAD
         // Send Mail Request
         $sendMail = (new SendEmailController)->sendMailRequest($request);
-
-        return response()->json(['message'=>'Leave created successfully']);
-=======
         $response = [
             'success' => true,
             'data' => $leave,
@@ -76,7 +72,6 @@ class LeaveController extends Controller
             'message' => 'Create leave successfully'
         ];
         return Response()->json($response, 200);
->>>>>>> 5dd92b3e15dec38b56833a5d09a7d6d1c7c8949b
     }
 
     /**

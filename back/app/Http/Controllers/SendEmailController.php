@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Mail;
-use App\Mail\NotifyMail;
+use App\Mail\RequestMail;
 
 class SendEmailController extends Controller
 {
-    public function sendMailRequest($request)
+    public function sendMailRequest($details)
     {
-        
-      $userMail = $request->email;
-      Mail::to($userMail)->send(new NotifyMail());
+      Mail::to('mengyi.yoeng34@gmail.com')->send(new RequestMail($details));
  
       if (Mail::flushMacros()) {
            return Response()->json(['fail' => 'Sorry! Please try again latter'], 401);

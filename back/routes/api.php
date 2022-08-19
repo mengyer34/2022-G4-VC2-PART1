@@ -3,11 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaveController;
-<<<<<<< HEAD
 use App\Http\Controllers\SendEmailController;
-=======
 use App\Http\Controllers\UserController;
->>>>>>> 5dd92b3e15dec38b56833a5d09a7d6d1c7c8949b
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +28,9 @@ Route::put('/leaves/status/{leave}', [LeaveController::class, 'updateStatus']);
 Route::put('/leaves/review/{leave}', [LeaveController::class, 'updateAsViewed']);
 Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']);
 
-<<<<<<< HEAD
 // Mail
 Route::get('send-email', [SendEmailController::class, 'sendMailRequest']);
 
-=======
 // Users routes
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users_leaves', [UserController::class, 'getUsersLeaves']);
@@ -47,4 +42,3 @@ Route::put('/users/{user}', [UserController::class, 'update']);
 Route::put('/users/reset_profile/{user}', [UserController::class, 'updateProfileImage']);
 Route::put('/users/reset_password/{user}', [UserController::class, 'updatePassword']);
 Route::delete('/users/{user}', [UserController::class, 'destroy']);
->>>>>>> 5dd92b3e15dec38b56833a5d09a7d6d1c7c8949b
