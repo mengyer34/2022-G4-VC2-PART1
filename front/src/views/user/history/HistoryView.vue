@@ -62,8 +62,8 @@
 
 <script>
 import axios from '../../../axios-http.js'
-import UserLeaveHistory from '../../../components/user/UserLeaveHistory.vue'
-import requestForm from "../../../components/user/RequestForm.vue"
+import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
+import requestForm from "../../../components/user/request/RequestForm.vue"
 export default {
   components: {
     'leave-history': UserLeaveHistory,
