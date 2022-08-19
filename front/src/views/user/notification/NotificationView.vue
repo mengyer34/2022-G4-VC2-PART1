@@ -34,7 +34,6 @@
     </div>
     <h1></h1>
 </template>
-// @ is an alias to /src
 
 <script>
 import Axios from '../../../axios-http'
@@ -44,6 +43,7 @@ export default {
         "imformation-requestion": requestImformation
     },
     data() {
+        
         return {
             datas: [],
         }
