@@ -17,9 +17,9 @@
                     </svg>
                     <div class="p-5">
                         <div>
-                            <h1 class="font-bold text-[25px]">Phouek Sauth</h1>
+                            <h1 class="font-bold text-[25px]">{{user.first_name}} {{user.last_name}}</h1>
                         </div>
-                        <div><span class="font-bold">ID :</span> 40</div>
+                        <div><span class="font-bold">ID :</span> {{user.personal_id}}</div>
                     </div>
                 </div>
                 <div class="user-detail grid grid-cols-2">
@@ -27,19 +27,19 @@
                         <h1 class="text-[20px]">Personal details</h1>
                         <div>
                             <p class="font-bold">First Name</p>
-                            <p>Sauth</p>
+                            <p>{{user.first_name}}</p>
                         </div>
                         <div>
                             <p class="font-bold">Last Name</p>
-                            <p>Phouek</p>
+                            <p>{{user.last_name}}</p>
                         </div>
                         <div>
                             <p class="font-bold">Gender:</p>
-                            <p>Male</p>
+                            <p>{{user.gender}}</p>
                         </div>
                         <div>
                             <p class="font-bold">Email:</p>
-                            <p>sauth.phouek@student.passerellesnumeriques.org</p>
+                            <p>{{user.email}}</p>
                         </div>
                         <div class="reset-password pt-10">
                             <button class="bg-[#FF0000] p-1.5 rounded-md text-white flex">
@@ -52,7 +52,6 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </router-link>
-
                             </button>
                         </div>
                     </div>
@@ -61,19 +60,19 @@
                         <h1 class="text-[20px]">Class deltails</h1>
                         <div>
                             <p class="font-bold">Student_ID:</p>
-                            <p>40</p>
+                            <p>{{user.personal_id}}</p>
                         </div>
                         <div>
                             <p class="font-bold">Generation</p>
-                            <p>2022</p>
+                            <p>{{user.generation}}</p>
                         </div>
                         <div>
                             <p class="font-bold">Class:</p>
-                            <p>WEB-A</p>
+                            <p>{{user.class}}</p>
                         </div>
                         <div>
-                            <p class="font-bold">Leave:</p>
-                            <p>0.5</p>
+                            <p class="font-bold">Leaves</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>
@@ -81,3 +80,25 @@
         </div>
     </div>
 </template>
+<script>
+import axios from "axios"
+export default {
+    data(){
+        return{
+            user:{},
+            id : 1
+        }
+    },
+    methods:{
+        getProfileInfo(){
+            axios.get('http://127.0.0.1:8000/api/users_leaves/'+this.id).then((res) => {
+                this.user = res.data.data;
+                console.log(this.user)
+            })
+        },
+    },
+    mounted() {
+        this.getProfileInfo();
+    },
+}
+</script>

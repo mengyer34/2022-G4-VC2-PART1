@@ -25,7 +25,7 @@
             </li>
         </ul>
         <ul class="flex space-x-5 relative">
-            <li v-if="role !== 'admin'">
+            <li v-if="role !== 'admin'" >
                 <router-link class="relative" to="notifications">
                     <span class="bg-red-700 text-xs rounded-full px-1 absolute">1</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
@@ -59,6 +59,7 @@
 </template>
 <script>
 export default {
+    
     inject: ['role'],
     data() {
       return {

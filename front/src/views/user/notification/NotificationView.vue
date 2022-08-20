@@ -1,17 +1,20 @@
 <template>
-
     <div class=" bg-[#ddd] w-full h-full pt-[100px]">
         <div class="card w-8/12 m-auto  shadow- bg-[white]">
             <div class="card-header bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
                 <h1>Notifications</h1>
             </div>
             <div class="pr-3 pl-3" v-for="data of dataOfImformation" :key="data">
-                <imformation-requestion :datas="data" >
-                    <template #allow >
+                <imformation-requestion :datas="data">
+                    <template #allow>
                         <div class="bg-[#F5F5F5]  rounded-l  flex justify-between ">
                             <div class="p-2">
-                                <p class="text-[22px]">You are allowed to <span
-                                        :class="data.status === 'Approved' ? 'text-[#7BE77B]' : 'text-[#FF0000]'">go to
+                                <p class="text-[22px]" v-if="data.status === 'Approved'">You are allowed to <span
+                                        class="text-[#7BE77B]">go to
+                                        homework!</span>
+                                </p>
+                                <p class="text-[22px]" v-if="data.status === 'Rejected'">You are not allowed to <span
+                                        class=" text-[#FF0000]">go to
                                         homework!</span>
                                 </p>
                                 <p class="text-[12px] text-[#AAAAAA] flex justify-start">{{ data.updated_at }}</p>
@@ -46,7 +49,7 @@ export default {
         "imformation-requestion": requestImformation
     },
     data() {
-        
+
         return {
             datas: [],
         }
@@ -54,7 +57,7 @@ export default {
     methods: {
         getData() {
             Axios.get('http://127.0.0.1:8000/api/leaves').then((res) => {
-                this.datas = res.data.data;
+                this.datas = res.data.data.reverse();
                 console.log(this.datas)
             })
         },
