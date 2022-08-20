@@ -43,7 +43,7 @@
 
 <script>
 import Axios from '../../../axios-http'
-import requestImformation from "../../../components/user/RequestImfortmation.vue"
+import requestImformation from "../../../components/user/request/RequestInfortmation.vue"
 export default {
     components: {
         "imformation-requestion": requestImformation

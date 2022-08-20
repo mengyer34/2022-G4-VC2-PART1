@@ -27,7 +27,11 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD
       role: 'user'
+=======
+      role: 'student'
+>>>>>>> e38f4d9e56ffc7b53b98c43f878fe43bba78061d
     }
   },
 

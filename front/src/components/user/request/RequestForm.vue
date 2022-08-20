@@ -13,7 +13,10 @@
                         <option value="Sick">Sick</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        <svg v-if="isSelectedType" xmlns="http://www.w3.org/2000/svg" class="fill-curren h-5 w-5 absolute top-[10px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                        <svg v-else class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                     </div>
                 </div>
 
@@ -36,7 +39,10 @@
                             <option value="Afternoon">Afternoon</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            <svg v-if="isStartTime" xmlns="http://www.w3.org/2000/svg" class="fill-curren h-5 w-5 absolute top-[10px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            <svg v-else class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                         </div>
                     </div>
 
@@ -61,9 +67,11 @@
                             <option value="Afternoon">Afternoon</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            <svg v-if="isEndTime" xmlns="http://www.w3.org/2000/svg" class="fill-curren h-5 w-5 absolute top-[10px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            <svg v-else class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -71,31 +79,36 @@
             <div class="mb-2 px-1"  v-if="calculateDay ">
                 <h1 class="text-lg">Duration: {{calculateDay}}</h1>
             </div>
-            <div class="mb-2 w-full m-1">
+            <div class="mb-2 w-full m-1 relative">
                 <label class="block text-gray-700 text-[16px] mb-1">
                     Drop an reasonable
                 </label>
                 <textarea placeholder="Give your reason here" :class="{'border-red-500 bg-red-100':isReasonInputted }" class="block resize-none h-16 required:border-red-500 border shadow appearance-none border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" @change="isReasonInputted = false"  v-model="reason" cols="30" rows="10"></textarea>
+                <svg v-if="isReasonInputted" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
             </div>
-            <div class="flex  w-full mt-6">
-                <button class="bg-red-500  text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="closePopup">
+            <div class="flex  w-full mt-6 justify-end">
+                <button class="bg-red-500 hover:bg-red-400  text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="$emit('closePopup')">
                     Cancel
                 </button>
-                <button class="bg-primary mx-2 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="requestLeave">
+                <button class="bg-primary hover:bg-blue-500          mx-2 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="requestLeave">
                     Send Request
                 </button>
             </div>
         </form>
     </div>
 </div>
+
 </template>
 
 <script>
     // import axios from "../../axios-http"
+    
     import axios from "axios"
     let url = "http://127.0.0.1:8000/api/leaves"
     export default({
-        emits:['close-popup'],
+        emits: ["saveChange"],
         data(){
             return {
                 leaveType: "",
@@ -112,15 +125,15 @@
                 isReasonInputted: null,
                 duration: 0,
                 inValid: false,
+                
             }
         },
         methods: {
             requestLeave(){
                 if (this.checkFormRequest()){
                     let newRequest = {user_id: 1, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration}
-                    axios.post(url,newRequest).then(this.$router.push({name: "histories"}));
-                    this.closePopup();
-                    
+                    axios.post(url,newRequest);
+                    return this.$emit("saveChange");
                 }
             },
             checkFormRequest(){
@@ -157,9 +170,6 @@
                     return true;
                 }
             },
-            closePopup(){
-                return this.$emit('close-popup',false);
-            }
         },
         computed:{
             calculateDay() {
