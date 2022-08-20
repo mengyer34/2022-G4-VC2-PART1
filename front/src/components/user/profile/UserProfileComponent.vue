@@ -1,7 +1,7 @@
 <template>
     <div class="home bg-[#ddd] w-full h-[110vh] pt-[100px]">
         <div class="card w-8/12 m-auto rounded-xl shadow- bg-[white]">
-            <div class="card-header bg-[#0081CA] p-2 text-center text-[30px] text-white">
+            <div class="card-header bg-[#0081CA] p-2 text-center text-[30px] text-white rounded-t-md">
                 <h1>My Profile</h1>
             </div>
             <div class="card-body p-5">
@@ -22,7 +22,7 @@
                         <div><span class="font-bold">ID :</span> 40</div>
                     </div>
                 </div>
-                <div class="user-detail grid grid-cols-2">
+                <div class=" grid grid-cols-2">
                     <div class=" personal-detail p-3 border-solid border-2 border-black-600">
                         <h1 class="text-[20px]">Personal details</h1>
                         <div>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <div class=" class-detail p-5 border-solid border-2 border-black-600 ml-2">
+                    <div class="p-5 border-solid border-2 border-black-600 ml-2">
                         <h1 class="text-[20px]">Class deltails</h1>
                         <div>
                             <p class="font-bold">Student_ID:</p>

@@ -21,7 +21,7 @@
         </button>
       </div>
     </div>
-    <form-requestion v-if="isShow" @closePopup="closePopup" />
+    <form-requestion v-if="isShow" @closePopup="closePopup" @saveChange="saveChange"/>
     <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
    </div>
 </template>
@@ -50,6 +50,10 @@
       addNewRequest(){
         this.isSentRequest = false;
         this.$router.push({name: "histories"})
+      },
+      saveChange(){
+        this.isSentRequest = true;
+        this.isShow = false;
       }
   }
   }

@@ -56,7 +56,8 @@
         </div>
         <leave-history :leaves="leaves" :status="status" :type="type" />
     </div>
-    <form-requestion v-if="isShow" @close-popup="closePopup"/>
+    <form-requestion v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
+    <!-- <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/> -->
 </template>
 
 
@@ -64,36 +65,43 @@
 import axios from '../../../axios-http.js'
 import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
 import requestForm from "../../../components/user/request/RequestForm.vue"
+// import requestSent from "../../../components/user/reqeuest/RequestSentSuccess.vue"
+import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
 export default {
-  components: {
-    'leave-history': UserLeaveHistory,
-    "form-requestion": requestForm
-  },
-  data() {
-    return {
-        status: "All",
-        type: "All",
-        leaves: [],
+    components: {
+        'leave-history': UserLeaveHistory,
+        "form-requestion": requestForm,
+        "request-sent":requestSent
+    },
+    data() {
+        return {
+            status: "All",
+            type: "All",
+            leaves: [],
+            isShow: false,
+            userId: 1,
+            isSentRequest: false
+        }
+        
+    },
+    methods: {
+            getLeave() {
 
-        isShow: false,
-        userId: 1,
-    }
-    
-  },
-  methods: {
-    getLeave() {
-
-        axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
-            this.leaves = res.data.data.leaves.reverse();
-        })
-    },
-    showFormRequest(){
-        this.isShow = true;
-    },
-    closePopup(){
-        this.isShow = false;
-    }
-    },
+                axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
+                    this.leaves = res.data.data.leaves.reverse();
+                })
+            },
+            showFormRequest(){
+                this.isShow = true;
+            },
+            closePopup(){
+                this.isShow = false;
+            },
+            saveChange(){
+                this.isShow = false;
+                this.isSentRequest = true;
+            }
+        },
     mounted() {
         this.getLeave();
     }

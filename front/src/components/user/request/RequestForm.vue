@@ -108,6 +108,7 @@
     import axios from "axios"
     let url = "http://127.0.0.1:8000/api/leaves"
     export default({
+        emits: ["saveChange"],
         data(){
             return {
                 leaveType: "",
@@ -131,7 +132,8 @@
             requestLeave(){
                 if (this.checkFormRequest()){
                     let newRequest = {user_id: 1, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration}
-                    axios.post(url,newRequest)
+                    axios.post(url,newRequest);
+                    return this.$emit("saveChange");
                 }
             },
             checkFormRequest(){
