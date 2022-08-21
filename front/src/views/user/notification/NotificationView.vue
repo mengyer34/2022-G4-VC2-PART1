@@ -1,13 +1,13 @@
 <template>
-    <div class=" bg-[#ddd] w-full h-full pt-[100px]">
-        <div class="card w-8/12 m-auto  shadow- bg-[white]">
+    <div class=" w-full h-full pt-[100px]">
+        <div v-if="dataOfImformation.length > 0" class="card w-8/12 m-auto bg-white">
             <div class="card-header bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
                 <h1>Notifications</h1>
             </div>
-            <div class="pr-3 pl-3" v-for="data of dataOfImformation" :key="data">
+            <div class="pr-3 pl-3 " v-for="data of dataOfImformation" :key="data">
                 <imformation-requestion :datas="data">
                     <template #allow>
-                        <div class="bg-[#F5F5F5]  rounded-l  flex justify-between ">
+                        <div class="bg-[rgba(180,255,224,0.44)]  rounded-l  flex justify-between ">
                             <div class="p-2">
                                 <p class="text-[22px]" v-if="data.status === 'Approved'">You are allowed to <span
                                         class="text-[#7BE77B]">go to
@@ -37,12 +37,17 @@
                 <p class="text-[12px] text-[#AAAAAA] flex justify-end pb-2">From: Socail Affair</p>
             </div>
         </div>
+        <div v-else class="text-center mt-10 text-2xl m-auto">
+            <img src="../../../assets/notification.png" class="m-auto w-20 h-20">
+            No Notification Here
+        </div>
     </div>
     <h1></h1>
 </template>
 
 <script>
-import Axios from '../../../axios-http'
+// import Axios from '../../../axios-http'
+import Axios from "axios"
 import requestImformation from "../../../components/user/request/RequestInfortmation.vue"
 export default {
     components: {
@@ -58,7 +63,7 @@ export default {
         getData() {
             Axios.get('http://127.0.0.1:8000/api/leaves').then((res) => {
                 this.datas = res.data.data.reverse();
-                console.log(this.datas)
+                console.log(this.datas);
             })
         },
 
@@ -67,6 +72,7 @@ export default {
         dataOfImformation() {
             return this.datas.filter(data => data.status != "Pending");
         },
+
 
     },
     mounted() {

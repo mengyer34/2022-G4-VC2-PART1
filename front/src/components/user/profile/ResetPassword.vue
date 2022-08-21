@@ -1,6 +1,5 @@
 <template>
     <div class="bg-[#00000080]  fixed top-0 w-full h-screen">
-
         <div class="rounded mb-4 w-5/12 m-auto mt-28">
             <div class="form-header rounded-t-md bg-primary p-2 px-4 text-white flex items-center justify-between">
                 <p class="text-2xl ">Change Password</p>
@@ -64,8 +63,12 @@
 </template>
 
 <script>
-
+// import axios from "axios"
 export default ({
+    props: {
+        oldPassword: String
+    },
+    emits: ["save-change"],
     data() {
         return {
             password: "password",
@@ -81,6 +84,7 @@ export default ({
     },
     methods: {
         showPassword(){
+
             if (this.password == "password"){
                 this.password = "text";
             }else{
@@ -88,7 +92,7 @@ export default ({
             }
         },
         saveChange(){
-            if (this.current_password == "1234"){
+            if (this.current_password == this.oldPassword){
                 this.is_correct_pwd = false
                 if (this.new_password != this.confirm_password){
                     this.isMatch = true
@@ -96,8 +100,12 @@ export default ({
             }else if (this.current_password != "") {
                 this.is_correct_pwd = true
             }
+            if (this.checkFormValidation() && !this.isMatch && this.is_correct_pwd ==false){
+                alert("Reset password sucessful")
+                return this.$emit("save-change",this.new_password);
+            }
 
-            this.checkFormValidation()
+            
         },
         checkFormValidation(){
             if (this.current_password == ""){
@@ -109,6 +117,12 @@ export default ({
             if (this.confirm_password == ""){
                 this.is_fill_confirm_password = true
             }
+            var message = false;
+            if (this.current_password && this.new_password && this.confirm_password ){
+                message =  true
+            }
+
+            return message
         }
     }
 })

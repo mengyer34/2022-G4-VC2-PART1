@@ -92,7 +92,7 @@
                 <button class="bg-red-500 hover:bg-red-400  text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="$emit('closePopup')">
                     Cancel
                 </button>
-                <button class="bg-primary hover:bg-blue-500          mx-2 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="requestLeave">
+                <button class="bg-primary hover:bg-blue-500 mx-2 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="requestLeave">
                     Send Request
                 </button>
             </div>
@@ -131,7 +131,7 @@
         methods: {
             requestLeave(){
                 if (this.checkFormRequest()){
-                    let newRequest = {user_id: 1, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration}
+                    let newRequest = {user_id: 4, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration}
                     axios.post(url,newRequest);
                     return this.$emit("saveChange");
                 }
