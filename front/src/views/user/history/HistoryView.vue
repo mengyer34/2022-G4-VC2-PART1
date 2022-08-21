@@ -56,29 +56,41 @@
         </div>
         <leave-history :leaves="leaves" :status="status" :type="type" />
     </div>
-    <form-requestion v-if="isShow" @close-popup="closePopup"/>
+    <form-requestion v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
+    <!-- <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/> -->
 </template>
 
 
 <script>
 import axios from '../../../axios-http.js'
-import UserLeaveHistory from '../../../components/user/UserLeaveHistory.vue'
-import requestForm from "../../../components/user/RequestForm.vue"
+import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
+import requestForm from "../../../components/user/request/RequestForm.vue"
+// import requestSent from "../../../components/user/reqeuest/RequestSentSuccess.vue"
+import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
 export default {
     components: {
         'leave-history': UserLeaveHistory,
-        "form-requestion": requestForm
+        "form-requestion": requestForm,
+        "request-sent":requestSent
     },
     data() {
         return {
             status: "All",
             type: "All",
             leaves: [],
-
             isShow: false,
             userId: 1,
+            isSentRequest: false,
+            isAdd: false,
         }
-    
+        
+    },
+    computed: {
+        hasAdd() {
+            if (isAdd) {
+                this.getLeave();
+            }
+        }
     },
     methods: {
         getLeave() {
@@ -91,11 +103,16 @@ export default {
         },
         closePopup(){
             this.isShow = false;
+        },
+        saveChange(){
+            this.isShow = false;
+            this.isSentRequest = true;
         }
     },
     mounted() {
         this.getLeave();
-    }
+    },
+
 
 }
 </script>

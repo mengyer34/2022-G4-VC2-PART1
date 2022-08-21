@@ -3,13 +3,13 @@
         <table class="w-full whitespace-nowrap">
             <thead>
                 <tr tabindex="0" class="focus:outline-none h-16 w-full text-sm leading-none text-gray-800 border-b-2 border-primary">
-                    <th class="font-normal text-left pl-4">Reason</th>
-                    <th class="font-normal text-left pl-12">Leave type</th>
-                    <th class="font-normal text-left pl-12">Start Date</th>
-                    <th class="font-normal text-left pl-20">End Date</th>
-                    <th class="font-normal text-left pl-20">Duration</th>
-                    <th class="font-normal text-left pl-16">Status</th>
-                    <th class="font-normal text-left pl-16">Request Date</th>
+                    <th class="font-bold text-left pl-4">Reason</th>
+                    <th class="font-bold text-left pl-12">Leave type</th>
+                    <th class="font-bold text-left pl-12">Start Date</th>
+                    <th class="font-bold text-left pl-20">End Date</th>
+                    <th class="font-bold text-left pl-20">Duration</th>
+                    <th class="font-bold text-left pl-16">Status</th>
+                    <th class="font-bold text-left pl-16">Request Date</th>
                 </tr>
             </thead>
             <tbody v-if="leavesstatus.length > 0" class="w-full">
@@ -55,7 +55,7 @@
 
 <script>
 
-    import requestForm from "./RequestForm.vue"
+    import requestForm from "../request/RequestForm.vue"
 
     export default {
         props: ['leaves', 'status', 'type'],
