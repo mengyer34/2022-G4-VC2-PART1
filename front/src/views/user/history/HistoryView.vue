@@ -65,34 +65,33 @@ import axios from '../../../axios-http.js'
 import UserLeaveHistory from '../../../components/user/UserLeaveHistory.vue'
 import requestForm from "../../../components/user/RequestForm.vue"
 export default {
-  components: {
-    'leave-history': UserLeaveHistory,
-    "form-requestion": requestForm
-  },
-  data() {
-    return {
-        status: "All",
-        type: "All",
-        leaves: [],
+    components: {
+        'leave-history': UserLeaveHistory,
+        "form-requestion": requestForm
+    },
+    data() {
+        return {
+            status: "All",
+            type: "All",
+            leaves: [],
 
-        isShow: false,
-        userId: 1,
-    }
+            isShow: false,
+            userId: 1,
+        }
     
-  },
-  methods: {
-    getLeave() {
-
-        axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
-            this.leaves = res.data.data.leaves.reverse();
-        })
     },
-    showFormRequest(){
-        this.isShow = true;
-    },
-    closePopup(){
-        this.isShow = false;
-    }
+    methods: {
+        getLeave() {
+            axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
+                this.leaves = res.data.data.leaves.reverse();
+            })
+        },
+        showFormRequest(){
+            this.isShow = true;
+        },
+        closePopup(){
+            this.isShow = false;
+        }
     },
     mounted() {
         this.getLeave();

@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      role: 'admin'
+      role: 'user'
     }
   },
 

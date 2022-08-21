@@ -91,8 +91,8 @@
 </template>
 
 <script>
-    // import axios from "../../axios-http"
-    import axios from "axios"
+    import axios from "../../axios-http.js"
+    // import axios from "axios"
     let url = "http://127.0.0.1:8000/api/leaves"
     export default({
         emits:['close-popup'],
