@@ -150,6 +150,10 @@ class UserController extends Controller
      */
     public function updateProfileImage(Request $request, User $user)
     {   
+        $validated = $request->validate([
+            'profile_image' => 'required|mimes:jpg,png,jpeg'
+        ]);
+
         if($user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/female_default_profile.png' 
             && $user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/male_default_profile.png') {
 
