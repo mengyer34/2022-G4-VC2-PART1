@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('leave_type');
             $table->string('reason');
             $table->string('status');
-            $table->boolean('is_review');
+            $table->boolean('is_admin_seen');
+            $table->boolean('is_user_seen');
             $table->timestamps();
         });
     }
