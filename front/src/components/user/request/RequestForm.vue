@@ -104,10 +104,14 @@
 
 <script>
     // import axios from "../../axios-http"
-    
     import axios from "axios"
     let url = "http://127.0.0.1:8000/api/leaves"
+    import { useEmail } from '../../../store/index';
     export default({
+        setup() {
+            const emailStore = useEmail()
+            return { emailStore }
+        },
         emits: ["saveChange"],
         data(){
             return {
@@ -124,14 +128,14 @@
                 isEndTime: null,
                 isReasonInputted: null,
                 duration: 0,
-                inValid: false,
-                
+                inValid: false,     
             }
         },
         methods: {
             requestLeave(){
+                const linkToNotification = new URL(location.href).origin+'/notifications'
                 if (this.checkFormRequest()){
-                    let newRequest = {user_id: 1, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration}
+                    let newRequest = {user_id: 1, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration, email: this.emailStore.email, urlApp: linkToNotification}
                     axios.post(url,newRequest);
                     return this.$emit("saveChange");
                 }
