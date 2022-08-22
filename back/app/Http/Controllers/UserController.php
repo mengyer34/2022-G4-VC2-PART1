@@ -61,6 +61,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->generation = $request->generation;
         $user->class = $request->class;
+        $user->phone = $request->phone;
 
         $ProfileImage = 'female_default_profile.png';
         if ($request->gender == "M") {
@@ -130,6 +131,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->generation = $request->generation;
         $user->class = $request->class;
+        $user->phone = $request->phone;
         $user->save();
 
         $response = [
