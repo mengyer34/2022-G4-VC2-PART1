@@ -64,6 +64,7 @@
 import axios from '../../../axios-http.js'
 import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
 import requestForm from "../../../components/user/request/RequestForm.vue"
+const url = 'http://localhost:8000/api/users_leaves/'
 export default {
     components: {
         'leave-history': UserLeaveHistory,
@@ -82,7 +83,7 @@ export default {
     },
     methods: {
             getLeave() {
-                axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
+                axios.get(url + this.userId).then(res => {
                     this.leaves = res.data.data.leaves.reverse();
                 })
             },
@@ -95,9 +96,13 @@ export default {
             saveChange(){
                 this.isShow = false;
                 this.isSentRequest = true;
-            }
-        },
+        }
+        
+    },
     mounted() {
+        this.getLeave();
+    },
+    afterUpdated(){
         this.getLeave();
     }
 

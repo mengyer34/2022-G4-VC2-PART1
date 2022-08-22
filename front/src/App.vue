@@ -32,13 +32,13 @@ export default {
   data() {
     return {
       role: 'student',
-      user: ""
+      user: "",
+      user_id: 4,
     }
   },
   created(){
-    axios.get("http://127.0.0.1:8000/api/users_leaves/4").then((res)=>{
+    axios.get("http://127.0.0.1:8000/api/users_leaves/"+this.user_id).then((res)=>{
       this.user = res.data.data.first_name + " " + res.data.data.last_name
-      console.log(this.user);
     })
   },
   provide() {

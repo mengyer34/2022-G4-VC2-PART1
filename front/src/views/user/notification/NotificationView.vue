@@ -46,7 +46,6 @@
 </template>
 
 <script>
-// import Axios from '../../../axios-http'
 import Axios from "axios"
 import requestImformation from "../../../components/user/request/RequestInfortmation.vue"
 export default {
@@ -63,7 +62,6 @@ export default {
         getData() {
             Axios.get('http://127.0.0.1:8000/api/leaves').then((res) => {
                 this.datas = res.data.data.reverse();
-                console.log(this.datas);
             })
         },
 
@@ -72,8 +70,6 @@ export default {
         dataOfImformation() {
             return this.datas.filter(data => data.status != "Pending");
         },
-
-
     },
     mounted() {
         this.getData();

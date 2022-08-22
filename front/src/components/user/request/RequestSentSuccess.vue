@@ -11,7 +11,6 @@
                 <p>Your request has been sent</p>
             </div>
             <div class="w-full p-5">
-
                 <button class="btn p-2 w-full  bg-green-500 text-white rounded font-bold" @click="$emit('addNewRequest')">
                     OK
                 </button>
@@ -20,8 +19,3 @@
     </div>
 </template>
 
-<style scoped>
-    .modal{
-        transition: 1s ease-in-out;
-    }
-</style>
