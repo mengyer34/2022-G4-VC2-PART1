@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "crypto-js": "^4.1.1",
     "moment": "^2.29.4",
     "vue": "^3.2.37",
     "vue-html2pdf": "^1.8.0",

@@ -1,14 +1,8 @@
 <template>
     <div class="w-full sm:px-6 mt-24">
-        <div v-if="isSentRequest" class="alert-success flex justify-between w-full mb-5 bg-green-500 p-2 rounded text-green-100">
-            <p class="text-lg  ">Your request has been sent</p>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:cursor-pointer hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" @click="isSentRequest = false">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </div>
         <div class="px-4 md:px-10 py-4 md:py-7 bg-gray-200 rounded-tl-lg rounded-tr-lg">
             <div class="sm:flex items-center justify-between">
-                <p tabindex="0" class="flex items-center focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">
+                <p tabindex="0" class="flex mb-6 items-center focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                         <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
@@ -57,43 +51,35 @@
         <leave-history :leaves="leaves" :status="status" :type="type" />
     </div>
     <form-requestion v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
-    <!-- <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/> -->
+    <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
 </template>
 
 
 <script>
 import axios from '../../../axios-http.js'
 import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
-import requestForm from "../../../components/user/request/RequestForm.vue"
-// import requestSent from "../../../components/user/reqeuest/RequestSentSuccess.vue"
+import requestForm from "../newRequest/RequestFormView.vue"
 import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
+const url = 'http://localhost:8000/api/users_leaves/'
 export default {
     components: {
         'leave-history': UserLeaveHistory,
         "form-requestion": requestForm,
-        "request-sent":requestSent
+        "request-sent":requestSent,
     },
+    inject: ['user_id'],
     data() {
         return {
             status: "All",
             type: "All",
             leaves: [],
             isShow: false,
-            userId: 1,
             isSentRequest: false,
-        }
-        
-    },
-    computed: {
-        leavess() {
-            if (this.getD) {
-                this.getLeave();
-            }
         }
     },
     methods: {
         getLeave() {
-            axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
+            axios.get(url + this.user_id).then(res => {
                 this.leaves = res.data.data.leaves.reverse();
             })
         },
@@ -106,14 +92,16 @@ export default {
         saveChange(){
             this.isShow = false;
             this.isSentRequest = true;
-        }
+        },
+        addNewRequest(){
+                this.isSentRequest = false;
+                this.getLeave()
+        },
+        
     },
     mounted() {
         this.getLeave();
     },
-    updated(){
-        // this.getLeave();
-    }
 
 }
 </script>
