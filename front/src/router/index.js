@@ -3,6 +3,9 @@ import HomeView from '../views/user/HomeView.vue'
 import HistoryView from '../views/user/history/HistoryView.vue'
 import NotificatonView from '../views/user/notification/NotificationView.vue'
 import ProfileView from '../views/user/profile/ProfileView.vue'
+import Dashboard from '../views/admin/Dashboard/DashboardView.vue'
+import Students from '../views/admin/Student/StudentView.vue'
+import LeaveList from '../views/admin/LeaveList/LeaveView.vue'
 
 
 const routes = [
@@ -25,6 +28,21 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard
+  },
+  {
+    path: '/students',
+    name: 'students',
+    component: Students
+  },
+  {
+    path: '/leaves',
+    name: 'leaves',
+    component: LeaveList
   },
 ]
 

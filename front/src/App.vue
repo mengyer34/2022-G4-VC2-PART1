@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      role: 'student',
+      role: 'admin',
       user: "",
       user_id: 4,
     }

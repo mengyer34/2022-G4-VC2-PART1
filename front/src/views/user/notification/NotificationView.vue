@@ -42,16 +42,17 @@
             No Notification Here
         </div>
     </div>
-    <h1></h1>
 </template>
 
 <script>
 import Axios from "axios"
 import requestImformation from "../../../components/user/request/RequestInfortmation.vue"
+const url = 'http://localhost:8000/api/users_leaves/'
 export default {
     components: {
         "imformation-requestion": requestImformation
     },
+    inject: ['user_id'],
     data() {
 
         return {
@@ -60,8 +61,8 @@ export default {
     },
     methods: {
         getData() {
-            Axios.get('http://127.0.0.1:8000/api/leaves').then((res) => {
-                this.datas = res.data.data.reverse();
+            Axios.get(url + this.user_id).then((res) => {
+                this.datas = res.data.data.leaves.reverse();
             })
         },
 
