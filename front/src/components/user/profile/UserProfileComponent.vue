@@ -8,7 +8,7 @@
                 <div class="user-profile flex relative">
                     <form >
                         <div class="w-24 h-24 flex items-center justify-center">
-                            <img v-if="!newProfile" :src="user.profile_image" class="rounded-full w-20 h-20">
+                            <img v-if="newProfile != null" :src="user.profile_image" class="rounded-full w-20 h-20">
                             <img v-else :src="newProfile" alt="" class="rounded-full w-20 h-20 object-fill">
                         </div>
                         <label for="file_input">
