@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/leaves/reject/{id}', [LeaveController::class, 'reject'])->name('request.reject');
+Route::get('/leaves/approve/{id}', [LeaveController::class, 'approve'])->name('request.approve');
+

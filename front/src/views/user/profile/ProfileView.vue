@@ -6,7 +6,7 @@
 import userProfile from "../../../components/user/profile/UserProfileComponent.vue"
 import resetPassword from "../../../components/user/profile/ResetPassword.vue"
 import axios from "axios"
-
+const url = "http://127.0.0.1:8000/api/"
 export default {
     components: {
         "user-profile": userProfile,
@@ -23,14 +23,15 @@ export default {
     },
         methods:{
             getProfileInfo(){
-                axios.get('http://127.0.0.1:8000/api/users_leaves/'+this.id).then((res) => {
+                axios.get(url + 'users_leaves/'+this.id).then((res) => {
                     this.user = res.data.data;
                     this.password = this.user.password
                     this.amountOfLeaves = this.user.leaves.length;
                 })
             },
-            saveChange(newPwd){
-                axios.put('http://127.0.0.1:8000/api/users/reset_password/'+  this.id,newPwd)
+            saveChange(){
+                console.log(newPwd);
+                axios.put(url + 'users/reset_password/'  +  this.id,newPwd)
                 this.toggleFormReset = false;
             },
         },

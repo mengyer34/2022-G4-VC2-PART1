@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import axios from "axios"
+const url = "http://127.0.0.1:8000/api/"
 export default ({
     props: {
         oldPassword: String
@@ -79,6 +81,7 @@ export default ({
             is_fill_new_password: false,
             is_fill_confirm_password: false,
             is_correct_pwd: null,
+            id: 4
         }
     },
     methods: {
@@ -91,17 +94,18 @@ export default ({
             }
         },
         saveChange(){
-            if (this.current_password == this.oldPassword){
-                this.is_correct_pwd = false
-                if (this.new_password != this.confirm_password){
-                    this.isMatch = true
-                }
-            }else if (this.current_password != "") {
-                this.is_correct_pwd = true
+            this.is_correct_pwd = false
+            if (this.new_password != this.confirm_password ){
+                this.isMatch = true
             }
-            if (this.checkFormValidation() && !this.isMatch && this.is_correct_pwd ==false){
-                alert("Reset password sucessful")
-                return this.$emit("save-change",this.new_password);
+            if (this.checkFormValidation() && !this.isMatch){
+                // alert("Reset password sucessful")
+                var new_password = {confirm_old_password: this.current_password, new_password: this.new_password}
+                axios.put(url + 'users/reset_password/'  +  this.id,new_password).then((res)=>{
+                    console.log(res.data);
+                })
+                console.log(new_password);
+                // return this.$emit("save-change",new_password);
             }
 
             

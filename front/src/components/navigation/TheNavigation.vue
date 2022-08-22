@@ -2,8 +2,8 @@
     <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
-                <img src="../../assets/pnc_logo.png" alt="logo" class="w-[60px]">
-                <span class="text-3xl font-semibold">SLMS</span>
+                <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
+                <span class="text-2xl font-semibold">SLMS</span>
             </li>
         </ul>
         <ul v-if="role !== 'admin'" @click="show=false" id="animation" class="flex">

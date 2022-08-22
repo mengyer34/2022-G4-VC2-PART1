@@ -68,7 +68,7 @@ class UserController extends Controller
         }
         $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $ProfileImage;
 
-        $user->personal_id = '11';
+        $user->personal_id = 17;
         $user->save();
         
         $response = [
@@ -207,16 +207,34 @@ class UserController extends Controller
      */
     public function updatePassword(Request $request, User $user)
     {
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        $response = [
-            'success' => true,
-            'data' => $user,
-            'status' => 200,
-            'message' => 'Update password successfully'
-        ];
-        return Response()->json($response, 200);
+        if (Hash::check($request->confirm_old_password, $user->password)) {
+            if (!Hash::check($request->new_password, $user->password)) {
+                $user->password = Hash::make($request->new_password);
+                $user->save();
+                $response = [
+                    'success' => true,
+                    'status' => 200,
+                    'message' => 'Update password successfully'
+                ];
+                return Response()->json($response, 200);
+            } else {
+                $response = [
+                    'success' => false,
+                    'error' => 'not a new password',
+                    'status' => 200,
+                    'message' => 'Update password failed'
+                ];
+                return Response()->json($response, 200);
+            }
+        } else {
+            $response = [
+                'success' => false,
+                'error' => 'incorrect current password',
+                'status' => 200,
+                'message' => 'Update password failed'
+            ];
+            return Response()->json($response, 200);
+        }
     }
 
     /**

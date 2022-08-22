@@ -62,6 +62,7 @@ import requestForm from "../newRequest/RequestFormView.vue"
 import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
 const url = 'http://localhost:8000/api/users_leaves/'
 export default {
+
     components: {
         'leave-history': UserLeaveHistory,
         "form-requestion": requestForm,
@@ -94,15 +95,14 @@ export default {
             this.isSentRequest = true;
         },
         addNewRequest(){
-                this.isSentRequest = false;
-                this.getLeave()
+            this.isSentRequest = false;
+            this.getLeave()
         },
         
     },
     mounted() {
         this.getLeave();
     },
-
 }
 </script>
 

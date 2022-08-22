@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->integer('personal_id')->unique();
+            $table->string('personal_id')->unique();
             $table->string('gender');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('generation');
+            $table->string('generation');
             $table->string('class');
             $table->string('profile_image');
             $table->rememberToken();
