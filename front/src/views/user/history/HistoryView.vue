@@ -81,13 +81,12 @@ export default {
             isShow: false,
             userId: 1,
             isSentRequest: false,
-            isAdd: false,
         }
         
     },
     computed: {
-        hasAdd() {
-            if (isAdd) {
+        leavess() {
+            if (this.getD) {
                 this.getLeave();
             }
         }
@@ -113,7 +112,7 @@ export default {
         this.getLeave();
     },
     updated(){
-        this.getLeave()
+        // this.getLeave();
     }
 
 }
