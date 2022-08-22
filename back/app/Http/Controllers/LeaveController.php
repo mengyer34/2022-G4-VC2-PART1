@@ -136,16 +136,36 @@ class LeaveController extends Controller
     * @param  \App\Models\Leave  $leave
     * @return \Illuminate\Http\Response
     */
-    public function updateAsViewed(Request $request, Leave $leave)
+    public function markAsSeenByAdmin(Request $request, Leave $leave)
     {
-        $leave->is_review = true;
+        $leave->is_admin_seen = true;
         $leave->save();
 
         $response = [
             'success' => true,
             'data' => $leave,
             'status' => 200,
-            'message' => 'Update leave as reviewed successfully'
+            'message' => 'Leave is seen by admin'
+        ];
+        return Response()->json($response, 200);
+    }
+
+    /** Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Leave  $leave
+    * @return \Illuminate\Http\Response
+    */
+    public function markAsSeenByUser(Request $request, Leave $leave)
+    {
+        $leave->is_user_seen = true;
+        $leave->save();
+
+        $response = [
+            'success' => true,
+            'data' => $leave,
+            'status' => 200,
+            'message' => 'Leave is seen by user'
         ];
         return Response()->json($response, 200);
     }

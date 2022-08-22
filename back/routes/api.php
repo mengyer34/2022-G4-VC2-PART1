@@ -25,7 +25,8 @@ Route::get('/leaves/{leave}', [LeaveController::class, 'show']); /* The route to
 Route::get('/leaves_user/{id}', [LeaveController::class, 'getLeaveUser']); /* The route to get one leave with belonged user */
 Route::post('/leaves', [LeaveController::class, 'store']); /* The route to create a new leave */
 Route::put('/leaves/status/{leave}', [LeaveController::class, 'updateStatus']); /* The route to update a leave’s status */
-Route::put('/leaves/review/{leave}', [LeaveController::class, 'updateAsViewed']); /* The route to update a leave as reviewed */
+Route::put('/leaves/admin_seen/{leave}', [LeaveController::class, 'updateAsViewed']); /* The route to update a leave as seen by admin */
+Route::put('/leaves/user_seen/{leave}', [LeaveController::class, 'updateAsViewed']); /* The route to update a leave as seen by user */
 Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']); /* The route to delete a leave */
 
 
