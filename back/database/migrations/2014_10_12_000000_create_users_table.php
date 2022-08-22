@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('generation');
             $table->string('class');
             $table->string('profile_image');
+            $table->string('phone');
             $table->rememberToken();
             $table->timestamps();
         });
