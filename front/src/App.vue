@@ -33,13 +33,13 @@ export default {
   data() {
     return {
       role: 'student',
-      user: "",
+      user: [],
       user_id: 4,
     }
   },
   created(){
     axios.get(url + "users/" + this.user_id).then((res)=>{
-      this.user = res.data.data.first_name + " " + res.data.data.last_name
+      this.user = res.data.data
     })
   },
   provide() {

@@ -102,8 +102,8 @@ export default {
     mounted() {
         this.getLeave();
     },
-    afterUpdated(){
-        this.getLeave();
+    updated(){
+        // this.getLeave();
     }
 
 }
