@@ -2,8 +2,8 @@
     <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
-                <img src="../../assets/pnc_logo.png" alt="logo" class="w-[60px]">
-                <span class="text-3xl font-semibold">SLMS</span>
+                <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
+                <span class="text-2xl font-semibold">SLMS</span>
             </li>
         </ul>
         <ul v-if="role !== 'admin'" @click="show=false" id="animation" class="flex">
@@ -20,12 +20,12 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
                     </svg>
-                    History
+                    List Leaves
                 </router-link>
             </li>
         </ul>
         <ul class="flex space-x-5 relative">
-            <li v-if="role !== 'admin'">
+            <li v-if="role !== 'admin'" >
                 <router-link class="relative" to="notifications">
                     <span class="bg-red-700 text-xs rounded-full px-1 absolute">1</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
@@ -34,11 +34,12 @@
                 </router-link>
             </li>
             <li @click="show=!show" class="flex space-x-2 cursor-pointer">
-                <img src="../../assets/avatar.png" alt="logo" class="w-[30px]">
-                <span>Sauth Phouek</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
+                    <img src="../../assets/avatar.png" alt="logo" class="w-[30px] mr-2">
+                    <span>{{user}}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+
                 <div v-if="show" class="py-1 rounded-md shadow-xs absolute bg-gray-200 mt-10 right-0">
                     <router-link class="flex px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-warning hover:text-white focus:outline-none focus:bg-gray-100" to="/profile">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -59,7 +60,11 @@
 </template>
 <script>
 export default {
+    
     inject: ['role'],
+    props: {
+        user: String
+    },
     data() {
       return {
         show: false,

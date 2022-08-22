@@ -19,33 +19,24 @@ use App\Http\Controllers\UserController;
 
 
 // Leaves routes
-Route::get('/leaves', [LeaveController::class, 'index']);
-Route::get('/leaves_user', [LeaveController::class, 'getLeavesUser']);
-Route::get('/leaves/{leave}', [LeaveController::class, 'show']);
-Route::get('/leaves_user/{id}', [LeaveController::class, 'getLeaveUser']);
-Route::post('/leaves', [LeaveController::class, 'store']);
-Route::put('/leaves/status/{leave}', [LeaveController::class, 'updateStatus']);
-Route::put('/leaves/review/{leave}', [LeaveController::class, 'updateAsViewed']);
-Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']);
-
-// Mail
-Route::get('send-email', [SendEmailController::class, 'sendMailRequest']);
-
-// Users routes
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users_leaves', [UserController::class, 'getUsersLeaves']);
-Route::get('/users/{user}', [UserController::class, 'show']);
-Route::get('/users_leaves/{id}', [UserController::class, 'getUserLeaves']);
-Route::get('/storage/image/{imageNname}', [UserController::class, 'getProfileImage']);
-Route::post('/users', [UserController::class, 'store']);
-Route::put('/users/{user}', [UserController::class, 'update']);
-Route::put('/users/reset_profile/{user}', [UserController::class, 'updateProfileImage']);
-Route::put('/users/reset_password/{user}', [UserController::class, 'updatePassword']);
-Route::delete('/users/{user}', [UserController::class, 'destroy']);
+Route::get('/leaves', [LeaveController::class, 'index']); /* The route to get all leaves */
+Route::get('/leaves_user', [LeaveController::class, 'getLeavesUser']); /* The route to get all leaves with belonged user */
+Route::get('/leaves/{leave}', [LeaveController::class, 'show']); /* The route to get one leave */
+Route::get('/leaves_user/{id}', [LeaveController::class, 'getLeaveUser']); /* The route to get one leave with belonged user */
+Route::post('/leaves', [LeaveController::class, 'store']); /* The route to create a new leave */
+Route::put('/leaves/status/{leave}', [LeaveController::class, 'updateStatus']); /* The route to update a leave’s status */
+Route::put('/leaves/review/{leave}', [LeaveController::class, 'updateAsViewed']); /* The route to update a leave as reviewed */
+Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']); /* The route to delete a leave */
 
 
-Route::get('/leaves/reject', [LeaveController::class, 'reject']);
-Route::post('/leaves/approve', [LeaveController::class, 'approveRequest'])->name('request.approve');
-
-Route::get('reject', [LeaveController::class, 'reject']);
-Route::get('approve', [LeaveController::class, 'approve']);
+// Users(students) routes
+Route::get('/users', [UserController::class, 'index']); /* The route to get all users */
+Route::get('/users_leaves', [UserController::class, 'getUsersLeaves']); /* The route to get all users with leaves belongs to each user */
+Route::get('/users/{user}', [UserController::class, 'show']); /* The route to get one user */
+Route::get('/users_leaves/{id}', [UserController::class, 'getUserLeaves']); /* The route to get one user with leaves belongs to user */
+Route::get('/storage/image/{imageNname}', [UserController::class, 'getProfileImage']); /* The route to display a specific profile image */
+Route::post('/users', [UserController::class, 'store']); /* The route to create a new user (By admin) */
+Route::put('/users/{user}', [UserController::class, 'update']); /* The route to update a user’s general data (By admin) */
+Route::put('/users/reset_profile/{user}', [UserController::class, 'updateProfileImage']); /* The route to update a user’s profile (By user) */
+Route::put('/users/reset_password/{user}', [UserController::class, 'updatePassword']); /* The route to update a user’s password (By user) */
+Route::delete('/users/{user}', [UserController::class, 'destroy']); /* The route to delete a user */

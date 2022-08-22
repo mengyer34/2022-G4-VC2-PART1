@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-component/>
+    <nav-component :user="user"/>
 
     <div>
       <admin-nav-drawer v-if="role == 'admin'" />
@@ -15,11 +15,16 @@
         </div>
       </div>
     </div>
+    <footer class="text-center mt-24 w-full text-sm">
+      Copyright © 2022 Passerelles Numériques SLMS - All rights reserved.
+    </footer>
   </div>
 </template>
 <script>
 import TheNavigation from './components/navigation/TheNavigation.vue';
 import AdminNavDrawer from './components/navigation/AdminNavDrawer.vue';
+import axios from "axios"
+const url = "http://127.0.0.1:8000/api/"
 export default {
   components: {
     'nav-component': TheNavigation,
@@ -27,13 +32,19 @@ export default {
   },
   data() {
     return {
-      role: 'user'
+      role: 'student',
+      user: "",
+      user_id: 1,
     }
   },
-
+  created(){
+    axios.get(url + "users/" + this.user_id).then((res)=>{
+      this.user = res.data.data.first_name + " " + res.data.data.last_name
+    })
+  },
   provide() {
     return {
-      role: this.role
+      role: this.role,
     }
   }
 }

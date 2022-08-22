@@ -99,7 +99,6 @@ export default {
     exportToPDF() {
       html2pdf(document.getElementById("element-to-convert"),
         {
-
           margin: 5,
           filename: "imformation.pdf",
         });
@@ -107,6 +106,3 @@ export default {
   }
 }
 </script>
-methods: {
-    
-  },
