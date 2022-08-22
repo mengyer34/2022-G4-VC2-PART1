@@ -127,12 +127,17 @@
             </tbody>
           </table>
           <div class="footer-container">
-              <button class="reject">
-                  Reject
-              </button>
-              <button class="approve">
-                  Approve
-              </button>
+              <form action="{{ route('request.reject', $details['duration']) }}" method="GET">
+                <button type="submit" class="reject">
+                    Reject
+                </button>
+              </form>
+              <form action="{{ route('request.approve', $details['duration']) }}" method="GET">
+                <input type="hidden" value="1">
+                <button type="submit" class="approve">
+                    Approve
+                </button>
+              </form>
           </div>
         </div>
     </div>

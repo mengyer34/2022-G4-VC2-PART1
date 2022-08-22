@@ -64,7 +64,7 @@ class LeaveController extends Controller
         $leave->save();
 
         // Send Mail Request
-        $sendMail = (new SendEmailController)->sendMailRequest($request);
+        (new SendEmailController)->sendMailRequest($request);
         $response = [
             'success' => true,
             'data' => $leave,
@@ -166,5 +166,14 @@ class LeaveController extends Controller
             'message' => 'Delete leave successfully'
         ];
         return Response()->json($response, 200);
+    }
+
+    public function reject($id)
+    {
+        return Response()->json(['sms'=>'reject', 'id'=>$id], 200);
+    }
+    public function approve($id)
+    {
+        return Response()->json(['sms'=>'approve', 'id'=>$id], 200);
     }
 }

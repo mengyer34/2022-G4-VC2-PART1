@@ -1,4 +1,4 @@
-<!-- @component('mail::table') 
+@component('mail::table') 
 | Title           | Description         |
 | ---------------- |:----------------:|
 | Reason           | {{ $details['reason'] }}   |
@@ -11,4 +11,4 @@
 
 @component('mail::button', ['url' => 'www.google.com'])
 Button Text
-@endcomponent -->
+@endcomponent

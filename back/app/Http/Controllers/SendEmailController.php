@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Mail;
 use App\Mail\RequestMail;
 
+
 class SendEmailController extends Controller
 {
     public function sendMailRequest($details)

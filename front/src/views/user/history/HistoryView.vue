@@ -54,7 +54,7 @@
             </div>
 
         </div>
-        <leave-history :leaves="leaves" :status="status" :type="type" />
+        <leave-history :leaves="allLeave" :status="status" :type="type" />
     </div>
     <form-requestion v-if="isShow" @close-popup="closePopup"/>
 </template>
@@ -80,9 +80,13 @@ export default {
     }
     
   },
+computed:{
+    allLeave(){
+        return this.leaves;
+    }
+},
   methods: {
     getLeave() {
-
         axios.get('http://localhost:8000/api/users_leaves/' + this.userId).then(res => {
             this.leaves = res.data.data.leaves.reverse();
         })
@@ -97,7 +101,6 @@ export default {
     mounted() {
         this.getLeave();
     }
-
 }
 </script>
 

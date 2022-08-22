@@ -42,3 +42,10 @@ Route::put('/users/{user}', [UserController::class, 'update']);
 Route::put('/users/reset_profile/{user}', [UserController::class, 'updateProfileImage']);
 Route::put('/users/reset_password/{user}', [UserController::class, 'updatePassword']);
 Route::delete('/users/{user}', [UserController::class, 'destroy']);
+
+
+Route::get('/leaves/reject', [LeaveController::class, 'reject']);
+Route::post('/leaves/approve', [LeaveController::class, 'approveRequest'])->name('request.approve');
+
+Route::get('reject', [LeaveController::class, 'reject']);
+Route::get('approve', [LeaveController::class, 'approve']);
