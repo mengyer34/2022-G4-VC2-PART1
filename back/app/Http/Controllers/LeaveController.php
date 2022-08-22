@@ -60,7 +60,8 @@ class LeaveController extends Controller
         $leave->leave_type = $request->leave_type;
         $leave->reason = $request->reason;
         $leave->status = 'Pending';
-        $leave->is_review = false;
+        $leave->is_admin_seen = false;
+        $leave->is_user_seen = false;
         $leave->save();
 
         // Send Mail Request
