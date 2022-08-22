@@ -1,11 +1,5 @@
 <template>
     <div class="w-full sm:px-6 mt-24">
-        <div v-if="isSentRequest" class="alert-success flex justify-between w-full mb-5 bg-green-500 p-2 rounded text-green-100">
-            <p class="text-lg  ">Your request has been sent</p>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:cursor-pointer hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" @click="isSentRequest = false">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </div>
         <div class="px-4 md:px-10 py-4 md:py-7 bg-gray-200 rounded-tl-lg rounded-tr-lg">
             <div class="sm:flex items-center justify-between">
                 <p tabindex="0" class="flex mb-6 items-center focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">
@@ -57,46 +51,53 @@
         <leave-history :leaves="leaves" :status="status" :type="type" />
     </div>
     <form-requestion v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
+    <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
 </template>
 
 
 <script>
 import axios from '../../../axios-http.js'
 import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
-import requestForm from "../../../components/user/request/RequestForm.vue"
+import requestForm from "../newRequest/RequestFormView.vue"
+import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
 const url = 'http://localhost:8000/api/users_leaves/'
 export default {
+
     components: {
         'leave-history': UserLeaveHistory,
         "form-requestion": requestForm,
+        "request-sent":requestSent,
     },
+    inject: ['user_id'],
     data() {
         return {
             status: "All",
             type: "All",
             leaves: [],
             isShow: false,
-            userId: 4,
-            isSentRequest: false
+            isSentRequest: false,
         }
-        
     },
     methods: {
-            getLeave() {
-                axios.get(url + this.userId).then(res => {
-                    this.leaves = res.data.data.leaves.reverse();
-                })
-            },
-            showFormRequest(){
-                this.isShow = true;
-            },
-            closePopup(){
-                this.isShow = false;
-            },
-            saveChange(){
-                this.isShow = false;
-                this.isSentRequest = true;
-        }
+        getLeave() {
+            axios.get(url + this.user_id).then(res => {
+                this.leaves = res.data.data.leaves.reverse();
+            })
+        },
+        showFormRequest(){
+            this.isShow = true;
+        },
+        closePopup(){
+            this.isShow = false;
+        },
+        saveChange(){
+            this.isShow = false;
+            this.isSentRequest = true;
+        },
+        addNewRequest(){
+            this.isSentRequest = false;
+            this.getLeave()
+        },
         
     },
     mounted() {
@@ -105,7 +106,6 @@ export default {
     updated(){
         // this.getLeave();
     }
-
 }
 </script>
 

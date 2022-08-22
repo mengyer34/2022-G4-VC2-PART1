@@ -25,7 +25,7 @@
                         <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
                     </svg>
                 </div>
-                <div v-if="is_correct_pwd" class= "text-red-500 mb-4">Incorrect Password</div>
+                <div v-if="is_correct_pwd == false" class= "text-red-500 mb-4">{{error_status}}</div>
                 <div class="mb-2 relative">
                     <label class="block text-gray-700 text-lg  mb-1" for="username">
                         New password
@@ -70,6 +70,7 @@ export default ({
         oldPassword: String
     },
     emits: ["save-change"],
+    inject: ['user_id'],
     data() {
         return {
             password: "password",
@@ -81,7 +82,7 @@ export default ({
             is_fill_new_password: false,
             is_fill_confirm_password: false,
             is_correct_pwd: null,
-            id: 4
+            error_status: null
         }
     },
     methods: {
@@ -94,18 +95,22 @@ export default ({
             }
         },
         saveChange(){
-            this.is_correct_pwd = false
             if (this.new_password != this.confirm_password ){
                 this.isMatch = true
             }
             if (this.checkFormValidation() && !this.isMatch){
                 // alert("Reset password sucessful")
                 var new_password = {confirm_old_password: this.current_password, new_password: this.new_password}
-                axios.put(url + 'users/reset_password/'  +  this.id,new_password).then((res)=>{
+                axios.put(url + 'users/reset_password/'  +  this.user_id,new_password).then((res)=>{
+                    this.is_correct_pwd = res.data.success
+                    this.error_status = res.data.error
                     console.log(res.data);
+                    if (this.is_correct_pwd){
+                        return this.$emit("save-change",new_password);
+                    }
+                    console.log(this.is_correct_pwd);
                 })
-                console.log(new_password);
-                // return this.$emit("save-change",new_password);
+                console.log(this.new_password);
             }
 
             

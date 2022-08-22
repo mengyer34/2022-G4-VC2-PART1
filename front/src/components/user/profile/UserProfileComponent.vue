@@ -6,7 +6,7 @@
             </div>
             <div class="card-body p-5">
                 <div class="user-profile flex relative">
-                    <form method="POST" enctype="multipart/form-data">
+                    <form >
                         <div class="w-24 h-24 flex items-center justify-center">
                             <img v-if="!newProfile" :src="user.profile_image" class="rounded-full w-20 h-20">
                             <img v-else :src="newProfile" alt="" class="rounded-full w-20 h-20 object-fill">
@@ -80,14 +80,14 @@
             </div>
         </div>
         <div class="fixed flex items-center justify-center bg-[#23242986] w-full h-full top-0 z-50 " v-if="isUploaded">
-            <div class="w-[36%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
+            <div class="w-[32%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
                 <div class="flex items-center justify-between mb-4 text-lg">
                     <p>Crop your new profile picture</p>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" @click="isUploaded=false">
                         <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </div>
-                <div>
+                <div class="max-h-72 overflow-auto">
                     <img :src="selectedImage" alt="" class="w-full max-h-[52vh] overflow-auto">
                 </div>
                 <div class="w-full mt-5">
@@ -102,17 +102,17 @@
 </template>
 <script>
     import axios from 'axios';
-    const url = 'http://localhost:8000/api'
+    const url = 'http://127.0.0.1:8000/api/'
     export default {
         props: {
             user: Object,
             amountOfLeaves: Number
         },
+        inject: ['user_id'],
         data(){
             return {
                 selectedImage: null,
                 image: null,
-                id: 4,
                 isUploaded: false,
                 newProfile: null
             }
@@ -129,11 +129,12 @@
                 this.isUploaded = true;
             },
             saveUpload(){
-                axios.put(url + "/users/reset_profile/" + this.id, {profile_image: this.image}).then((res)=>{
+
+                // this.newProfile =  this.image.name;
+                axios.put(url + "users/reset_profile/" + this.user_id, {profile_image: this.selectedImage}).then((res)=>{
                     console.log(res);
                 })
-                this.newProfile = this.selectedImage;
-                this.isUploaded = false;
+                // this.isUploaded = false;
             }
         }
     }
