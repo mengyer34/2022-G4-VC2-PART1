@@ -1,7 +1,7 @@
 <template>
 <div class="pop_up p-5 top-0 bg-[#00000080] w-full h-full fixed z-10">
     <div class="modal bg-white h-auto shadow-md rounded px-8 pt-6 pb-8 mt-6 mb-10 m-auto w-[50%] z-10">
-        <form class="form" >
+        <form class="form">
             <p class="text-center text-primary text-2xl uppercase">Request Leave Form</p>
             <div class="mb-2 mt-6">
                 <label class="block text-gray-700 text-[16px]    mb-1">
@@ -113,6 +113,7 @@
             return { emailStore }
         },
         emits: ["saveChange"],
+        inject: ['user_id'],
         data(){
             return {
                 leaveType: "",
@@ -135,7 +136,7 @@
             requestLeave(){
                 const linkToNotification = new URL(location.href).origin+'/notifications'
                 if (this.checkFormRequest()){
-                    let newRequest = {user_id: 1, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration, email: this.emailStore.email, urlApp: linkToNotification}
+                    let newRequest = {user_id: this.user_id, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration, email: this.emailStore.email, urlApp: linkToNotification}
                     axios.post(url,newRequest);
                     return this.$emit("saveChange");
                 }

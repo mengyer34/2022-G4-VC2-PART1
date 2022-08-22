@@ -61,6 +61,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->generation = $request->generation;
         $user->class = $request->class;
+        $user->phone = $request->phone;
 
         $ProfileImage = 'female_default_profile.png';
         if ($request->gender == "M") {
@@ -130,6 +131,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->generation = $request->generation;
         $user->class = $request->class;
+        $user->phone = $request->phone;
         $user->save();
 
         $response = [
@@ -150,6 +152,10 @@ class UserController extends Controller
      */
     public function updateProfileImage(Request $request, User $user)
     {   
+        $validated = $request->validate([
+            'profile_image' => 'required|mimes:jpg,png,jpeg'
+        ]);
+
         if($user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/female_default_profile.png' 
             && $user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/male_default_profile.png') {
 

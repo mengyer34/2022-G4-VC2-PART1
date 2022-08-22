@@ -53,6 +53,7 @@ export default {
   provide() {
     return {
       role: this.role,
+      user_id: this.user_id
     }
   }
 }

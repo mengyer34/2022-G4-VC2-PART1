@@ -150,8 +150,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'profile_image' => [
+            'required' => 'please inset an image',
         ],
     ],
 
