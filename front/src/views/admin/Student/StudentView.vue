@@ -5,7 +5,7 @@
             <div>
                 <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Batch:</label><br>
                 <div class="flex justify-between">
-                    <select name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
+                    <select v-model="batch" name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
                         <option value="All">All</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div>
-                <student-lists :students="students" @popUp="popUp"/>      
+                <student-lists :students="batchFilter" @popUp="popUp"/>      
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/> 
             </div>
         </div>
@@ -43,7 +43,21 @@ export default {
         return {
             students: [],
             isPop: false,
-            id: null
+            id: null,
+            batch: 'All',
+        }
+    },
+    computed: {
+        batchFilter() {
+            if (this.batch == '2023') {
+                return this.students.filter(student => student.generation == '2023');
+            }else if (this.batch == '2022') {
+                return this.students.filter(student => student.generation == '2022');
+            }else if (this.batch == '2021') {
+                return this.students.filter(student => student.generation == '2021');
+            }else {
+                return this.students;
+            }
         }
     },
     methods: {
