@@ -10,8 +10,7 @@ class SendEmailController extends Controller
 {
     public function sendMailRequest($details)
     {
-     $user_email = $details->email;
-      Mail::to($user_email)->send(new RequestMail($details));
+      Mail::to("mengyi.yoeng34@gmail.com")->send(new RequestMail($details));
  
       if (Mail::flushMacros()) {
            return Response()->json(['fail' => 'Sorry! Please try again latter'], 401);

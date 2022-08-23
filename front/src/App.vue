@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      role: 'student',
+      role: 'user',
       user: "",
       user_id: 1,
       email: useEmail().email
