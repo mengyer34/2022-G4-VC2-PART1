@@ -1,6 +1,6 @@
 <template>
     <div class=" w-full h-full pt-[100px]">
-        <div v-if="dataOfImformation.length > 0" class="card w-8/12 m-auto bg-white">
+        <div v-if="dataOfImformation.length > 0" class="card w-8/12 m-auto rounded bg-white">
             <div class="card-header bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
                 <h1>Notifications</h1>
             </div>

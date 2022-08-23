@@ -25,7 +25,13 @@ import TheNavigation from './components/navigation/TheNavigation.vue';
 import AdminNavDrawer from './components/navigation/AdminNavDrawer.vue';
 import axios from "axios"
 const url = "http://127.0.0.1:8000/api/"
+import { useEmail } from './store/index';
+
 export default {
+  setup() {
+    const emailStore = useEmail()
+    return { emailStore }
+  },
   components: {
     'nav-component': TheNavigation,
     'admin-nav-drawer': AdminNavDrawer
@@ -33,9 +39,10 @@ export default {
   data() {
     return {
       role: 'student',
-      user: "",
+      user: [],
       user_id: 1,
       leaves: [],
+      email: useEmail().email
     }
   },
   methods: {
@@ -47,7 +54,8 @@ export default {
   },
   created(){
     axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
-      this.user = res.data.data.first_name + " " + res.data.data.last_name
+      this.user = res.data.data
+      this.emailStore.email = res.data.data.email
       this.leaves = res.data.data.leaves;
     })
   },

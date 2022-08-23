@@ -26,6 +26,11 @@ const routes = [
     name: 'profile',
     component: ProfileView
   },
+  {
+    path: '/view/request/leave',
+    name: 'view/request',
+    // component: ProfileView
+  },
 ]
 
 const router = createRouter({
