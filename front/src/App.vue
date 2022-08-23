@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <footer class="text-center mt-24 w-full text-sm">
+    <footer class="mt-24 text-center  text-sm" :class="{'w-full ': role == 'student', 'w-[70] ml-[13rem]': role=='admin'}">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved.
     </footer>
   </div>

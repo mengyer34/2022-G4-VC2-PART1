@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody class="w-full">
-            <tr v-for="leaveUser of leaveUsers" :key="leaveUser" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-100">
+            <tr v-for="leaveUser of leaveUserHistory" :key="leaveUser" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-100">
                 <td class="text-center">
                     {{leaveUser.user.last_name}} {{leaveUser.user.first_name}}
                 </td>
@@ -26,18 +26,29 @@
                     </div>
                 </td>
                 <td class="text-center">
-                    <button class="bg-blue-500 py-2 px-4 rounded text-white">Details</button>
+                    <button class="bg-blue-500 hover:bg-blue-300 p-2 px-4 rounded text-white" @click="viewLeaveDetail(leaveUser.id)" type="button" data-modal-toggle="defaultModal">
+                        View Detail
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
+        <leave-detail v-if="isViewDetail" @closeStudentDetail="isViewDetail=false" :leave_detail="leave_detail"/>
 </template>
 
 <script>
+import leaveDetail from "./user/leaves/LeaveDetails.vue"
+import axios  from "../axios-http.js"
+const url = 'http://localhost:8000/api/'
 export default {
-    props: ['leaveUsers'],
+    props: ['leaveUserHistory'],
+    components: {
+        'leave-detail': leaveDetail
+    },
     data() {
         return {
+            isViewDetail: false,
+            leave_detail: {}
         }
     },
     methods: {
@@ -50,6 +61,12 @@ export default {
                 return "bg-red-500";
             }
         },   
+        viewLeaveDetail(id){
+            axios.get(url + 'leaves_user/' + id).then((res)=>{
+                this.isViewDetail = true;
+                this.leave_detail = res.data.data
+            })
+        }
     },
 }
 </script>
