@@ -15,8 +15,8 @@ class Leave extends Model
         'is_user_seen' => 'boolean',
         'start_date' => 'date:F j, Y',
         'end_date' => 'date:F j, Y',
-        'created_at' => 'date:F j, Y H:i A',
-        'updated_at' => 'date:F j, Y H:i A',
+        'created_at' => 'date:F j, Y, g:i a',
+        'updated_at' => 'date:F j, Y, g:i a',
     ];
 
     // Relationship
