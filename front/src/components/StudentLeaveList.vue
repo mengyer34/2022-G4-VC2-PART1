@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody class="w-full">
-            <tr v-for="leaveUser of leaveUsers" :key="leaveUser" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-100">
+            <tr v-for="leaveUser of leaveUsers" :key="leaveUser" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-100" :class="{'bg-white text-stone-600': leaveUser.is_admin_seen, 'bg-slate-300 font-medium': !leaveUser.is_admin_seen}">
                 <td class="text-center">
                     {{leaveUser.user.last_name}} {{leaveUser.user.first_name}}
                 </td>
@@ -22,7 +22,8 @@
                 </td>
                 <td class="text-center">
                     <div class="flex justify-center items-center">
-                        <span class="px-2 py-[5px] rounded-full text-white" :class="iscolor(leaveUser)">{{leaveUser.status}}</span>
+                        <span v-if="leaveUser.is_admin_seen" class="px-2 py-[5px] rounded-full text-white" :class="iscolor(leaveUser)">{{leaveUser.status}}</span>
+                        <span v-else class="px-2 py-[5px] rounded-full text-white bg-orange-400" >New</span>
                     </div>
                 </td>
                 <td class="text-center">
