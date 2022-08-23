@@ -1,13 +1,13 @@
 <template>
   <div>
-    <nav-component :user="user"/>
+    <nav-component :user="user" :leaves="leaves"/>
 
     <div>
       <admin-nav-drawer v-if="role == 'admin'" />
 
       <div :class="{'flex justify-center w-[70] ml-[13rem]': role == 'admin'}">
         <div :class="{'w-[100%]': role == 'admin'}">
-          <router-view v-slot="{Component}">
+          <router-view @notifUpdated="notifUpdated" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -34,12 +34,21 @@ export default {
     return {
       role: 'student',
       user: "",
-      user_id: 4,
+      user_id: 1,
+      leaves: [],
+    }
+  },
+  methods: {
+    notifUpdated() {
+      axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
+        this.leaves = res.data.data.leaves;
+      })
     }
   },
   created(){
-    axios.get(url + "users/" + this.user_id).then((res)=>{
+    axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
       this.user = res.data.data.first_name + " " + res.data.data.last_name
+      this.leaves = res.data.data.leaves;
     })
   },
   provide() {
