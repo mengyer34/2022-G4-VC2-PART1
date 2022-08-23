@@ -1,5 +1,5 @@
 <template>
-<div class="pop_up p-5 top-0 bg-[#00000080] w-full h-full fixed z-10">
+<div class="pop_up p-5 top-0 bg-[#00000080] w-full h-full fixed z-50">
     <div class="modal bg-white h-auto shadow-md rounded px-8 pt-6 pb-8 mt-6 mb-10 m-auto w-[50%] z-10">
         <form class="form">
             <p class="text-center text-primary text-2xl uppercase">Request Leave Form</p>
@@ -104,10 +104,14 @@
 
 <script>
     // import axios from "../../axios-http"
-    
     import axios from "axios"
     let url = "http://127.0.0.1:8000/api/leaves"
+    import { useEmail } from '../../../store/index';
     export default({
+        setup() {
+            const emailStore = useEmail()
+            return { emailStore }
+        },
         emits: ["saveChange"],
         inject: ['user_id'],
         data(){
@@ -125,14 +129,14 @@
                 isEndTime: null,
                 isReasonInputted: null,
                 duration: 0,
-                inValid: false,
-                
+                inValid: false,     
             }
         },
         methods: {
             requestLeave(){
+                const linkToNotification = new URL(location.href).origin+'/notifications'
                 if (this.checkFormRequest()){
-                    let newRequest = {user_id: this.user_id, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration}
+                    let newRequest = {user_id: this.user_id, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration, email: this.emailStore.email, urlApp: linkToNotification}
                     axios.post(url,newRequest);
                     return this.$emit("saveChange");
                 }

@@ -61,6 +61,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->generation = $request->generation;
         $user->class = $request->class;
+        $user->phone = $request->phone;
 
         $ProfileImage = 'female_default_profile.png';
         if ($request->gender == "M") {
@@ -68,7 +69,7 @@ class UserController extends Controller
         }
         $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $ProfileImage;
 
-        $user->personal_id = 17;
+        $user->personal_id = 20;
         $user->save();
         
         $response = [
@@ -130,6 +131,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->generation = $request->generation;
         $user->class = $request->class;
+        $user->phone = $request->phone;
         $user->save();
 
         $response = [
@@ -151,8 +153,9 @@ class UserController extends Controller
     public function updateProfileImage(Request $request, User $user)
     {   
         $validated = $request->validate([
-            'profile_image' => 'required|mimes:jpg,png,jpeg'
+            'profile_image' => 'required|mimes:jpg,JPG,PNG,JPEG,png,jpeg'
         ]);
+
 
         if($user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/female_default_profile.png' 
             && $user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/male_default_profile.png') {
@@ -168,7 +171,7 @@ class UserController extends Controller
         $ProfileImage = $request->file('profile_image');
         $imageName = date('F-j-Y-H-i-s-A') . $ProfileImage->getClientOriginalName();
         $ProfileImage->move(storage_path('images'), $imageName);
-        $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $imageName;
+        $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $imageName; 
         $user->save();
 
         $response = [
@@ -224,7 +227,7 @@ class UserController extends Controller
             } else {
                 $response = [
                     'success' => false,
-                    'error' => 'not a new password',
+                    'error' => 'Not a new password',
                     'status' => 200,
                     'message' => 'Update password failed'
                 ];
@@ -233,7 +236,7 @@ class UserController extends Controller
         } else {
             $response = [
                 'success' => false,
-                'error' => 'incorrect current password',
+                'error' => 'Incorrect current password',
                 'status' => 200,
                 'message' => 'Update password failed'
             ];

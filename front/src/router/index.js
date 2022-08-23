@@ -44,6 +44,7 @@ const routes = [
     name: 'leaves',
     component: LeaveList
   },
+
 ]
 
 const router = createRouter({

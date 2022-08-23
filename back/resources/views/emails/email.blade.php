@@ -26,6 +26,7 @@
             font-weight: 600; 
             text-align: center; 
         }
+
         .body-container {
             padding: 1rem; 
             width: 91.666667%; 
@@ -58,28 +59,18 @@
             display: flex; 
             margin-top: 0.75rem; 
             justify-content: flex-end; 
-            align-items: center; 
         }
         .footer-container button {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem; 
-            padding-left: 1.3rem;
-            padding-right: 1.3rem; 
+            padding: 0.5rem 1.3rem;
             color: #ffffff; 
             border-radius: 0.25rem; 
             border: none;
         }
-        button.reject {
-            background-color: #DC2626; 
-        }
-        button.reject:hover {
-            background-color: #ea5b5b; 
-        }
-        button.approve {
+        button.view_app {
             background-color: #3B82F6;  
             margin-left: 10px;
         }
-        button.approve:hover {
+        button.view_app:hover {
             background-color: #80a8e9; 
         }
     </style>
@@ -89,13 +80,17 @@
         <!--header-->
         <div class="header-container">
           <h3>
-            Request Leave Imformation
+            Request Leave Information
           </h3>
         </div>
         <!--body-->
         <div class="body-container">
           <table>
             <tbody>
+              <tr>
+                <td class="title">From</td>
+                <td>{{ $details['email'] }}</td>
+              </tr>
               <tr>
                 <td class="title">Reason</td>
                 <td>{{ $details['reason'] }}</td>
@@ -127,17 +122,11 @@
             </tbody>
           </table>
           <div class="footer-container">
-              <form action="{{ route('request.reject', $details['duration']) }}" method="GET">
-                <button type="submit" class="reject">
-                    Reject
+              <a href="{{ $details['urlApp'] }}">
+                <button type="submit" class="view_app">
+                    View in App
                 </button>
-              </form>
-              <form action="{{ route('request.approve', $details['duration']) }}" method="GET">
-                <input type="hidden" value="1">
-                <button type="submit" class="approve">
-                    Approve
-                </button>
-              </form>
+              </a>
           </div>
         </div>
     </div>
