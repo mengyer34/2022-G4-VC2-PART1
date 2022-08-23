@@ -40,7 +40,7 @@ export default {
     return {
       role: 'admin',
       user: [],
-      user_id: 1,
+      user_id: 3,
       leaves: [],
       email: useEmail().email
     }
