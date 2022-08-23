@@ -27,7 +27,7 @@
         <ul class="flex space-x-5 relative">
             <li v-if="role !== 'admin'" >
                 <router-link class="relative" to="notifications">
-                    <span class="bg-red-700 text-xs rounded-full px-1 absolute">1</span>
+                    <span class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                     </svg>
@@ -59,16 +59,30 @@
     </nav>
 </template>
 <script>
+import axios from "axios";
+const url = "http://127.0.0.1:8000/api/";
 export default {
-    
-    inject: ['role'],
+    inject: ['role', 'user_id'],
     props: {
-        user: String
+        user: String,
+        leaves: Array,
     },
     data() {
       return {
         show: false,
       };
+    },
+
+    computed: {
+        countUnseenNotification() {
+            let countUnseen = 0;
+            this.leaves.forEach(eachLeave => {
+                if (!eachLeave.is_user_seen && eachLeave.status !== 'Pending') {
+                    countUnseen += 1
+                }
+            });
+            return countUnseen;
+        }
     },
 }
 </script>

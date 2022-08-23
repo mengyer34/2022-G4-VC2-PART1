@@ -7,7 +7,7 @@
             <div class="pr-3 pl-3 " v-for="data of dataOfImformation" :key="data">
                 <imformation-requestion :datas="data">
                     <template #allow>
-                        <div class="bg-[rgba(180,255,224,0.44)]  rounded-l  flex justify-between ">
+                        <div @click="seenNotification(data.id)" class="bg-[rgba(180,255,224,0.44)]  rounded-l  flex justify-between ">
                             <div class="p-2">
                                 <p class="text-[22px]" v-if="data.status === 'Approved'">You are allowed to <span
                                         class="text-[#7BE77B]">go to
@@ -65,6 +65,10 @@ export default {
             })
         },
 
+        seenNotification(leaveId) {
+            this.$emit('notifUpdated');
+            Axios.put('http://127.0.0.1:8000/api/leaves/user_seen/' + leaveId);
+        }
     },
     computed: {
         dataOfImformation() {
