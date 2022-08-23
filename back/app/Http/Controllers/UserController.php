@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 
 class UserController extends Controller
@@ -261,4 +263,46 @@ class UserController extends Controller
         ];
         return Response()->json($response, 200);
     }
+
+    public function register(Request $request){
+        $request -> validate([
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'personal_id' => 'required|string|max:20|unique:users',
+            'gender' => 'required|string|max:1',
+            'email' => 'required|unique:users|max:255|email',
+            'password' => 'required|min:8',
+            'batch' => 'required|string|max:4',
+            'class' => 'required|string|max:8',
+            'phone' => 'required'
+        ]);
+        $newUser = new User();
+        $newUser->first_name = $request->first_name;
+        $newUser->last_name = $request->last_name;
+        $newUser->personal_id = $request->personal_id;
+        $newUser->gender = $request->gender;
+        $newUser->email = $request->email;
+        $newUser->password = bcrypt($request->password);
+        $newUser->batch = $request->batch;
+        $newUser->class = $request->class;
+        $newUser->phone = $request->phone;
+        $newUser->profile_image = 'null';
+        $newUser->save();
+        return response()->json(['message'=>'User registered successfully']);
+    }
+    public function login(Request $request){
+        if(!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json(['message'=>'Invalid credentials']);
+        }
+        $user = Auth::user();
+        $token = $user->createToken('token')->plainTextToken;
+        $cookie = cookie('jwt', $token, 60 * 24);
+        return response()->json(['message'=>'successful login', 'token' => $token], 200)
+            ->withCookie($cookie);
+    }
+    public function logout(Request $request){
+        $cookie = Cookie::forget('jwt');
+        return response()->json(['sms'=>'logged out'])->withCookie($cookie);;
+    }
+
 }
