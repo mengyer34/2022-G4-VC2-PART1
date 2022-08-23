@@ -1,6 +1,6 @@
 <template>
     <div class="w-full sm:px-6 mt-24">
-        <h1 class="text-3xl font-semibold my-9">STUDENT LEAVES</h1>
+        <h1 class="text-2xl font-semibold my-9">STUDENT LEAVES</h1>
         <search-bar />
         <div class="mt-6">
             <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded">
