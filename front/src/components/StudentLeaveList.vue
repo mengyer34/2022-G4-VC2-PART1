@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody class="w-full">
-                <tr v-for="leave of leaves" :key="leave" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-100" :class="{'bg-white text-stone-600': leave.is_admin_seen, 'bg-slate-300 font-medium': !leave.is_admin_seen}">
+                <tr v-for="leave of leaves" :key="leave" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-100" :class="{'bg-white text-stone-600': leave.is_admin_seen, 'bg-slate-300 font-medium': !leave.is_admin_seen}">
                     <td class="text-center">
                         {{leave.user.last_name}} {{leave.user.first_name}}
                     </td>
