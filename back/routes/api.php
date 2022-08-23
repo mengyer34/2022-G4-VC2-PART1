@@ -38,7 +38,7 @@ Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']); /* The ro
 
 
 // Users(students) routes
-// Route::get('/users', [UserController::class, 'index']); /* The route to get all users */
+Route::get('/users', [UserController::class, 'index']); /* The route to get all users */
 Route::get('/users_leaves', [UserController::class, 'getUsersLeaves']); /* The route to get all users with leaves belongs to each user */
 Route::get('/users/{user}', [UserController::class, 'show']); /* The route to get one user */
 Route::get('/users_leaves/{id}', [UserController::class, 'getUserLeaves']); /* The route to get one user with leaves belongs to user */

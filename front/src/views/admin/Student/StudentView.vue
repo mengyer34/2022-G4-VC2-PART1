@@ -12,8 +12,8 @@
                         <option value="2021">2021</option>
                     </select>
                     <div class="w-[60%]">
-                        <input class="p-[0.54rem] outline-none w-[80%] rounded-l" type="text" placeholder="Student name...">
-                        <button class="px-4 py-2  bg-blue-600 border-none text-white rounded-r">Search</button>
+                        <input class="p-2 outline-none w-[80%] rounded-l border border-gray-300" type="text" placeholder="Student name...">
+                        <button class="px-4 py-2  bg-blue-600 border border-blue-600 text-white rounded-r">Search</button>
                     </div>
                     <div>
                         <button class="text-white bg-orange-500 py-2 px-4 rounded border-none">Add Student</button>
