@@ -61,7 +61,7 @@
                 <div class="mt-4">
                     <h1 class="font-bold text-lg uppercase mt-6 inline-block p-2 bg-white shadow rounded">All student's leave History </h1>
                     <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded mt-2">
-                        <student-leave :leaveUserHistory="leaveUserHistory" />
+                        <student-leave :leaves="leaveUserHistory" />
                     </div>
                 </div>
             </div>

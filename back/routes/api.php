@@ -16,6 +16,14 @@ use App\Http\Controllers\UserController;
 |
 */
 
+// Registe, Login
+Route::post('/user/register', [UserController::class, 'register']); /* The route to register the user */
+Route::post('/user/login', [UserController::class, 'login']); /* The route to login the user */
+Route::group(['middleware'=> ['auth:sanctum']], function(){
+    Route::get('/users', [UserController::class, 'index']); /* The route to index the user */ 
+    Route::get('/user/logout', [UserController::class, 'logout']); /* The route to logout account of the user */
+});
+
 
 // Leaves routes
 Route::get('/leaves', [LeaveController::class, 'index']); /* The route to get all leaves */
@@ -30,7 +38,7 @@ Route::delete('/leaves/{leave}', [LeaveController::class, 'destroy']); /* The ro
 
 
 // Users(students) routes
-Route::get('/users', [UserController::class, 'index']); /* The route to get all users */
+// Route::get('/users', [UserController::class, 'index']); /* The route to get all users */
 Route::get('/users_leaves', [UserController::class, 'getUsersLeaves']); /* The route to get all users with leaves belongs to each user */
 Route::get('/users/{user}', [UserController::class, 'show']); /* The route to get one user */
 Route::get('/users_leaves/{id}', [UserController::class, 'getUserLeaves']); /* The route to get one user with leaves belongs to user */
