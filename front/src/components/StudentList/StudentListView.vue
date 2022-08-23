@@ -9,7 +9,7 @@
                 <th class="font-bold text-center ">ACTION</th>
             </tr>
         </thead>
-        <tbody class="w-full">
+        <tbody v-if="students.length > 0" class="w-full">
             <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-300">
                 <td class="text-center w-3/12 pl-2">
                     <div class="flex items-center space-x-2 p-2">
@@ -38,7 +38,11 @@
                         </svg>
                     </button>
                 </td>
-
+            </tr>
+        </tbody>
+        <tbody v-else>
+            <tr>
+                <td colspan="5" class="p-2 text-center">No Student Found!!</td>
             </tr>
         </tbody>
     </table>     

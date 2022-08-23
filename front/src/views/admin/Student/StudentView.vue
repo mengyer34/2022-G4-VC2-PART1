@@ -5,14 +5,14 @@
             <div>
                 <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Batch:</label><br>
                 <div class="flex justify-between w-full">
-                    <select name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
+                    <select v-model="batch" name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
                         <option value="All">All</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
                         <option value="2021">2021</option>
                     </select>
                     <div class="w-[60%] relative flex">
-                        <input class="p-2 focus:border-primary outline-none rounded-l border border-gray-300 w-full" type="text" placeholder="Student name...">
+                        <input v-model="search" class="p-2 focus:border-primary outline-none rounded-l border border-gray-300 w-full" type="text" placeholder="Student name...">
                         <button class=" border border-gray-300  items-centeroutline-none p-2 w-12 bg-gray-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -24,9 +24,11 @@
                     </div>
                 </div>
             </div>
-                <student-lists :students="students" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+            <div>
+                <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+                <student-detail v-if="isViewDetail" @notViewDetail="isViewDetail=false" :student_detail="student_detail" @save-edit="saveEditStudent"/> 
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/> 
-                <student-detail v-if="isViewDetail" @notViewDetail="isViewDetail=false" :student_detail="student_detail" @save-edit="saveEditStudent"/>
+            </div>
         </div>
 
     </div>
@@ -50,7 +52,26 @@ export default {
             isPop: false,
             id: null,
             isViewDetail: false,
-            student_detail: {}
+            student_detail: {},
+            batch: 'All',
+            search: '',
+        }
+    },
+    computed: {
+        batchFilter() {
+            if (this.search != '') {
+                if (this.batch != 'All') {
+                    return this.students.filter(student => student.generation == this.batch && (student.first_name.toLowerCase().includes(this.search.toLowerCase()) || student.last_name.toLowerCase().includes(this.search.toLowerCase())))
+                }else {
+                    return this.students.filter(student => student.first_name.toLowerCase().includes(this.search.toLowerCase()) || student.last_name.toLowerCase().includes(this.search.toLowerCase()))
+                }
+            }else {
+                if (this.batch != 'All') {
+                    return this.students.filter(student => student.generation == this.batch);
+                }else {
+                    return this.students;
+                }
+            }
         }
     },
     methods: {
