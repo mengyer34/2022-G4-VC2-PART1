@@ -25,7 +25,7 @@ import TheNavigation from './components/navigation/TheNavigation.vue';
 import AdminNavDrawer from './components/navigation/AdminNavDrawer.vue';
 import axios from "axios"
 const url = "http://127.0.0.1:8000/api/"
-import { useEmail } from './store/index';
+import { useEmail } from './store/email';
 
 export default {
   setup() {
