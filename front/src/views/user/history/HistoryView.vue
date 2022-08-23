@@ -103,9 +103,6 @@ export default {
     mounted() {
         this.getLeave();
     },
-    updated(){
-        // this.getLeave();
-    }
 }
 </script>
 
