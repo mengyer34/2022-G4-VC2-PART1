@@ -1,16 +1,23 @@
 <template>
-    <div class="home bg-[#ddd] w-full h-[110vh] pt-[100px]">
+    <div class="home w-full h-[110vh] pt-[100px]" v-cloak>
         <div class="card w-8/12 m-auto rounded-xl shadow- bg-[white]">
             <div class="card-header bg-[#0081CA] p-2 text-center text-[30px] text-white rounded-t-md">
                 <h1>My Profile</h1>
             </div>
             <div class="card-body p-5">
-                <div class="user-profile flex ">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 ml-1 " fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                <div class="user-profile flex relative">
+                    <form >
+                        <div class="w-24 h-24 flex items-center justify-center">
+                            <!-- <img v-if="newProfile != null" :src="user.profile_image" class="rounded-full w-20 h-20"> -->
+                            <img  :src="user.profile_image" alt="" class="rounded-full w-20 h-20 object-fill">
+                        </div>
+                        <label for="file_input">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-16 hover:scale-110 cursor-pointer left-16 bg-slate-300 p-1 text-3xl rounded-full" viewBox="0 0 20 20" fill="currentColor" >
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                            </svg>
+                        </label>
+                        <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
+                    </form>
                     <div class="p-5">
                         <div>
                             <h1 class="font-bold text-[25px]">{{user.first_name}} {{user.last_name}}</h1>
@@ -18,7 +25,7 @@
                         <div><span class="font-bold">ID :</span> {{user.personal_id}}</div>
                     </div>
                 </div>
-                <div class=" grid grid-cols-2">
+                <div class=" grid grid-cols-2 mt-3">
                     <div class=" personal-detail p-3 border-solid border-2 border-black-600">
                         <h1 class="text-[20px]">Personal details</h1>
                         <div>
@@ -72,13 +79,63 @@
                 </div>
             </div>
         </div>
+        <div class="fixed flex items-center justify-center bg-[#23242986] w-full h-full top-0 z-50 " v-if="isUploaded">
+            <div class="w-[32%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
+                <div class="flex items-center justify-between mb-4 text-lg">
+                    <p>Crop your new profile picture</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" @click="isUploaded=false">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="max-h-72 overflow-auto">
+                    <img :src="selectedImage" alt="" class="w-full max-h-[52vh] overflow-auto">
+                </div>
+                <div class="w-full mt-5">
+                    <button class="btn bg-warning rounded p-2 text-white w-full " @click="saveUpload">
+                        Set new profile picture
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </template>
 <script>
+    import axios from 'axios';
+    const url = 'http://127.0.0.1:8000/api/'
     export default {
         props: {
             user: Object,
             amountOfLeaves: Number
-        }
+        },
+        inject: ['user_id'],
+        // data(){
+        //     return {
+        //         selectedImage: null,
+        //         image: null,
+        //         isUploaded: false,
+        //         newProfile: null
+        //     }
+        // },
+        // methods: {
+        //     onSelectFile(event){
+        //         this.image = event.target.files[0]   
+        //         console.log(this.image);
+        //         let reader = new FileReader();
+        //         reader.readAsDataURL(this.image);
+        //         reader.onload = e => {
+        //             this.selectedImage = e.target.result;
+        //         }
+        //         this.isUploaded = true;
+        //     },
+        //     saveUpload(){
+
+        //         // this.newProfile =  this.image.name;
+        //         axios.put(url + "users/reset_profile/" + this.user_id, {profile_image: this.selectedImage}).then((res)=>{
+        //             console.log(res);
+        //         })
+        //         // this.isUploaded = false;
+        //     }
+        // }
     }
 </script>

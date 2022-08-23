@@ -1,13 +1,13 @@
 <template>
     <div class=" w-full h-full pt-[100px]">
-        <div v-if="dataOfImformation.length > 0" class="card w-8/12 m-auto bg-white">
+        <div v-if="dataOfImformation.length > 0" class="card w-8/12 m-auto rounded bg-white">
             <div class="card-header bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
                 <h1>Notifications</h1>
             </div>
             <div class="pr-3 pl-3 " v-for="data of dataOfImformation" :key="data">
                 <imformation-requestion :datas="data">
                     <template #allow>
-                        <div class="bg-[rgba(180,255,224,0.44)]  rounded-l  flex justify-between ">
+                        <div @click="seenNotification(data.id)" class="bg-[rgba(180,255,224,0.44)]  rounded-l  flex justify-between ">
                             <div class="p-2">
                                 <p class="text-[22px]" v-if="data.status === 'Approved'">You are allowed to <span
                                         class="text-[#7BE77B]">go to
@@ -42,16 +42,17 @@
             No Notification Here
         </div>
     </div>
-    <h1></h1>
 </template>
 
 <script>
 import Axios from "axios"
 import requestImformation from "../../../components/user/request/RequestInfortmation.vue"
+const url = 'http://localhost:8000/api/users_leaves/'
 export default {
     components: {
         "imformation-requestion": requestImformation
     },
+    inject: ['user_id'],
     data() {
 
         return {
@@ -60,11 +61,15 @@ export default {
     },
     methods: {
         getData() {
-            Axios.get('http://127.0.0.1:8000/api/leaves').then((res) => {
-                this.datas = res.data.data.reverse();
+            Axios.get(url + this.user_id).then((res) => {
+                this.datas = res.data.data.leaves.reverse();
             })
         },
 
+        seenNotification(leaveId) {
+            this.$emit('notifUpdated');
+            Axios.put('http://127.0.0.1:8000/api/leaves/user_seen/' + leaveId);
+        }
     },
     computed: {
         dataOfImformation() {

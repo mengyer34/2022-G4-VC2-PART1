@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaveController;
-use App\Http\Controllers\SendEmailController;
 use App\Http\Controllers\UserController;
 
 /*

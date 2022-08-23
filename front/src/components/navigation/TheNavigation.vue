@@ -1,5 +1,5 @@
 <template>
-    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0">
+    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0 z-50">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
                 <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
@@ -27,15 +27,15 @@
         <ul class="flex space-x-5 relative">
             <li v-if="role !== 'admin'" >
                 <router-link class="relative" to="notifications">
-                    <span class="bg-red-700 text-xs rounded-full px-1 absolute">1</span>
+                    <span class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                     </svg>
                 </router-link>
             </li>
             <li @click="show=!show" class="flex space-x-2 cursor-pointer">
-                    <img src="../../assets/avatar.png" alt="logo" class="w-[30px] mr-2">
-                    <span>{{user}}</span>
+                    <div class="w-8 h-8"><img :src="user.profile_image" alt="" class=" w-[30px] h-[30px] rounded-full"></div>
+                    <span>{{user.first_name}} {{user.last_name}}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -59,16 +59,30 @@
     </nav>
 </template>
 <script>
+import axios from "axios";
+const url = "http://127.0.0.1:8000/api/";
 export default {
-    
-    inject: ['role'],
+    inject: ['role', 'user_id'],
     props: {
-        user: String
+        user: String,
+        leaves: Array,
     },
     data() {
       return {
         show: false,
       };
+    },
+
+    computed: {
+        countUnseenNotification() {
+            let countUnseen = 0;
+            this.leaves.forEach(eachLeave => {
+                if (!eachLeave.is_user_seen && eachLeave.status !== 'Pending') {
+                    countUnseen += 1
+                }
+            });
+            return countUnseen;
+        }
     },
 }
 </script>
