@@ -4,18 +4,22 @@
         <div class="bg-white mt-4 p-3 rounded">
             <div>
                 <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Batch:</label><br>
-                <div class="flex justify-between">
+                <div class="flex justify-between w-full">
                     <select name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
                         <option value="All">All</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
                         <option value="2021">2021</option>
                     </select>
-                    <div class="w-[60%]">
-                        <input class="p-2 outline-none w-[80%] rounded-l border border-gray-300" type="text" placeholder="Student name...">
-                        <button class="px-4 py-2  bg-blue-600 border border-blue-600 text-white rounded-r">Search</button>
+                    <div class="w-[60%] relative flex">
+                        <input class="p-2 focus:border-primary outline-none rounded-l border border-gray-300 w-full" type="text" placeholder="Student name...">
+                        <button class=" border border-gray-300  items-centeroutline-none p-2 w-12 bg-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
                     </div>
-                    <div>
+                    <div class="w-32 flex justify-end">
                         <button class="text-white bg-orange-500 py-2 px-4 rounded border-none">Add Student</button>
                     </div>
                 </div>
@@ -32,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody class="w-full">
-                        <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-300">
+                        <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
                             <td class="text-center w-3/12 pl-2">
                                 <div class="flex items-center space-x-2 p-2">
                                     <img class="rounded-full w-[19%]" :src="student.profile_image" alt="">
