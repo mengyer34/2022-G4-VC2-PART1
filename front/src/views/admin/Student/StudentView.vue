@@ -21,9 +21,9 @@
                 </div>
             </div>
             <div>
-                <student-lists :students="batchFilter" @popUp="popUp"/>      
+                <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+                <student-detail v-if="isViewDetail" @notViewDetail="isViewDetail=false" :student_detail="student_detail" @save-edit="saveEditStudent"/> 
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/> 
-                <!-- <student-detail /> -->
             </div>
         </div>
 
@@ -35,20 +35,22 @@ import axios from '../../../axios-http.js'
 import StudentListView from '../../../components/StudentList/StudentListView.vue'
 import alertDeleteDialog from '../../../components/StudentList/StudentDeleteAlert.vue'
 import SearchBar from './../../../components/search/SearchBar.vue';
-// import studentDetail from '../../../components/StudentList/StudentDetail.vue'
+import studentDetail from '../../../components/StudentList/StudentDetail.vue'
 const url = 'http://localhost:8000/api/'
 export default {
     components: {
         'student-lists': StudentListView,
         'alert-dialog':alertDeleteDialog,
         'search-bar': SearchBar,
-        // 'student-detail': studentDetail,
+        'student-detail': studentDetail,
     },
     data() {
         return {
             students: [],
             isPop: false,
             id: null,
+            isViewDetail: false,
+            student_detail: {},
             batch: 'All',
             searchKeyword: '',
         }
@@ -72,7 +74,7 @@ export default {
     },
     methods: {
         getStudent() {
-            axios.get(url + 'users').then(res => {
+            axios.get(url + 'users_leaves').then(res => {
                 this.students = res.data.data;
             })
         },   
@@ -86,10 +88,18 @@ export default {
             this.isPop = true;
             this.id = id;
         },
-
         updateKeyword(keyword) {
             this.searchKeyword = keyword;
         },
+        viewStudentDetail(id){
+            this.student_detail = this.students.find((student)=>student.id == id);
+            this.isViewDetail = true
+        },
+        saveEditStudent(object,id){
+            axios.put(url + "users/" + id,object).then((res)=>{
+                this.getStudent()
+            })
+        }
     },
     mounted() {
         this.getStudent();

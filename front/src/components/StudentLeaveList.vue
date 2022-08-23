@@ -41,8 +41,6 @@
 
 <script>
 import leaveDetail from "./user/leaves/LeaveDetails.vue"
-// import axios  from "../axios-http.js"
-// const url = 'http://localhost:8000/api/'
 export default {
     props: ['leaves'],
     components: {
