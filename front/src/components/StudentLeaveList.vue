@@ -35,21 +35,25 @@
                 </tr>
             </tbody>
         </table>
-        <leave-detail v-if="isViewDetail" @closeStudentDetail="isViewDetail=false" :leave="leave_detail"/>
+        <leave-detail v-if="isViewDetail" @closeStudentDetail="isViewDetail=false" @close="isViewDetail=false" @getLeaves="$emit('getLeaves')" :leave="leave_detail"/>
     </div>
 </template>
 
 <script>
+import axios from '../axios-http.js'
 import leaveDetail from "./user/leaves/LeaveDetails.vue"
+const url = 'http://localhost:8000/api/'
+
 export default {
     props: ['leaves'],
+    emits: ['getLeaves'],
     components: {
-        'leave-detail': leaveDetail
+        'leave-detail': leaveDetail,
     },
     data() {
         return {
             isViewDetail: false,
-            leave_detail: {}
+            leave_detail: {},
         }
     },
     methods: {
@@ -65,7 +69,11 @@ export default {
         viewLeaveDetail(id){
             this.leave_detail = this.leaves.find((leave)=>leave.id == id);
             this.isViewDetail = true;
-        }
+            axios.put(url + "leaves/admin_seen/" + id).then(res => {
+                console.log(res);
+                this.$emit('getLeaves');
+            });
+        },
     },
 }
 </script>

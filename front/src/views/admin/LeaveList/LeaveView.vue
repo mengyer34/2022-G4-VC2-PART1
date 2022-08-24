@@ -32,7 +32,7 @@
                 </div>
 
                 <!-- list all leaves -->
-                <student-leave v-if="leaves.length > 0" :leaves="filterLeaves" />
+                <student-leave v-if="leaves.length > 0" :leaves="filterLeaves" @getLeaves="getLeaves" />
                 <div v-if="leaves.length <= 0" class="flex flex-col items-center mt-8 mb-3">
                     <img class="w-32" src="./../../../assets/request_empty.png" alt="Image not found">
                     <h1 class="text-stone-500">No any requests for now!</h1>
@@ -90,6 +90,7 @@ export default {
         getLeaves() {
             axios.get(url + "leaves_user").then(res => {
                 this.leaves = res.data.data.reverse();
+                console.log("HI")
             })
         },
 
@@ -102,4 +103,5 @@ export default {
         this.getLeaves();
     },
 }
+
 </script>
