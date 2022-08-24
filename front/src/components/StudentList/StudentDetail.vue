@@ -9,7 +9,7 @@
             <div class="p-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <img  :src="student_detail.profile_image" alt="" class="rounded-full w-16 h-16 object-fill">
+                        <img  :src="'./../../../public/profile_images/' + student_detail.profile_image" alt="" class="rounded-full w-16 h-16 object-fill">
                         <p class="ml-2 font-bold text-lg">{{student_detail.first_name}} {{student_detail.last_name}}</p>
                     </div>
                     <div>
