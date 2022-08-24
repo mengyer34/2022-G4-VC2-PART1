@@ -42,7 +42,6 @@ Route::get('/users', [UserController::class, 'index']); /* The route to get all 
 Route::get('/users_leaves', [UserController::class, 'getUsersLeaves']); /* The route to get all users with leaves belongs to each user */
 Route::get('/users/{user}', [UserController::class, 'show']); /* The route to get one user */
 Route::get('/users_leaves/{id}', [UserController::class, 'getUserLeaves']); /* The route to get one user with leaves belongs to user */
-Route::get('/storage/image/{imageNname}', [UserController::class, 'getProfileImage']); /* The route to display a specific profile image */
 Route::post('/users', [UserController::class, 'store']); /* The route to create a new user (By admin) */
 Route::put('/users/{user}', [UserController::class, 'update']); /* The route to update a user’s general data (By admin) */
 Route::put('/users/reset_profile/{user}', [UserController::class, 'updateProfileImage']); /* The route to update a user’s profile (By user) */
