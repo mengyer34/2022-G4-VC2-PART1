@@ -134,6 +134,7 @@ class UserController extends Controller
         $user->generation = $request->generation;
         $user->class = $request->class;
         $user->phone = $request->phone;
+        $user->personal_id = $request->personal_id;
         $user->save();
 
         $response = [

@@ -58,7 +58,6 @@
 <script>
 
     import requestForm from "../request/RequestForm.vue"
-
     export default {
         props: ['leaves', 'status', 'type'],
         computed: {

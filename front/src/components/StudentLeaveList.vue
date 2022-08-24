@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="w-full whitespace-nowrap">
+        <table class="w-full whitespace-nowrap bg-white">
             <thead>
                 <tr tabindex="0" class="focus:outline-none h-16 w-full text-sm leading-none text-gray-800 border-b-2 border-primary">
                     <th class="font-bold text-center ">STUDENT NAME</th>
