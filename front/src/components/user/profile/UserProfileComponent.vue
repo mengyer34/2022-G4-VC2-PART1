@@ -9,7 +9,7 @@
                     <form >
                         <div class="w-24 h-24 flex items-center justify-center">
                             <!-- <img v-if="newProfile != null" :src="user.profile_image" class="rounded-full w-20 h-20"> -->
-                            <img  :src="user.profile_image" alt="" class="rounded-full w-20 h-20 object-fill">
+                            <img  :src="'./../../../../public/profile_images/' + user.profile_image" alt="" class="rounded-full w-20 h-20 object-fill">
                         </div>
                         <label for="file_input">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-16 hover:scale-110 cursor-pointer left-16 bg-slate-300 p-1 text-3xl rounded-full" viewBox="0 0 20 20" fill="currentColor" >

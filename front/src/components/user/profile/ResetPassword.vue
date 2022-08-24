@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[#00000080]  fixed top-0 w-full h-screen">
+    <div class="bg-[#000000b9]   fixed top-0 w-full h-screen">
         <div class="rounded mb-4 w-5/12 m-auto mt-28">
             <div class="form-header rounded-t-md bg-primary p-2 px-4 text-white flex items-center justify-between">
                 <p class="text-2xl ">Change Password</p>
@@ -87,7 +87,6 @@ export default ({
     },
     methods: {
         showPassword(){
-
             if (this.password == "password"){
                 this.password = "text";
             }else{
