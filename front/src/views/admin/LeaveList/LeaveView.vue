@@ -100,6 +100,9 @@ export default {
 
     created() {
         this.getLeaves();
+        if (this.$route.query.filter != undefined) {
+            this.filterStatusKey = this.$route.query.filter;
+        };
     },
 }
 </script>

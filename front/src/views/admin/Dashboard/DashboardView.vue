@@ -23,7 +23,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex bg-white shadow w-[24%] rounded cursor-pointer">
+                        <div @click="viewLeaves('Pending')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]  ">
                                 <p class="text-3xl text-yellow-500 font-semibold">{{getPendingLeave.length}}</p>
                                 <p class="font-bold">Pending Leaves</p>
@@ -34,7 +34,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex bg-white shadow w-[24%] rounded cursor-pointer">
+                        <div @click="viewLeaves('Approved')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
                                 <p class="text-3xl text-green-700 font-semibold">{{getApprovedLeave.length}}</p>
                                 <p class="font-bold">Approved Leaves</p>
@@ -45,7 +45,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex bg-white shadow w-[24%] rounded cursor-pointer">
+                        <div @click="viewLeaves('Rejected')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%] ">
                                 <p class="text-3xl text-red-600 font-semibold">{{getRejectedLeave.length}}</p>
                                 <p class="font-bold">Rejected Leaves</p>
@@ -112,7 +112,11 @@ export default {
 
         viewStudent(){
             this.$router.push({name: "students"})
-        },  
+        },
+        
+        viewLeaves(status){
+            this.$router.push("leaves?filter="+status);
+        },
     },
     mounted() {
         this.getLeaveUser();
