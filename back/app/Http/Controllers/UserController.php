@@ -69,7 +69,7 @@ class UserController extends Controller
         if ($request->gender == "M") {
             $ProfileImage = 'male_default_profile.png';
         }
-        $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $ProfileImage;
+        $user->profile_image = $ProfileImage;
 
         $user->personal_id = 20;
         $user->save();
@@ -155,26 +155,7 @@ class UserController extends Controller
      */
     public function updateProfileImage(Request $request, User $user)
     {   
-        $validated = $request->validate([
-            'profile_image' => 'required|mimes:jpg,JPG,PNG,JPEG,png,jpeg'
-        ]);
-
-
-        if($user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/female_default_profile.png' 
-            && $user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/male_default_profile.png') {
-
-            $previousProfilePathInfo = pathinfo($user->profile_image);
-            $previousProfileName = $previousProfilePathInfo['filename'] . '.' . $previousProfilePathInfo['extension'];
-            $previousProfileStoragePath = storage_path('images/' . $previousProfileName);
-            if(File::exists($previousProfileStoragePath)){
-                File::delete($previousProfileStoragePath);
-            }
-        }
-
-        $ProfileImage = $request->file('profile_image');
-        $imageName = date('F-j-Y-H-i-s-A') . $ProfileImage->getClientOriginalName();
-        $ProfileImage->move(storage_path('images'), $imageName);
-        $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $imageName; 
+        $user->profile_image = $request->profile_image; 
         $user->save();
 
         $response = [
@@ -184,28 +165,6 @@ class UserController extends Controller
             'message' => 'Update profile successfully'
         ];
         return Response()->json($response, 200);
-    }
-
-    /**
-     * Return an image.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getProfileImage($imageName)
-    {
-        $path = storage_path('images/' . $imageName);
-
-        if (File::exists($path)) {
-            $file = File::get($path);
-        } else {
-            abort(404);
-        }
-
-        $type = File::mimeType($path);
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
     }
 
     /**

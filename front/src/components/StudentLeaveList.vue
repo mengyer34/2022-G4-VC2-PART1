@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody class="w-full">
-                <tr v-for="leave of leaves" :key="leave" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 hover:bg-gray-200 border-b border-t border-gray-100" :class="{'bg-white text-stone-600': leave.is_admin_seen, 'bg-slate-300 font-medium': !leave.is_admin_seen}">
+                <tr v-for="leave of leaves" :key="leave" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-100" :class="{'bg-white text-stone-600': leave.is_admin_seen, 'bg-slate-300 font-medium': !leave.is_admin_seen}">
                     <td class="text-center">
                         {{leave.user.last_name}} {{leave.user.first_name}}
                     </td>
@@ -35,21 +35,25 @@
                 </tr>
             </tbody>
         </table>
-        <leave-detail v-if="isViewDetail" @closeStudentDetail="isViewDetail=false" :leave="leave_detail"/>
+        <leave-detail v-if="isViewDetail" @closeStudentDetail="isViewDetail=false" @close="isViewDetail=false" @getLeaves="$emit('getLeaves')" :leave="leave_detail"/>
     </div>
 </template>
 
 <script>
+import axios from '../axios-http.js'
 import leaveDetail from "./user/leaves/LeaveDetails.vue"
+const url = 'http://localhost:8000/api/'
+
 export default {
     props: ['leaves'],
+    emits: ['getLeaves'],
     components: {
-        'leave-detail': leaveDetail
+        'leave-detail': leaveDetail,
     },
     data() {
         return {
             isViewDetail: false,
-            leave_detail: {}
+            leave_detail: {},
         }
     },
     methods: {
@@ -65,7 +69,11 @@ export default {
         viewLeaveDetail(id){
             this.leave_detail = this.leaves.find((leave)=>leave.id == id);
             this.isViewDetail = true;
-        }
+            axios.put(url + "leaves/admin_seen/" + id).then(res => {
+                console.log(res);
+                this.$emit('getLeaves');
+            });
+        },
     },
 }
 </script>

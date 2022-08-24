@@ -17,7 +17,7 @@
                 <div class="flex mt-3">
                     <div class="rounded shadow bg-white shadow-gray-400 w-[26%] text-center relative p-2">
                         <div class="">
-                            <img  :src="student_detail.profile_image" alt="" class="rounded-full w-32 h-32 object-fill m-auto">
+                            <img  :src="'./../../../public/profile_images/' + student_detail.profile_image" alt="" class="rounded-full w-32 h-32 object-fill m-auto">
                             <p class="font-bold mt-2 text-2xl break-words">{{detail_student_list.first_name}} {{detail_student_list.last_name}}</p>
                         </div>
                         <div>
@@ -37,22 +37,22 @@
                             <div class=" w-[49%] h-auto">
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">First name</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-14 inline-block p-2 rounded shadow w-[60%] outline-none border border-gray-300 focus:shadow-outline focus:border-primary" v-model="student_edit.first_name" >
+                                    <input v-if="isClickEdit" type="text" class="ml-14 inline-block p-2 rounded shadow w-[60%] border border-gray-300 focus:shadow-outline focus:outline-[#0081CA]" v-model="student_edit.first_name" >
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.first_name}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Last name</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-14 focus:shadow-outline focus:border-primary  inline-block p-2 rounded shadow w-[60%] outline-none border border-gray-300 " v-model="student_edit.last_name" >
+                                    <input v-if="isClickEdit" type="text" class="ml-14 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.last_name" >
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.last_name}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Gender</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:border-primary  inline-block p-2 rounded shadow w-[60%] outline-none border border-gray-300 " v-model="student_edit.gender">
+                                    <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.gender">
                                     <div v-else class="ml-16 inline-block text-gray-500">{{detail_student_list.gender}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Tel</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-28 focus:shadow-outline focus:border-primary  inline-block p-2 rounded shadow w-full outline-none border border-gray-300 " v-model="student_edit.phone">
+                                    <input v-if="isClickEdit" type="text" class="ml-28 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-full border border-gray-300 " v-model="student_edit.phone">
                                     <div v-else class="ml-[100px] inline-block text-gray-500">{{detail_student_list.phone}}</div>
                                 </div>
                                 <p v-if="isInvalidPhoneNumber" class="text-red-500 text-center mb-2 ml-14 text-sm">Invalid phone number</p>
@@ -60,17 +60,17 @@
                             <div class=" w-[49%] h-auto">
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Student Id</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:border-primary  inline-block p-2 rounded shadow w-[60%] outline-none border border-gray-300 " v-model="student_edit.personal_id" >
+                                    <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.personal_id" >
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.personal_id}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Generation</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:border-primary  inline-block p-2 rounded shadow w-[70%] outline-none border border-gray-300 " v-model="student_edit.generation" >
+                                    <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[70%] border border-gray-300 " v-model="student_edit.generation" >
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.generation}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Class</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:border-primary  inline-block p-2 rounded shadow w-[70%] outline-none border border-gray-300 " v-model="student_edit.class">
+                                    <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[70%] border border-gray-300 " v-model="student_edit.class">
                                     <div v-else class="ml-24 inline-block text-gray-500">{{detail_student_list.class}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
@@ -82,17 +82,17 @@
                         </div>
                         <div class="flex mt-1 items-cente p-2 rounded border border-b-gray-300 w-full m-auto">
                                 <div class="text-lg">Gmail</div>
-                                <input v-if="isClickEdit" type="email" class="ml-20 focus:shadow-outline focus:border-primary  inline-block p-2 rounded shadow w-full outline-none border border-gray-300 " v-model="student_edit.email">
+                                <input v-if="isClickEdit" type="email" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-full border border-gray-300 " v-model="student_edit.email">
                                 <div v-else class="ml-[78px] inline-block text-gray-500">{{detail_student_list.email}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="">
-                    <div class="shadow-gray-400 mt-3 p-3 bg-white shadow rounded w-full">
+                    <div class="shadow-gray-400 mt-3 p-3 bg-white shadow rounded w-full" v-if="student_detail.leaves.length > 0">
                         <div class="text-1xl font-bold ml-4 uppercase">Student Leave Request</div>
                         <table class=" w-full m-auto">
                             <thead>
-                                <tr tabindex="0" class="focus:outline-none h-16 w-full text-sm leading-none text-primary border-b-2 border-primary">
+                                <tr tabindex="0" class="focus h-16 w-full text-sm leading-none text-primary border-b-2 border-primary">
                                     <th class="font-bold text-center">Reason</th>
                                     <th class="font-bold text-center">Leave type</th>
                                     <th class="font-bold text-center">Start Date</th>
@@ -102,8 +102,8 @@
                                     <th class="font-bold text-center">Request Date</th>
                                 </tr>
                             </thead>
-                            <tbody v-if="student_detail.leaves.length > 0" class="w-full m-auto">
-                                <tr  v-for="leave of student_detail.leaves" :key="leave" tabindex="0" class="focus:outline-none h-20 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
+                            <tbody class="w-full m-auto">
+                                <tr  v-for="leave of student_detail.leaves" :key="leave" tabindex="0" class="focus h-20 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
                                     <td class="text-center ">
                                         <div class="flex items-center">
                                             <p class="font-medium cursor-pointer truncate w-16 hover:whitespace-pre-wrap  hover:absolute hover:font-normal hover:bg-gray-200 hover:p-3 hover:rounded hover:w-2/12" v-if="leave.reason.length > 8">{{leave.reason}}</p>
@@ -130,12 +130,13 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody v-else>
-                                <tr>
-                                    <td colspan="7" class="p-2 text-center">No leaves Found!!</td>
-                                </tr>
-                            </tbody>
                         </table>
+                    </div>
+                    <div v-else class=" mt-6 flex items-center justify-center w-full">
+                        <div class="text-center">
+                            <img class="w-32" src="../../assets/request_empty.png" alt="Image not found">
+                            <td colspan="7" class="p-2 text-center">No leaves Found!!</td>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -164,15 +165,15 @@ export default ({
         editStudent(){
             this.isClickEdit = true;
             this.student_edit = {
-                                    first_name: this.detail_student_list.first_name,
-                                    last_name: this.detail_student_list.last_name,
-                                    gender: this.detail_student_list.gender,
-                                    email: this.detail_student_list.email,
-                                    class: this.detail_student_list.class,
-                                    generation: this.detail_student_list.generation,
-                                    phone: this.detail_student_list.phone,
-                                    personal_id: this.detail_student_list.personal_id
-                                }
+                first_name: this.detail_student_list.first_name,
+                last_name: this.detail_student_list.last_name,
+                gender: this.detail_student_list.gender,
+                email: this.detail_student_list.email,
+                class: this.detail_student_list.class,
+                generation: this.detail_student_list.generation,
+                phone: this.detail_student_list.phone,
+                personal_id: this.detail_student_list.personal_id
+            }
         },
         saveEditStudent(id){
             let student_edited = this.student_edit;
