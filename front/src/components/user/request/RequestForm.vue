@@ -146,7 +146,6 @@
                 if (this.leaveType == ""){
                     this.isSelectedType =  true;
                 }
-
                 this.isStartDate = false
                 if (this.startDate == null){
                     this.isStartDate = true
@@ -156,6 +155,7 @@
                 if (this.startTime == null){
                     this.isStartTime = true
                 }
+                
                 this.isEndDate = false
                 if (this.endDate == null){
                     this.isEndDate = true
