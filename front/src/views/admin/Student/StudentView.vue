@@ -1,32 +1,32 @@
 <template>
-    <div class="w-full sm:px-6 mt-24">
-        <h1 class="text-2xl font-semibold my-9">STUDENT INFORMATION</h1>
-
-        <div class="bg-white mt-4 p-3 rounded">
-            <div>
-                <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Batch:</label><br>
-                <div class="flex justify-between w-full">
-                    <select v-model="batch" name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
-                        <option value="All">All</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                    </select>
-                    <div class="w-[60%] relative flex">
-                        <search-bar @update-keyword="updateKeyword" />
+    <div>
+        <div v-if="!isViewDetail" class="w-full sm:px-6 mt-24">
+            <h1 class="text-2xl font-semibold my-9">STUDENT INFORMATION</h1>
+            <div class="bg-white mt-4 p-3 rounded">
+                <div>
+                    <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Batch:</label><br>
+                    <div class="flex justify-between w-full">
+                        <select v-model="batch" name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
+                            <option value="All">All</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                        </select>
+                        <div class="w-[60%] relative flex">
+                            <search-bar @update-keyword="updateKeyword" />
+                        </div>
+                        <div class="w-32 flex justify-end">
+                            <button class="text-white bg-orange-500 py-2 px-4 rounded border-none">Add Student</button>
+                        </div>
                     </div>
-                    <div class="w-32 flex justify-end">
-                        <button class="text-white bg-orange-500 py-2 px-4 rounded border-none">Add Student</button>
-                    </div>
+                    <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
                 </div>
-            </div>
-            <div>
-                <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
-                <student-detail v-if="isViewDetail" @notViewDetail="isViewDetail=false" :student_detail="student_detail" @save-edit="saveEditStudent"/> 
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/> 
             </div>
         </div>
-
+        <div v-else>
+            <student-detail @notViewDetail="isViewDetail=false" :student_detail="student_detail" :students="students" @save-edit="saveEditStudent"/> 
+        </div>
     </div>
 </template>
 
