@@ -16,12 +16,16 @@
                             <search-bar @update-keyword="updateKeyword" />
                         </div>
                         <div class="w-32 flex justify-end">
-                            <button class="text-white bg-orange-500 py-2 px-4 rounded border-none">Add Student</button>
+                            <button class="text-white bg-orange-500 py-2 px-4 rounded border-none" @click="showFormAddStudent">Add Student</button>
                         </div>
+
                     </div>
-                    <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
                 </div>
-                <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/> 
+            </div>
+            <div>
+                <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+                <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/>
+                <form-student v-if="isShow" @close-popup="isShow=false" @add-student="addNewStudent"/>
             </div>
         </div>
         <div v-else>
@@ -36,6 +40,7 @@ import StudentListView from '../../../components/StudentList/StudentListView.vue
 import alertDeleteDialog from '../../../components/StudentList/StudentDeleteAlert.vue'
 import SearchBar from './../../../components/search/SearchBar.vue';
 import studentDetail from '../../../components/StudentList/StudentDetail.vue'
+import studentForm from "../../../components/StudentList/StudentForm.vue"
 const url = 'http://localhost:8000/api/'
 export default {
     components: {
@@ -43,6 +48,7 @@ export default {
         'alert-dialog':alertDeleteDialog,
         'search-bar': SearchBar,
         'student-detail': studentDetail,
+        "form-student": studentForm
     },
     data() {
         return {
@@ -53,6 +59,7 @@ export default {
             student_detail: {},
             batch: 'All',
             searchKeyword: '',
+            isShow: false
         }
     },
     computed: {
@@ -98,6 +105,18 @@ export default {
         saveEditStudent(object,id){
             axios.put(url + "users/" + id,object).then((res)=>{
                 this.getStudent()
+            })
+        },
+        showFormAddStudent(){
+            this.isShow = true
+        },
+        closePopup(){
+            this.isShow = false
+        },
+        addNewStudent(newStudent){
+            axios.post('http://127.0.0.1:8000/api/users', newStudent).then((res)=>{
+                this.getStudent()
+                this.closePopup()
             })
         }
     },

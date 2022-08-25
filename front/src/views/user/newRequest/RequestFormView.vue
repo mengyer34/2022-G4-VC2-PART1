@@ -7,5 +7,5 @@ import requestForm from "../../../components/user/request/RequestForm.vue"
         components: {
             "form-requestion": requestForm
         },
-  }
+}
 </script>
