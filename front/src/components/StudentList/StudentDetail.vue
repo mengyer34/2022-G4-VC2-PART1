@@ -205,13 +205,11 @@ export default ({
         },
 
         getImage(imageName) {
-            console.log('StuDetails');
             return url +'storage/image/' + imageName;
         },
 
         filterStudentId(id){
             let find = this.students.filter((student)=>student.personal_id == id && student.personal_id != this.student_detail.personal_id);
-            console.log(find, "Hello");
             let sms = true
             if (find.length >= 1){
                 sms = false

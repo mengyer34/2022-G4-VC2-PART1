@@ -58,7 +58,6 @@ export default {
     },
     methods: {
         getImage(imageName) {
-            console.log('stuListVie');
             return url +'storage/image/' + imageName;
         }
     }

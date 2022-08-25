@@ -1,5 +1,5 @@
 <template>
-    <user-profile @resetPassword="toggleFormReset = true" :user="user" :amountOfLeaves="amountOfLeaves"/>
+    <user-profile @user-updated="$emit('user-updated')" @resetPassword="toggleFormReset = true" :user="user" :amountOfLeaves="amountOfLeaves"/>
     <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :oldPassword="password" @save-change="saveChange"/>
 </template>
 <script>
@@ -9,6 +9,7 @@ import axios from "axios"
 const url = "http://127.0.0.1:8000/api/"
 export default {
     inject: ["user_id"],
+    props: ['user'],
     components: {
         "user-profile": userProfile,
         'form-resetPD': resetPassword
@@ -16,7 +17,6 @@ export default {
     data() {
         return {
             toggleFormReset: false,
-            user:{},
             amountOfLeaves: 0,
             password: null
         }
@@ -24,7 +24,6 @@ export default {
         methods:{
             getProfileInfo(){
                 axios.get(url + 'users_leaves/'+this.user_id).then((res) => {
-                    this.user = res.data.data;
                     this.password = this.user.password
                     this.amountOfLeaves = this.user.leaves.length;
                 })

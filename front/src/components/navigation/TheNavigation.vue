@@ -63,7 +63,7 @@ const url = "http://127.0.0.1:8000/api/";
 export default {
     inject: ['role', 'user_id'],
     props: {
-        user: String,
+        user: Object,
         leaves: Array,
     },
     data() {
@@ -86,7 +86,6 @@ export default {
 
     methods: {
         getImage(imageName) {
-            console.log('TheNav');
             return url +'storage/image/' + imageName;
         }
     }

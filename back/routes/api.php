@@ -45,6 +45,6 @@ Route::get('/users_leaves/{id}', [UserController::class, 'getUserLeaves']); /* T
 Route::get('/storage/image/{imageNname}', [UserController::class, 'getProfileImage']); /* The route to display a specific profile image */
 Route::post('/users', [UserController::class, 'store']); /* The route to create a new user (By admin) */
 Route::put('/users/{user}', [UserController::class, 'update']); /* The route to update a user’s general data (By admin) */
-Route::put('/users/reset_profile/{user}', [UserController::class, 'updateProfileImage']); /* The route to update a user’s profile (By user) */
+Route::post('/users/reset_profile/{user}', [UserController::class, 'updateProfileImage']); /* The route to update a user’s profile (By user) */
 Route::put('/users/reset_password/{user}', [UserController::class, 'updatePassword']); /* The route to update a user’s password (By user) */
 Route::delete('/users/{user}', [UserController::class, 'destroy']); /* The route to delete a user */

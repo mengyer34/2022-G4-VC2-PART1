@@ -166,7 +166,7 @@ class UserController extends Controller
             }
         }
 
-        $ProfileImage = $request->file('profile_image');
+        $ProfileImage = $request->profile_image;
         $imageName = date('F-j-Y-H-i-s-A') . $ProfileImage->getClientOriginalName();
         $ProfileImage->move(storage_path('profile_images'), $imageName);
         $user->profile_image = $imageName;
