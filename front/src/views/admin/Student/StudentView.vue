@@ -24,7 +24,6 @@
             </div>
             <div>
                 <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
-                <student-detail v-if="isViewDetail" @notViewDetail="isViewDetail=false" :student_detail="student_detail" @save-edit="saveEditStudent"/> 
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/>
                 <form-student v-if="isShow" @close-popup="isShow=false" @add-student="addNewStudent"/>
             </div>

@@ -5,7 +5,7 @@
             <form class=" rounded-b-md">
                 <div class="flex justify-between items-center">
                     <p></p>
-                    <h1 class="text-[20px] font-semibold text-[#0081CA] text-cente">Student Detail</h1>
+                    <h1 class="text-[20px] font-semibold text-[#0081CA] text-cente">Add New Student</h1>
                     <svg aria-hidden="true" @click="$emit('closePopup')" class="w-5 h-5 cursor-pointer"
                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
