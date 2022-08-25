@@ -46,7 +46,7 @@
 
 <script>
 import Axios from "axios"
-import requestImformation from "../../../components/user/request/RequestInfortmation.vue"
+import requestImformation from "../../../components/user/request/RequestInformation.vue"
 const url = 'http://localhost:8000/api/users_leaves/'
 export default {
     components: {

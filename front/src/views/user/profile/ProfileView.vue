@@ -1,6 +1,8 @@
 <template>
-    <user-profile @resetPassword="toggleFormReset = true" :user="user" :amountOfLeaves="amountOfLeaves"/>
-    <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :oldPassword="password" @save-change="saveChange"/>
+    <div>
+        <user-profile @resetPassword="toggleFormReset = true" :user="user" :amountOfLeaves="amountOfLeaves"/>
+        <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :oldPassword="password" @save-change="saveChange"/>
+    </div>
 </template>
 <script>
 import userProfile from "../../../components/user/profile/UserProfileComponent.vue"

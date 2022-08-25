@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      role: 'admin',
+      role: 'student',
       user: [],
       user_id: 1,
       leaves: [],
