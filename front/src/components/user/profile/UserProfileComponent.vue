@@ -157,6 +157,7 @@
             saveUpload(){
                 let formData = new FormData();
                 formData.append('profile_image', this.image);
+                formData.append('_method', 'PUT');
 
                 this.onClosePopup();
                 axios.post(url + "users/reset_profile/" + this.user_id, formData).then((res)=>{
