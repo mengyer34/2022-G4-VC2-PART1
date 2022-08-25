@@ -138,8 +138,7 @@
                                 v-model="gender">
                             <label for="default-radio-1"
                                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                :class="{ 'dark:border-red-500 text-[red]': is_gender }"
-                                @change="is_gender = false">Male</label>
+                                >Male</label>
                         </div>
                         <div class="flex items-center mb-4 ml-2">
                             <input id="default-radio-2" type="radio" value="F" name="default-radio"

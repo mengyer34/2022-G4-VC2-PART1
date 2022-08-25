@@ -8,8 +8,7 @@
                 <div class="user-profile flex relative">
                     <form >
                         <div class="w-24 h-24 flex items-center justify-center">
-                            <!-- <img v-if="newProfile != null" :src="user.profile_image" class="rounded-full w-20 h-20"> -->
-                            <img  :src="'./../../../../public/profile_images/' + user.profile_image" alt="" class="rounded-full w-20 h-20 object-fill">
+                            <img  :src="getImage(user.profile_image)" alt="" class="rounded-full w-20 h-20 object-fill">
                         </div>
                         <label for="file_input">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-16 hover:scale-110 cursor-pointer left-16 bg-slate-300 p-1 text-3xl rounded-full" viewBox="0 0 20 20" fill="currentColor" >
@@ -80,7 +79,7 @@
             </div>
         </div>
         <div class="fixed flex items-center justify-center bg-[#23242986] w-full h-full top-0 z-50 " v-if="isUploaded">
-            <div class="w-[32%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
+            <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="w-[32%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
                 <div class="flex items-center justify-between mb-4 text-lg">
                     <p>Crop your new profile picture</p>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" @click="isUploaded=false">
@@ -91,51 +90,100 @@
                     <img :src="selectedImage" alt="" class="w-full max-h-[52vh] overflow-auto">
                 </div>
                 <div class="w-full mt-5">
-                    <button class="btn bg-warning rounded p-2 text-white w-full " @click="saveUpload">
+                    <button type="submit" class="btn bg-warning rounded p-2 text-white w-full">
                         Set new profile picture
                     </button>
                 </div>
-            </div>
+            </form>
 
         </div>
+
+        <!-- Alerts -->
+        <success-alert v-if="isSuccessAlert" :content="'Update profile success!'" />
+        <warning-alert v-if="isWarningAlert" :content="'File must be an image!'" />
     </div>
 </template>
 <script>
     import axios from 'axios';
     const url = 'http://127.0.0.1:8000/api/'
+    import WarningAlert from "./alerts/WarningAlert.vue";
+    import SuccessAlert from "./alerts/SuccessAlert.vue";
     export default {
+        components: {
+            'warning-alert': WarningAlert,
+            'success-alert': SuccessAlert,
+        },
         props: {
             user: Object,
             amountOfLeaves: Number
         },
         inject: ['user_id'],
-        // data(){
-        //     return {
-        //         selectedImage: null,
-        //         image: null,
-        //         isUploaded: false,
-        //         newProfile: null
-        //     }
-        // },
-        // methods: {
-        //     onSelectFile(event){
-        //         this.image = event.target.files[0]   
-        //         console.log(this.image);
-        //         let reader = new FileReader();
-        //         reader.readAsDataURL(this.image);
-        //         reader.onload = e => {
-        //             this.selectedImage = e.target.result;
-        //         }
-        //         this.isUploaded = true;
-        //     },
-        //     saveUpload(){
 
-        //         // this.newProfile =  this.image.name;
-        //         axios.put(url + "users/reset_profile/" + this.user_id, {profile_image: this.selectedImage}).then((res)=>{
-        //             console.log(res);
-        //         })
-        //         // this.isUploaded = false;
-        //     }
-        // }
+        data(){
+            return {
+                selectedImage: null,
+                image: null,
+                isUploaded: false,
+                allowImageExtension: ['jpg', 'png', 'jpeg'],
+                isSuccessAlert: false,
+                isWarningAlert: false,
+            }
+        },
+
+        methods: {
+            getImage(imageName) {
+                return url +'storage/image/' + imageName;
+            },
+
+            onSelectFile(event){
+                let fileExtension = event.target.files[0].name.split('.').pop();
+                if (this.allowImageExtension.includes(fileExtension.toLowerCase())) {
+                    this.image = event.target.files[0];
+
+                    let reader = new FileReader();
+                    reader.readAsDataURL(this.image);
+                    reader.onload = e => {
+                        this.selectedImage = e.target.result;
+                    }
+
+                    this.isUploaded = true;
+                } else {
+                    this.onClosePopup();
+                    this.warningAlert();
+                }
+                event.target.value = "";
+            },
+
+            saveUpload(){
+                let formData = new FormData();
+                formData.append('profile_image', this.image);
+
+                this.onClosePopup();
+                axios.post(url + "users/reset_profile/" + this.user_id, formData).then((res)=>{
+                    this.$emit('user-updated');
+                    this.successAlert();
+                })
+            },
+
+            onClosePopup() {
+                this.isUploaded = false;
+                this.image = null;
+                this.selectedImage = null;
+            },
+
+            successAlert() {
+                this.isSuccessAlert = true;
+                setTimeout(() => {
+                    this.isSuccessAlert = false;
+                }, 1500);
+            },
+
+            warningAlert() {
+                this.isWarningAlert = true;
+                setTimeout(() => {
+                    this.isWarningAlert = false;
+                }, 2000);
+            }
+        }
     }
 </script>

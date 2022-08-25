@@ -7,7 +7,7 @@
 
       <div :class="{'flex justify-center w-[70] ml-[13rem]': role == 'admin'}">
         <div :class="{'w-[100%]': role == 'admin'}">
-          <router-view @notifUpdated="notifUpdated" v-slot="{Component}">
+          <router-view @notifUpdated="notifUpdated" @user-updated="userUpdated" :user="user" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       role: 'admin',
-      user: [],
+      user: {},
       user_id: 1,
       leaves: [],
       email: useEmail().email
@@ -49,6 +49,12 @@ export default {
     notifUpdated() {
       axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
         this.leaves = res.data.data.leaves;
+      })
+    },
+
+    userUpdated() {
+      axios.get(url + "users/" + this.user_id).then((res)=>{
+        this.user = res.data.data;
       })
     }
   },
@@ -63,7 +69,6 @@ export default {
     return {
       role: this.role,
       user_id: this.user_id,
-      user: this.user
     }
   }
 }
