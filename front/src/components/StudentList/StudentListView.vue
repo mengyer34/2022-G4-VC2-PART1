@@ -13,7 +13,7 @@
             <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
                 <td class="text-center w-3/12 pl-2">
                     <div class="flex items-center space-x-2 p-2">
-                        <img class="rounded-full w-[19%]" :src="'./../../../public/profile_images/' + student.profile_image" alt="">
+                        <img class="rounded-full w-[19%]" :src="getImage(student.profile_image)" alt="">
                         <p class="pl-6">{{student.first_name}} {{student.last_name}}</p>
                     </div>
                 </td>
@@ -51,11 +51,17 @@
 </template>
 
 <script>
+const url = 'http://127.0.0.1:8000/api/'
 export default {
     props:{
         students: Array
     },
-
+    methods: {
+        getImage(imageName) {
+            console.log('stuListVie');
+            return url +'storage/image/' + imageName;
+        }
+    }
 }
 </script>
 

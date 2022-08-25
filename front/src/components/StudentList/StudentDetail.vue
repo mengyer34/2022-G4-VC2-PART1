@@ -8,6 +8,7 @@
                 <h1 class="text-2xl text-center">Student Detail</h1>
                 <p></p>
             </div>
+
             <div class="bg-[#ddd] p-3">
                 <div v-if="isEditSuccess" class="alert-success p-2 rounded bg-green-400 border border-green-500 text-white flex items-center justify-between">Edited student successfull
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5  h-5 cursor-pointer " @click="isEditSuccess=false">
@@ -17,7 +18,7 @@
                 <div class="flex mt-3">
                     <div class="rounded shadow bg-white shadow-gray-400 w-[26%] text-center relative p-2">
                         <div class="">
-                            <img  :src="'./../../../public/profile_images/' + student_detail.profile_image" alt="" class="rounded-full w-32 h-32 object-fill m-auto">
+                            <img  :src="getImage(student_detail.profile_image)" alt="" class="rounded-full w-32 h-32 object-fill m-auto">
                             <p class="font-bold mt-2 text-2xl break-words">{{detail_student_list.first_name}} {{detail_student_list.last_name}}</p>
                         </div>
                         <div>
@@ -145,7 +146,7 @@
 </template>
 
 <script>
-
+const url = 'http://127.0.0.1:8000/api/'
 export default ({
     props: {
         student_detail: Object,
@@ -202,6 +203,12 @@ export default ({
                 this.isInvalidPhoneNumber = true;
             }
         },
+
+        getImage(imageName) {
+            console.log('StuDetails');
+            return url +'storage/image/' + imageName;
+        },
+
         filterStudentId(id){
             let find = this.students.filter((student)=>student.personal_id == id && student.personal_id != this.student_detail.personal_id);
             console.log(find, "Hello");
@@ -212,7 +219,6 @@ export default ({
             return sms
         },
     },
-    
 })
 </script>
 <style scoped>

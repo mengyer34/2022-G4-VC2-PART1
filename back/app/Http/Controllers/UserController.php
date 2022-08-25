@@ -155,7 +155,21 @@ class UserController extends Controller
      */
     public function updateProfileImage(Request $request, User $user)
     {   
-        $user->profile_image = $request->profile_image; 
+        if($user->profile_image !== 'female_default_profile.png' 
+            && $user->profile_image !== 'male_default_profile.png') {
+
+            $previousProfilePathInfo = pathinfo($user->profile_image);
+            $previousProfileName = $previousProfilePathInfo['filename'] . '.' . $previousProfilePathInfo['extension'];
+            $previousProfileStoragePath = storage_path('profile_images/' . $previousProfileName);
+            if(File::exists($previousProfileStoragePath)){
+                File::delete($previousProfileStoragePath);
+            }
+        }
+
+        $ProfileImage = $request->file('profile_image');
+        $imageName = date('F-j-Y-H-i-s-A') . $ProfileImage->getClientOriginalName();
+        $ProfileImage->move(storage_path('profile_images'), $imageName);
+        $user->profile_image = $imageName;
         $user->save();
 
         $response = [
@@ -165,6 +179,28 @@ class UserController extends Controller
             'message' => 'Update profile successfully'
         ];
         return Response()->json($response, 200);
+    }
+
+    /**
+     * Return an image.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getProfileImage($imageName)
+    {
+        $path = storage_path('profile_images/' . $imageName);
+
+        if (File::exists($path)) {
+            $file = File::get($path);
+        } else {
+            abort(404);
+        }
+
+        $type = File::mimeType($path);
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
     }
 
     /**

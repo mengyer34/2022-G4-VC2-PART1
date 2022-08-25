@@ -34,7 +34,7 @@
                 </router-link>
             </li>
             <li @click="show=!show" class="flex space-x-2 cursor-pointer">
-                    <div class="w-8 h-8"><img :src="'./../../../public/profile_images/' + user.profile_image" alt="" class=" w-[30px] h-[30px] rounded-full"></div>
+                    <div class="w-8 h-8"><img :src="getImage(user.profile_image)" alt="" class=" w-[30px] h-[30px] rounded-full"></div>
                     <span>{{user.first_name}} {{user.last_name}}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -59,7 +59,6 @@
     </nav>
 </template>
 <script>
-import axios from "axios";
 const url = "http://127.0.0.1:8000/api/";
 export default {
     inject: ['role', 'user_id'],
@@ -84,6 +83,13 @@ export default {
             return countUnseen;
         }
     },
+
+    methods: {
+        getImage(imageName) {
+            console.log('TheNav');
+            return url +'storage/image/' + imageName;
+        }
+    }
 }
 </script>
 
