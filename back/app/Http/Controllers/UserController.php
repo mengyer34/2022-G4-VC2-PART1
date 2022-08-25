@@ -71,7 +71,7 @@ class UserController extends Controller
         }
         $user->profile_image = $ProfileImage;
 
-        $user->personal_id = 20;
+        $user->personal_id = $request->personal_id;
         $user->save();
         
         $response = [
