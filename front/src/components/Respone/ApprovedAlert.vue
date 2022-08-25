@@ -10,7 +10,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>                    
                     <h3 class="mb-5 text-lg font-normal text-gray-600 dark:text-gray-400">Successful</h3>
-                    <h3 class="mb-5 text-lg font-normal text-gray-600 dark:text-gray-400">Your approved has been sent!!</h3>
+                    <h3 class="mb-5 text-lg font-normal text-gray-600 dark:text-gray-400">Your approval has been sent!!</h3>
                 </div>
             </div>
         </div>

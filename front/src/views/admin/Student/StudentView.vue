@@ -6,7 +6,7 @@
                 <div>
                     <label for="filter-status text-sm leading-none text-gray-800"><span class="text-red-600">*</span>Batch:</label><br>
                     <div class="flex justify-between w-full">
-                        <select v-model="batch" name="" id="filter-status" class="w-[20%] rounded border p-2 focus:outline-none focus:border-primary">
+                        <select v-model="batch" name="" id="filter-status" class="w-[20%] rounded  p-2 focus:outline-none focus:border-2 focus:border-primary border border-gray-400">
                             <option value="All">All</option>
                             <option value="2023">2023</option>
                             <option value="2022">2022</option>
@@ -24,7 +24,6 @@
             </div>
             <div>
                 <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
-                <student-detail v-if="isViewDetail" @notViewDetail="isViewDetail=false" :student_detail="student_detail" @save-edit="saveEditStudent"/> 
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/>
                 <form-student v-if="isShow" @close-popup="isShow=false" @add-student="addNewStudent"/>
             </div>

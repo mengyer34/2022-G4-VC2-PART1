@@ -1,6 +1,6 @@
 <template>
         <div class="bg-[#000000b9] fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex ">
-            <div class="relative my-6 mx-auto max-w-3xl w-[40%] rounded bg-white">
+            <div class="relative my-6 mx-auto max-w-3xl w-[50%] rounded bg-white">
                 <!--content-->
                 <div
                 class="relative flex flex-col w-full outline-none focus:outline-none ">

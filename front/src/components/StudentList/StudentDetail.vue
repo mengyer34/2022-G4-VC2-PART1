@@ -11,9 +11,6 @@
 
             <div class="bg-[#ddd] p-3">
                 <div v-if="isEditSuccess" class="alert-success p-2 rounded bg-green-400 border border-green-500 text-white flex items-center justify-between">Edited student successfull
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5  h-5 cursor-pointer " @click="isEditSuccess=false">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m-15 0l15 15" />
-                    </svg>
                 </div>
                 <div class="flex mt-3">
                     <div class="rounded shadow bg-white shadow-gray-400 w-[26%] text-center relative p-2">
@@ -183,7 +180,6 @@ export default ({
                     if (this.filterStudentId(student_edited.personal_id)){
                         this.isInvalidPhoneNumber = false;
                         this.isClickEdit = false;
-                        this.isEditSuccess = true;
                         let new_update = {
                             first_name: student_edited.first_name,
                             last_name: student_edited.last_name,
@@ -195,6 +191,7 @@ export default ({
                             personal_id: student_edited.personal_id
                         }
                         this.detail_student_list = new_update;
+                        this.successAlert()
                         return this.$emit('save-edit',new_update,id);
                     }else{
                         alert("Personal Id already exist!")
@@ -207,7 +204,12 @@ export default ({
         getImage(imageName) {
             return url +'storage/image/' + imageName;
         },
-
+        successAlert() {
+            this.isEditSuccess = true;
+            setTimeout(() => {
+                this.isEditSuccess = false;
+            }, 3000);
+        },
         filterStudentId(id){
             let find = this.students.filter((student)=>student.personal_id == id && student.personal_id != this.student_detail.personal_id);
             let sms = true
