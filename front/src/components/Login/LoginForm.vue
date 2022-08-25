@@ -77,9 +77,8 @@ export default {
         async login(){
            await axios.post('login', {email: this.email, password: this.password})
            .then(res=>{
-                this.authStore.setToken(res.data.token)
                 this.$cookies.set('slms',res.data.token, {httpOnly: true});
-                // this.authStore.getUserInfo()
+                setTimeout(this.authStore.getUserInfo, 1000)
                 console.log(this.$cookies.get('slms'));
                 this.$router.push("/");
            })

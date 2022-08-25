@@ -8,7 +8,7 @@
                     Leave Types
                 </label>
                 <div class="inline-block relative w-full">
-                    <select class="block appearance-none w-full bg-white border border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isSelectedType }" v-model="leaveType" @change="isSelectedType = false">
+                    <select class="block appearance-none w-full bg-white border border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight  focus:shadow-outline focus:outline-[#0081CA]" :class="{'border-red-500 bg-red-100':isSelectedType }" v-model="leaveType" @change="isSelectedType = false">
                         <option  value="Family's event">Family's Event</option>
                         <option value="Sick">Sick</option>
                     </select>
@@ -26,7 +26,7 @@
                     <label class="block text-gray-700 text-[16px] mb-1">
                         Start Date
                     </label>
-                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isStartDate }" v-model="startDate" @change="isStartDate = false" type="date" :min="inValidDate">
+                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight  focus:shadow-outline focus:shadow-outline focus:outline-[#0081CA]" :class="{'border-red-500 bg-red-100':isStartDate }" v-model="startDate" @change="isStartDate = false" type="date" :min="inValidDate">
 
                 </div>
                 <div class="w-[50%] m-1">
@@ -34,7 +34,7 @@
                         Time of the day
                     </label>
                     <div class="inline-block relative w-full">
-                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isStartTime }" v-model="startTime" @change="isStartTime = false">
+                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight  focus:shadow-outline focus:outline-[#0081CA]" :class="{'border-red-500 bg-red-100':isStartTime }" v-model="startTime" @change="isStartTime = false">
                             <option selected value="Morning">Morning</option>
                             <option value="Afternoon">Afternoon</option>
                         </select>
@@ -53,7 +53,7 @@
                     <label class="block text-gray-700 text-[16px] mb-1">
                         End Date
                     </label>
-                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" :class="{'border-red-500 bg-red-100':isEndDate }" v-model="endDate"  @change="isEndDate = false" type="date" :min="startDate">
+                    <input class="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight  focus:shadow-outline focus:shadow-outline focus:outline-[#0081CA]" :class="{'border-red-500 bg-red-100':isEndDate }" v-model="endDate"  @change="isEndDate = false" type="date" :min="startDate">
 
                 </div>
 
@@ -62,7 +62,7 @@
                         Time of the day
                     </label>
                     <div class="inline-block relative w-full">
-                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-primary" :class="{'border-red-500 bg-red-100':isEndTime }" v-model="endTime"  @change="isEndTime = false">
+                        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight  focus:shadow-outline focus:outline-[#0081CA]" :class="{'border-red-500 bg-red-100':isEndTime }" v-model="endTime"  @change="isEndTime = false">
                             <option selected value="Morning" >Morning</option>
                             <option value="Afternoon" >Afternoon</option>
                         </select>
@@ -83,16 +83,16 @@
                 <label class="block text-gray-700 text-[16px] mb-1">
                     Drop an reasonable
                 </label>
-                <textarea placeholder="Give your reason here" :class="{'border-red-500 bg-red-100':isReasonInputted }" class="block resize-none h-16 required:border-red-500 border shadow appearance-none border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline focus:border-primary" @change="isReasonInputted = false"  v-model="reason" cols="30" rows="10"></textarea>
+                <textarea placeholder="Give your reason here" :class="{'border-red-500 bg-red-100':isReasonInputted }" class="block resize-none h-16 required:border-red-500 border shadow appearance-none border-gray-400 rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight  focus:shadow-outline focus:shadow-outline focus:outline-[#0081CA]" @change="isReasonInputted = false"  v-model="reason" cols="30" rows="10"></textarea>
                 <svg v-if="isReasonInputted" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                 </svg>
             </div>
             <div class="flex  w-full mt-6 justify-end">
-                <button class="bg-red-500 hover:bg-red-400  text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="$emit('closePopup')">
+                <button class="bg-red-500 hover:bg-red-400  text-white py-2 px-4 rounded  focus:shadow-outline" type="button" @click="$emit('closePopup')">
                     Cancel
                 </button>
-                <button class="bg-primary hover:bg-blue-500 mx-2 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="requestLeave">
+                <button class="bg-primary hover:bg-blue-500 mx-2 text-white py-2 px-4 rounded  focus:shadow-outline" type="button" @click="requestLeave">
                     Send Request
                 </button>
             </div>
@@ -146,7 +146,6 @@
                 if (this.leaveType == ""){
                     this.isSelectedType =  true;
                 }
-
                 this.isStartDate = false
                 if (this.startDate == null){
                     this.isStartDate = true
@@ -156,6 +155,7 @@
                 if (this.startTime == null){
                     this.isStartTime = true
                 }
+                
                 this.isEndDate = false
                 if (this.endDate == null){
                     this.isEndDate = true

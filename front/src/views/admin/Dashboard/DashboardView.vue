@@ -10,7 +10,7 @@
             </div>
             <div>
                 <div class="mt-3">
-                    <h1 class="font-bold text-lg uppercase mt-6 inline-block p-2 bg-white shadow rounded">DATA INFORMATION</h1>
+                    <h1 class="font-bold text-lg uppercase mt-6">DATA INFORMATION</h1>
                     <div  class="flex justify-between mt-2">
                         <div @click="viewStudent" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
@@ -23,7 +23,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex bg-white shadow w-[24%] rounded cursor-pointer">
+                        <div @click="viewLeaves('Pending')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]  ">
                                 <p class="text-3xl text-yellow-500 font-semibold">{{getPendingLeave.length}}</p>
                                 <p class="font-bold">Pending Leaves</p>
@@ -34,7 +34,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex bg-white shadow w-[24%] rounded cursor-pointer">
+                        <div @click="viewLeaves('Approved')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
                                 <p class="text-3xl text-green-700 font-semibold">{{getApprovedLeave.length}}</p>
                                 <p class="font-bold">Approved Leaves</p>
@@ -45,7 +45,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex bg-white shadow w-[24%] rounded cursor-pointer">
+                        <div @click="viewLeaves('Rejected')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%] ">
                                 <p class="text-3xl text-red-600 font-semibold">{{getRejectedLeave.length}}</p>
                                 <p class="font-bold">Rejected Leaves</p>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <h1 class="font-bold text-lg uppercase mt-6 inline-block p-2 bg-white shadow rounded">All student's leave History </h1>
+                    <h1 class="font-bold text-lg uppercase mt-6 ">All student's leave History </h1>
                     <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded mt-2">
                         <student-leave :leaves="leaveUserHistory" />
                     </div>
@@ -112,7 +112,11 @@ export default {
 
         viewStudent(){
             this.$router.push({name: "students"})
-        },  
+        },
+        
+        viewLeaves(status){
+            this.$router.push("leaves?filter="+status);
+        },
     },
     mounted() {
         this.getLeaveUser();

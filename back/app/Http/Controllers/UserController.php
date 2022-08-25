@@ -70,9 +70,9 @@ class UserController extends Controller
         if ($request->gender == "M") {
             $ProfileImage = 'male_default_profile.png';
         }
-        $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $ProfileImage;
+        $user->profile_image = $ProfileImage;
 
-        $user->personal_id = 20;
+        $user->personal_id = $request->personal_id;
         $user->save();
         
         $response = [
@@ -135,6 +135,7 @@ class UserController extends Controller
         $user->generation = $request->generation;
         $user->class = $request->class;
         $user->phone = $request->phone;
+        $user->personal_id = $request->personal_id;
         $user->save();
 
         $response = [
@@ -155,26 +156,21 @@ class UserController extends Controller
      */
     public function updateProfileImage(Request $request, User $user)
     {   
-        $validated = $request->validate([
-            'profile_image' => 'required|mimes:jpg,JPG,PNG,JPEG,png,jpeg'
-        ]);
-
-
-        if($user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/female_default_profile.png' 
-            && $user->profile_image !== 'http://127.0.0.1:8000/api/storage/image/male_default_profile.png') {
+        if($user->profile_image !== 'female_default_profile.png' 
+            && $user->profile_image !== 'male_default_profile.png') {
 
             $previousProfilePathInfo = pathinfo($user->profile_image);
             $previousProfileName = $previousProfilePathInfo['filename'] . '.' . $previousProfilePathInfo['extension'];
-            $previousProfileStoragePath = storage_path('images/' . $previousProfileName);
+            $previousProfileStoragePath = storage_path('profile_images/' . $previousProfileName);
             if(File::exists($previousProfileStoragePath)){
                 File::delete($previousProfileStoragePath);
             }
         }
 
-        $ProfileImage = $request->file('profile_image');
+        $ProfileImage = $request->profile_image;
         $imageName = date('F-j-Y-H-i-s-A') . $ProfileImage->getClientOriginalName();
-        $ProfileImage->move(storage_path('images'), $imageName);
-        $user->profile_image = 'http://127.0.0.1:8000/api/storage/image/' . $imageName; 
+        $ProfileImage->move(storage_path('profile_images'), $imageName);
+        $user->profile_image = $imageName;
         $user->save();
 
         $response = [
@@ -193,7 +189,7 @@ class UserController extends Controller
      */
     public function getProfileImage($imageName)
     {
-        $path = storage_path('images/' . $imageName);
+        $path = storage_path('profile_images/' . $imageName);
 
         if (File::exists($path)) {
             $file = File::get($path);

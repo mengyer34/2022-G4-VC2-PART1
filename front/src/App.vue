@@ -7,7 +7,7 @@
 
       <div :class="{'flex justify-center w-[70] ml-[13rem]': role == 'admin'}">
         <div :class="{'w-[100%]': role == 'admin'}">
-          <router-view @notifUpdated="notifUpdated" v-slot="{Component}">
+          <router-view @notifUpdated="notifUpdated" @user-updated="userUpdated" :user="user" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -59,6 +59,12 @@ export default {
   async created(){
     await this.userStore.getUserInfo()
   },
+  provide() {
+    return {
+      role: this.role,
+      user_id: this.user_id,
+    }
+  }
 }
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-        <div class="bg-[#00000080] fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex ">
+        <div class="bg-[#000000b9] fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex ">
             <div class="relative my-6 mx-auto max-w-3xl w-[40%] rounded bg-white">
                 <!--content-->
                 <div
@@ -63,20 +63,58 @@
                 </div>
                 <!--footer-->
                     <div class="p-4 flex justify-end" v-if="leave.status == 'Pending'">
-                        <button class="p-2  px-3 bg-red-500 text-white rounded">Reject</button>
-                        <button class="p-2 ml-2 px-3 bg-primary text-white rounded">Approve</button>
+                        <button @click="isAlert" class="p-2  px-3 bg-red-500 text-white rounded">Reject</button>
+                        <button @click="isApprove" class="p-2 ml-2 px-3 bg-primary text-white rounded">Approve</button>
                     </div>
                 </div>
-
+                <reject-dialog v-if="alert" @closePopup="alert=false" @reject="reject" />
+                <approve-dialog v-if="approve" @closes="approve=false, $emit('getLeaves'), $emit('close')" />
             </div>
         </div>
 </template>
 
 <script>
+import axios from '../../../axios-http.js'
+import RejectAlert from '../../Respone/RejectAlert.vue'
+import ApprovedAlert from '../../Respone/ApprovedAlert.vue'
+const url = 'http://localhost:8000/api/'
 export default ({
+    emits: ['close', 'getLeaves'],
     props: {
         leave: Object
+    },
+    components: {
+        'reject-dialog': RejectAlert,
+        'approve-dialog': ApprovedAlert,
+    },
+    data() {
+        return {
+            alert: false,
+            approve: false,
+        }
+    },
+    methods: {
+        isAlert() {
+            this.alert = true;
+        },
+        isApprove() {
+            this.approve = true;
+            let status = {status: "Approved"};
+            axios.put(url + "leaves/status/" + this.leave.id, status).then(res => {
+                console.log(res);
+            });
+        },
+        reject() {
+            let status = {status: "Rejected"};
+            axios.put(url + "leaves/status/" + this.leave.id, status).then(res => {
+                console.log(res);
+                this.$emit('getLeaves');
+                this.$emit('close');
+            });
+            this.alert = false;
+        }
     }
+    
 })
 
 </script>
