@@ -47,30 +47,40 @@
                         </svg>
                         Your Profile
                     </router-link>
-                    <router-link class="flex px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out focus:outline-none hover:bg-warning hover:text-white" to="/logout">
+                    <div class="flex px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out focus:outline-none hover:bg-warning hover:text-white" @click="submitLogout">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                         Sign out
-                    </router-link>
+                    </div>
                 </div>
             </li>
         </ul>
     </nav>
 </template>
 <script>
-import axios from "axios";
-const url = "http://127.0.0.1:8000/api/";
+import { useAuth } from '../../stores/useAuth'
 export default {
+    setup() {
+        const userStore = useAuth()
+        return {userStore}
+    },
     inject: ['role', 'user_id'],
     props: {
         user: String,
+        user_id: String,
         leaves: Array,
     },
     data() {
       return {
         show: false,
       };
+    },
+    methods: {
+        submitLogout(){
+            this.userStore.logout('slms')
+            this.$router.push('/login')
+        }
     },
 
     computed: {

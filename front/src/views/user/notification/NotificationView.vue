@@ -45,9 +45,8 @@
 </template>
 
 <script>
-import Axios from "axios"
+import axios from "../../../axios-http"
 import requestImformation from "../../../components/user/request/RequestInfortmation.vue"
-const url = 'http://localhost:8000/api/users_leaves/'
 export default {
     components: {
         "imformation-requestion": requestImformation
@@ -61,14 +60,14 @@ export default {
     },
     methods: {
         getData() {
-            Axios.get(url + this.user_id).then((res) => {
+            axios.get('users_leaves/' + this.user_id).then((res) => {
                 this.datas = res.data.data.leaves.reverse();
             })
         },
 
         seenNotification(leaveId) {
             this.$emit('notifUpdated');
-            Axios.put('http://127.0.0.1:8000/api/leaves/user_seen/' + leaveId);
+            axios.put('/leaves/user_seen/' + leaveId);
         }
     },
     computed: {

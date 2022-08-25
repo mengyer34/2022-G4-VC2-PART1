@@ -1,11 +1,14 @@
 import axios from "axios";
-
+import getCookie from "./helper/getCookie";
 
 export default axios.create({
-  baseURL: import.meta.env.VUE_APP_API_URL,
-  // withCredentials: true,
+  baseURL: "http://localhost:8000/api",
   headers: {
     "Content-type": "application/json",
+    'Authorization': 'Bearer ' +  getCookie('slms')
   }
 });
+
+
+
 

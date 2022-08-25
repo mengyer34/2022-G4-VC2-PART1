@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-component :user="user" :leaves="leaves"/>
+    <nav-component :user_id="userStore.userId" :user="user" :leaves="leaves"/>
 
     <div>
       <admin-nav-drawer v-if="role == 'admin'" />
@@ -23,14 +23,13 @@
 <script>
 import TheNavigation from './components/navigation/TheNavigation.vue';
 import AdminNavDrawer from './components/navigation/AdminNavDrawer.vue';
-import axios from "axios"
-const url = "http://127.0.0.1:8000/api/"
-import { useEmail } from './store/email';
+import axios from "./axios-http"
+import { useAuth } from './stores/useAuth';
 
 export default {
   setup() {
-    const emailStore = useEmail()
-    return { emailStore }
+    const userStore = useAuth()
+    return { userStore }
   },
   components: {
     'nav-component': TheNavigation,
@@ -38,34 +37,28 @@ export default {
   },
   data() {
     return {
-      role: 'admin',
+      role: 'user',
       user: [],
-      user_id: 1,
-      leaves: [],
-      email: useEmail().email
+      leaves: []
     }
   },
   methods: {
-    notifUpdated() {
-      axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
-        this.leaves = res.data.data.leaves;
-      })
-    }
+    // notifUpdated() {
+    //   axios.get("users_leaves/" + this.userStore.userId).then((res)=>{
+    //     this.leaves = res.data.data.leaves;
+    //   })
+    // },
+    async getUserInfo(){
+      const result = await axios.get('findUser')
+      const data = await result.data.data;
+      console.log(data);
+      this.userStore.userId = data.id;
+      this.userStore.userEmail = data.email;
+    },
   },
-  created(){
-    axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
-      this.user = res.data.data
-      this.emailStore.email = res.data.data.email
-      this.leaves = res.data.data.leaves;
-    })
+  async created(){
+    await this.userStore.getUserInfo()
   },
-  provide() {
-    return {
-      role: this.role,
-      user_id: this.user_id,
-      user: this.user
-    }
-  }
 }
 
 </script>

@@ -3,9 +3,11 @@
 </template>
 <script>
 import LoginForm from "../../components/Login/LoginForm.vue"
-    export default{
-        components: {
-            'login-form': LoginForm,
-        },
-  }
+
+export default{
+    
+    components: {
+        'login-form': LoginForm,
+    },
+}
 </script>

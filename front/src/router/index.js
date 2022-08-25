@@ -6,6 +6,8 @@ import ProfileView from '../views/user/profile/ProfileView.vue'
 import Dashboard from '../views/admin/Dashboard/DashboardView.vue'
 import Students from '../views/admin/Student/StudentView.vue'
 import LeaveList from '../views/admin/LeaveList/LeaveView.vue'
+import LoginView from '../views/login&signout/LoginView.vue'
+import { useAuth } from '../stores/useAuth';
 
 
 const routes = [
@@ -44,6 +46,12 @@ const routes = [
     name: 'leaves',
     component: LeaveList
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
+  { path: '/:pathMatch(.*)*', redirect: '/' }
 
 ]
 
@@ -51,5 +59,22 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
+router.beforeEach(async (to) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const auth = useAuth();
+  auth.getUserInfo()
+  if (authRequired && !auth.token) {
+      return '/login';
+  }
+});
+// router.beforeEach((to) => {
+//   const auth = useAuth();
+//   auth.getUserInfo();
+//   if (!auth.token) return '/login'
+// })
+
 
 export default router

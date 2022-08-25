@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Laravel\Passport\Token;
 
 
 class UserController extends Controller
@@ -288,21 +289,33 @@ class UserController extends Controller
         $newUser->phone = $request->phone;
         $newUser->profile_image = 'null';
         $newUser->save();
-        return response()->json(['message'=>'User registered successfully']);
+
+        // Token for login
+        $token = $newUser->createToken('myToken')->plainTextToken;
+        $response = [
+            'user'=>$newUser,
+            'token'=>$token,
+        ];
+
+        return response()->json($response);
     }
     public function login(Request $request){
-        if(!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message'=>'Invalid credentials']);
+        $user = User::where('email', $request->email)->first();
+        if(!$user || !Hash::check($request->password, $user->password))
+        {
+            return response('Login Invalid !!!', 503);
         }
-        $user = Auth::user();
-        $token = $user->createToken('token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60 * 24);
-        return response()->json(['message'=>'successful login', 'token' => $token], 200)
-            ->withCookie($cookie);
+        return response()->json(['token'=> $user->createToken($request->email)->plainTextToken]);
     }
     public function logout(Request $request){
-        $cookie = Cookie::forget('jwt');
-        return response()->json(['sms'=>'logged out'])->withCookie($cookie);;
+        auth()->user()->tokens()->delete();
+        return response()->json(['sms'=>'logged out']);
+    }
+
+    public function findUserByToken(User $request)
+    {
+        $user = auth('sanctum')->user();
+        return Response()->json(['data'=>$user]);
     }
 
 }
