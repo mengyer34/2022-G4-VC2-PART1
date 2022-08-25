@@ -2,6 +2,7 @@
     <div class="bg-[#000000b9]   fixed top-0 w-full h-screen">
         <div class="rounded mb-4 w-5/12 m-auto mt-28">
             <div class="form-header rounded-t-md bg-primary p-2 px-4 text-white flex items-center justify-between">
+                <p></p>
                 <p class="text-2xl ">Change Password</p>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" @click="$emit('hideForm')">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -98,18 +99,14 @@ export default ({
                 this.isMatch = true
             }
             if (this.checkFormValidation() && !this.isMatch){
-                // alert("Reset password sucessful")
                 var new_password = {confirm_old_password: this.current_password, new_password: this.new_password}
                 axios.put(url + 'users/reset_password/'  +  this.user_id,new_password).then((res)=>{
                     this.is_correct_pwd = res.data.success
                     this.error_status = res.data.error
-                    console.log(res.data);
                     if (this.is_correct_pwd){
                         return this.$emit("save-change",new_password);
                     }
-                    console.log(this.is_correct_pwd);
                 })
-                console.log(this.new_password);
             }
 
             
@@ -118,7 +115,7 @@ export default ({
             if (this.current_password == ""){
                 this.is_fill_current_password = true
             }
-            if (this.new_password == ""){
+            if (this.new_password == "" || this.new_password.length < 7){
                 this.is_fill_new_password = true
             }
             if (this.confirm_password == ""){
@@ -128,7 +125,6 @@ export default ({
             if (this.current_password && this.new_password && this.confirm_password ){
                 message =  true
             }
-
             return message
         }
     }

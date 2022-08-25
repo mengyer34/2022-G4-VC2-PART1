@@ -1,6 +1,13 @@
 <template>
+<<<<<<< HEAD
     <user-profile @user-updated="$emit('user-updated')" @resetPassword="toggleFormReset = true" :user="user" :amountOfLeaves="amountOfLeaves"/>
     <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :oldPassword="password" @save-change="saveChange"/>
+=======
+    <div>
+        <user-profile @resetPassword="toggleFormReset = true" :user="user" :amountOfLeaves="amountOfLeaves"/>
+        <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :oldPassword="password" @save-change="saveChange"/>
+    </div>
+>>>>>>> ab3c75026f5d7731c89093ed5bfd01d161f4045b
 </template>
 <script>
 import userProfile from "../../../components/user/profile/UserProfileComponent.vue"
