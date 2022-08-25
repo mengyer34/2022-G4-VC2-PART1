@@ -9,7 +9,7 @@
             <div class="p-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <img  :src="'./../../../public/profile_images/' + student_detail.profile_image" alt="" class="rounded-full w-16 h-16 object-fill">
+                        <img  :src="getImage(student_detail.profile_image)" alt="" class="rounded-full w-16 h-16 object-fill">
                         <p class="ml-2 font-bold text-lg">{{student_detail.first_name}} {{student_detail.last_name}}</p>
                     </div>
                     <div>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-
+const url = 'http://127.0.0.1:8000/api/'
 export default ({
     props: {
         student_detail: Object
@@ -118,6 +118,11 @@ export default ({
             }else{
                 this.isInvalidPhoneNumber = true;
             }
+        },
+
+        getImage(imageName) {
+            console.log('StuDetails');
+            return url +'storage/image/' + imageName;
         }
     }
 })
