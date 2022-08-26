@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <user-profile @user-updated="$emit('user-updated')" @resetPassword="toggleFormReset = true" :user="user" :amountOfLeaves="amountOfLeaves"/>
         <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :oldPassword="password" @save-change="saveChange"/>
     </div>

@@ -221,7 +221,7 @@ export default ({
     },
 })
 </script>
-<style scoped>
+<style>
     #card-detail ,.alert-success{
             -webkit-animation: fadeIn .6s ease-out;
             -moz-animation: fadeIn .6s ease-out;

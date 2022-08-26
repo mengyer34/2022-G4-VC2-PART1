@@ -1,5 +1,5 @@
 <template>
-    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0 z-50">
+    <nav class="flex w-full p-2 bg-primary  text-white justify-between items-center px-4 fixed top-0 z-50">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
                 <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
@@ -25,6 +25,7 @@
             </li>
         </ul>
         <ul class="flex space-x-5 relative">
+
             <li v-if="role !== 'admin'" >
                 <router-link class="relative" to="notifications">
                     <span class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
@@ -67,9 +68,9 @@ export default {
         leaves: Array,
     },
     data() {
-      return {
+    return {
         show: false,
-      };
+    };
     },
 
     computed: {
@@ -88,7 +89,7 @@ export default {
         getImage(imageName) {
             return url +'storage/image/' + imageName;
         }
-    }
+    },
 }
 </script>
 

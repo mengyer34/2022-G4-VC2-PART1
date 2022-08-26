@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="home w-10/12 mt-32 bg-gray-100 m-auto rounded shadow p-3 relative " v-cloak>
-            <div class=" w-full absolute text-3xl p-3 flex justify-center -top-16">
+            <div class=" w-full absolute text-3xl p-3 flex justify-center -top-[68px]">
                 <div class="inline-block rounded-t-full px-6 bg-gray-100 text-primary rounded shadow absolute text-2xl p-3 ">Student Information</div>
             </div>
             <div class=" p-3 ">
@@ -15,7 +15,7 @@
                             </label>
                             <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
                             <div class="flex justify-center">
-                                <img  :src="getImage(user.profile_image)" alt="" class="rounded-full w-32 h-32 object-fill">
+                                <img  :src="getImage(user.profile_image)" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-primary">
                             </div>
                                 <div class="font-bold text-2xl mt-2">{{user.first_name}} {{user.last_name}}</div>
                         </form>

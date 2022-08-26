@@ -2,12 +2,12 @@
   <div>
     <nav-component :user="user" :leaves="leaves"/>
 
-    <div>
+    <div >
       <admin-nav-drawer v-if="role == 'admin'" />
 
       <div :class="{'flex justify-center w-[70] ml-[13rem]': role == 'admin'}">
         <div :class="{'w-[100%]': role == 'admin'}">
-          <router-view @notifUpdated="notifUpdated" @user-updated="userUpdated" :user="user" v-slot="{Component}">
+          <router-view  @notifUpdated="notifUpdated" @user-updated="userUpdated" :user="user" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -42,7 +42,8 @@ export default {
       user: {},
       user_id: 1,
       leaves: [],
-      email: useEmail().email
+      email: useEmail().email,
+      isMode: true
     }
   },
   methods: {
@@ -64,6 +65,7 @@ export default {
       this.emailStore.email = res.data.data.email
       this.leaves = res.data.data.leaves;
     })
+    
   },
   provide() {
     return {
