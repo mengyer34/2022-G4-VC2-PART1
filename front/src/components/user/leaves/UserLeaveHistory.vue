@@ -6,11 +6,11 @@
                     <tr tabindex="0" class="focus:outline-none h-16 w-full text-sm leading-none text-gray-800 border-b-2 border-primary">
                         <th class="font-bold text-center pl-4">Reason</th>
                         <th class="font-bold text-center pl-12">Leave type</th>
-                        <th class="font-bold text-center pl-12">Start Date</th>
-                        <th class="font-bold text-center pl-20">End Date</th>
-                        <th class="font-bold text-center pl-20">Duration</th>
-                        <th class="font-bold text-center pl-16">Status</th>
-                        <th class="font-bold text-center pl-16">Request Date</th>
+                        <th class="font-bold text-center pl-10">Start Date</th>
+                        <th class="font-bold text-center pl-10">End Date</th>
+                        <th class="font-bold text-center pl-10">Duration</th>
+                        <th class="font-bold text-center pl-10">Status</th>
+                        <th class="font-bold text-center pl-10">Request Date</th>
                     </tr>
                 </thead>
                 <tbody v-if="leavesstatus.length > 0" class="w-full">
@@ -23,21 +23,21 @@
                         <td class="pl-12 text-center">
                             {{leave.leave_type}}
                         </td>
-                        <td class="pl-12">
+                        <td class="pl-10">
                             {{leave.start_date}} ({{leave.start_time}})
                         </td>
-                        <td class="pl-20">
+                        <td class="pl-10">
                             {{leave.end_date}} ({{leave.end_time}})
                         </td>
-                        <td class="pl-20 text-center">
+                        <td class="pl-10 text-center">
                             <p class="font-medium">{{leave.duration}}</p>
                         </td>
-                        <td class="pl-16">
+                        <td class="pl-10">
                             <div class="flex items-center">
                                 <span class="px-4 py-2 rounded-full text-white" :class="iscolor(leave)">{{leave.status}}</span>
                             </div>
                         </td>
-                        <td class="pl-16">
+                        <td class="pl-10">
                             <div class="flex items-center">
                                 <span>{{leave.created_at}}</span>
                             </div>
