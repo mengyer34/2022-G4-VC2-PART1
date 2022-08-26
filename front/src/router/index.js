@@ -67,7 +67,7 @@ router.beforeEach(async (to) => {
   const auth = useAuth();
   auth.getUserInfo()
   if (authRequired && !auth.token) {
-      return '/login';
+    return '/login';
   }
 });
 // router.beforeEach((to) => {

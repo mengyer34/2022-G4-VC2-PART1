@@ -14,16 +14,15 @@ export const useAuth = defineStore({
     setToken(token){
       this.token = token
     },
-    getUserInfo(){
+    async getUserInfo(){
       axios.get('findUser').then(res => {
-        let user = res.data.data;
-        if(user!==null){
-          this.userId = res.data.data.id;
-          this.userEmail = res.data.data.email;
-        }else{
-          console.log('not load yet')
-        }
+        this.userId = res.data.data.id;
+        this.userEmail = res.data.data.email;
+        console.log('fetched data!!!');
+        console.log(res.data.data);
+        this.user = res.data.data;
       })
+      console.log("not wait");
     },
     logout(value){
       document.cookie = `${value}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;

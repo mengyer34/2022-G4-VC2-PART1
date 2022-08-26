@@ -74,16 +74,25 @@ export default {
         }
     },
     methods: {
-        async login(){
-           await axios.post('login', {email: this.email, password: this.password})
+        login(){
+           axios.post('login', {email: this.email, password: this.password})
            .then(res=>{
-                this.$cookies.set('slms',res.data.token, {httpOnly: true});
-                setTimeout(this.authStore.getUserInfo, 1000)
+                this.$cookies.set('slms',res.data.token);
+                this.authStore.getUserInfo()
                 console.log(this.$cookies.get('slms'));
                 this.$router.push("/");
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
            })
         }
-    }
+    },
+    created(){
+        if(this.$cookies.get('slms')){
+            this.$router.push('/')
+        }
+        console.log(this.$route.path);
+    },
 }
 </script>
 
