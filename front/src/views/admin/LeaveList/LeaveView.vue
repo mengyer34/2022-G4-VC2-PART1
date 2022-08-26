@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import axios from '../../../axios-http.js'
+import axios from 'axios'
 import StudentLeaveList from '../../../components/StudentLeaveList.vue'
 import SearchBar from './../../../components/search/SearchBar.vue';
 const url = 'http://localhost:8000/api/'

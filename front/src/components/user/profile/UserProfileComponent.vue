@@ -116,7 +116,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import axios from '../../../axios-http';
     const url = 'http://127.0.0.1:8000/api/'
     import WarningAlert from "./alerts/WarningAlert.vue";
     import SuccessAlert from "./alerts/SuccessAlert.vue";
@@ -144,7 +144,7 @@
 
         methods: {
             getImage(imageName) {
-                return url +'storage/image/' + imageName;
+                return 'http://127.0.0.1:8000/api/' +'storage/image/' + imageName;
             },
 
             onSelectFile(event){
@@ -168,6 +168,7 @@
             saveUpload(){
                 let formData = new FormData();
                 formData.append('profile_image', this.image);
+                formData.append('_method', 'PUT');
 
                 this.onClosePopup();
                 axios.post(url + "users/reset_profile/" + this.user_id, formData).then((res)=>{

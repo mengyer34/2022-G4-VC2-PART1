@@ -7,8 +7,7 @@
 <script>
 import userProfile from "../../../components/user/profile/UserProfileComponent.vue"
 import resetPassword from "../../../components/user/profile/ResetPassword.vue"
-import axios from "axios"
-const url = "http://127.0.0.1:8000/api/"
+import axios from "../../../axios-http"
 export default {
     inject: ["user_id"],
     props: ['user'],
@@ -25,7 +24,8 @@ export default {
     },
         methods:{
             getProfileInfo(){
-                axios.get(url + 'users_leaves/'+this.user_id).then((res) => {
+                axios.get('users_leaves/'+this.user_id).then((res) => {
+                    this.user = res.data.data;
                     this.password = this.user.password
                     this.amountOfLeaves = this.user.leaves.length;
                 })

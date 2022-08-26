@@ -58,19 +58,21 @@
 
 
 <script>
-import axios from '../../../axios-http.js'
+import axios from '../../../axios-http'
 import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
 import requestForm from "../newRequest/RequestFormView.vue"
 import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
-const url = 'http://localhost:8000/api/users_leaves/'
+import { useAuth } from '../../../stores/useAuth'
 export default {
-
+    setup() {
+        const userStore = useAuth()
+        return { userStore }
+    },
     components: {
         'leave-history': UserLeaveHistory,
         "form-requestion": requestForm,
         "request-sent":requestSent,
     },
-    inject: ['user_id'],
     data() {
         return {
             status: "All",
@@ -81,8 +83,8 @@ export default {
         }
     },
     methods: {
-        getLeave() {
-            axios.get(url + this.user_id).then(res => {
+         async getLeave() { 
+            await axios.get('users_leaves/' + 1).then(res => {
                 this.leaves = res.data.data.leaves.reverse();
             })
         },

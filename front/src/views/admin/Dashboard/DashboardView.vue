@@ -70,7 +70,7 @@
     </div>
 </template>
 <script>
-import axios from '../../../axios-http.js'
+import axios from 'axios'
 import StudentLeaveList from '../../../components/StudentLeaveList.vue'
 const url = 'http://localhost:8000/api/'
 export default {
