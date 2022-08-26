@@ -1,5 +1,5 @@
 <template>
-    <nav class="flex w-full p-2 bg-[#0081CA] text-white justify-between items-center px-4 fixed top-0 z-50">
+    <nav class="flex w-full p-2 bg-primary  text-white justify-between items-center px-4 fixed top-0 z-50">
         <ul @click="show=false">
             <li class="flex items-center space-x-2">
                 <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
@@ -25,6 +25,7 @@
             </li>
         </ul>
         <ul class="flex space-x-5 relative">
+
             <li v-if="role !== 'admin'" >
                 <router-link class="relative" to="notifications">
                     <span class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
@@ -34,7 +35,10 @@
                 </router-link>
             </li>
             <li @click="show=!show" class="flex space-x-2 cursor-pointer">
-                    <div class="w-8 h-8"><img :src="getImage(user.profile_image)" alt="" class=" w-[30px] h-[30px] rounded-full"></div>
+                    <div class="w-8 h-8">
+                        <img v-if="user.profile_image != undefined" :src="getImage" alt="" class=" w-[30px] h-[30px] rounded-full">
+                        <img v-else src="../../assets/loading_user.png" alt="" class=" w-[30px] h-[30px] rounded-full">
+                    </div>
                     <span>{{user.first_name}} {{user.last_name}}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -51,7 +55,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
-                        Sign out
+                        Sign out {{user_id}}
                     </div>
                 </div>
             </li>
@@ -60,29 +64,37 @@
 </template>
 <script>
 import { useAuth } from '../../stores/useAuth'
+import axios from "../../axios-http"
 export default {
     setup() {
         const userStore = useAuth()
         return {userStore}
     },
-    inject: ['role', 'user_id'],
+
     props: {
-        user: String,
-        user_id: String,
-        leaves: Array,
+        user_id: Number,
+        role: String
     },
+
     data() {
-      return {
-        show: false,
-      };
+        return {
+            show: false,
+            user: {},
+            leaves: [],
+        };
     },
+    
     methods: {
         submitLogout(){
             this.userStore.logout('slms')
             this.$router.push('/login')
         },
-        getImage(imageName) {
-            return 'http://127.0.0.1:8000/api/' +'storage/image/' + imageName;
+
+        getData() {
+            axios.get('users_leaves/' + this.user_id).then(res=> {
+                this.user = res.data.data;
+                this.leaves = res.data.data.leaves;
+            })
         }
     },
 
@@ -95,9 +107,23 @@ export default {
                 }
             });
             return countUnseen;
-        }
-    },
+        },
 
+
+        getImage() {
+            if (this.user.profile_image != undefined) {
+                return 'http://127.0.0.1:8000/api/' +'storage/image/' + this.user.profile_image;
+            } else {
+                return "";
+            }
+        },
+    },
+    
+    watch: {
+        user_id() {
+            this.getData();
+        },
+    },
 }
 </script>
 

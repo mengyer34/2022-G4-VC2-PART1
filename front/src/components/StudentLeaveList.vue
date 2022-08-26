@@ -28,7 +28,7 @@
                         </div>
                     </td>
                     <td class="text-center">
-                        <button class="bg-blue-500 hover:bg-blue-300 p-2.5 px-4 rounded text-white" @click="viewLeaveDetail(leave.id)" type="button" data-modal-toggle="defaultModal">
+                        <button class="bg-blue-500 hover:bg-blue-600 p-2.5 px-4 rounded text-white" @click="viewLeaveDetail(leave.id)" type="button" data-modal-toggle="defaultModal">
                             View Detail
                         </button>
                     </td>

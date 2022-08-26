@@ -13,7 +13,7 @@
                     <div class="flex">
                         <div class="flex justify-between">
                             <label for="filter-status" class="mx-3 font-medium"><span class="text-red-600">*</span>Filter by status:</label>
-                            <select v-model="filterStatusKey" id="filter-status" class="shadow-md w-44 rounded border border-stone-400 p-[0.4rem] focus:outline-none focus:border-primary">
+                            <select v-model="filterStatusKey" id="filter-status" class=" w-44 rounded border border-gray-400 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
                                 <option value="All">All</option>
                                 <option value="Rejected">Rejected</option>
                                 <option value="Approved">Approved</option>
@@ -22,7 +22,7 @@
                         </div>
                         <div class="flex justify-between">
                             <label for="filter-type" class="mx-3 font-medium"><span class="text-red-600">*</span>Filter by leave type:</label>
-                            <select v-model="filterLeaveTypeKey" id="filter-type" class="shadow-md w-44 rounded border border-stone-400 p-[0.4rem] focus:outline-none focus:border-primary">
+                            <select v-model="filterLeaveTypeKey" id="filter-type" class=" w-44 rounded border border-gray-400 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
                                 <option value="All">All</option>
                                 <option value="Sick">Sick</option>
                                 <option value="Family's events">Family's Event</option>
@@ -47,10 +47,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../../../axios-http.js'
 import StudentLeaveList from '../../../components/StudentLeaveList.vue'
 import SearchBar from './../../../components/search/SearchBar.vue';
-const url = 'http://localhost:8000/api/'
 
 export default {
     components: {
@@ -88,9 +87,8 @@ export default {
 
     methods: {
         getLeaves() {
-            axios.get(url + "leaves_user").then(res => {
+            axios.get("/leaves_user").then(res => {
                 this.leaves = res.data.data.reverse();
-                console.log("HI")
             })
         },
 

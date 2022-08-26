@@ -51,6 +51,7 @@ const routes = [
     name: 'login',
     component: LoginView
   },
+
   { path: '/:pathMatch(.*)*', redirect: '/' }
 
 ]

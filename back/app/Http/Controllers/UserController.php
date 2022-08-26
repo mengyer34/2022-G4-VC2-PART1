@@ -56,6 +56,32 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $getUserByEmail = User::where('email', $request->email)->first();
+        $getUserByPersonalId = User::where('personal_id', $request->personal_id)->first();
+        if ($getUserByEmail && $getUserByPersonalId){
+            $response = [
+                'success' => false,
+                'status' => 500,
+                'message' => 'Email and personal id already exist'
+            ];
+            return Response()->json($response, 500);
+        } 
+        if ($getUserByEmail){
+            $response = [
+                'email_error' => false,
+                'status' => 500,
+                'message' => 'Email already exist'
+            ];
+            return Response()->json($response, 500);
+        }
+        else if ($getUserByPersonalId ){
+            $response = [
+                'personal_id_error' => false,
+                'status' => 500,
+                'message' => 'Personal id already exist'
+            ];
+            return Response()->json($response, 500);
+        }
         $user = new User();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;

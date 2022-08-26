@@ -41,7 +41,7 @@
                                 v-model="password"
                                 id="password" type="password" placeholder="Password...">
                         </div>
-                        <a class="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800" href="#">
+                        <a class="inline-block cursor-pointer align-baseline text-sm text-blue-500 hover:text-blue-800" to="/forgot">
                             Forgot Password?
                         </a>
                     </div>
@@ -75,16 +75,16 @@ export default {
     },
     methods: {
         login(){
-           axios.post('login', {email: this.email, password: this.password})
-           .then(res=>{
-                this.$cookies.set('slms',res.data.token);
-                this.authStore.getUserInfo()
-                console.log(this.$cookies.get('slms'));
-                this.$router.push("/");
-                setTimeout(function () {
-                    window.location.reload();
-                }, 1000);
-           })
+            axios.post('login', {email: this.email, password: this.password})
+            .then(res=>{
+                    this.$cookies.set('slms',res.data.token);
+                    this.authStore.getUserInfo();
+                    console.log(this.$cookies.get('slms'));
+                    this.$router.push("/");
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+            })
         }
     },
     created(){
