@@ -1,13 +1,13 @@
 <template>
   <div>
-    <nav-component :user_id="userStore.userId" :user="user" :leaves="leaves"/>
+    <nav-component :role="role" :user_id="userStore.userId" ref="navigation" />
 
     <div >
       <admin-nav-drawer v-if="role == 'admin'" />
 
       <div :class="{'flex justify-center w-[70] ml-[13rem]': role == 'admin'}">
         <div :class="{'w-[100%]': role == 'admin'}">
-          <router-view  @notifUpdated="notifUpdated" @user-updated="userUpdated" :user="user" v-slot="{Component}">
+          <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -31,26 +31,17 @@ export default {
     const userStore = useAuth()
     return { userStore }
   },
+
   components: {
     'nav-component': TheNavigation,
     'admin-nav-drawer': AdminNavDrawer
   },
   data() {
     return {
-      role: 'admin',
-      user: {},
-      user_id: 1,
-      leaves: [],
-      // email: useEmail().email,
-      isMode: true
+      role: 'student',
     }
   },
   methods: {
-    // notifUpdated() {
-    //   axios.get("users_leaves/" + this.userStore.userId).then((res)=>{
-    //     this.leaves = res.data.data.leaves;
-    //   })
-    // },
     async getUserInfo(){
       const result = await axios.get('findUser')
       const data = await result.data.data;
@@ -68,17 +59,7 @@ export default {
   },
   async created(){
     await this.userStore.getUserInfo()
-    // if(this.$cookies.get('slms') && this.$route.path == '/login'){
-    //   this.$router.push('/')
-    // }
-    // console.log(this.$route.path);
   },
-  provide() {
-    return {
-      role: this.role,
-      user_id: this.user_id,
-    }
-  }
 }
 
 </script>

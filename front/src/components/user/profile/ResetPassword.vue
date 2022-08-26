@@ -64,14 +64,15 @@
 </template>
 
 <script>
-import axios from "axios"
-const url = "http://127.0.0.1:8000/api/"
+import axios from '../../../axios-http';
 export default ({
     props: {
-        oldPassword: String
+        oldPassword: String,
+        user_id: Number,
     },
+
     emits: ["save-change"],
-    inject: ['user_id'],
+
     data() {
         return {
             password: "password",
@@ -100,12 +101,13 @@ export default ({
             }
             if (this.checkFormValidation() && !this.isMatch){
                 var new_password = {confirm_old_password: this.current_password, new_password: this.new_password}
-                axios.put(url + 'users/reset_password/'  +  this.user_id,new_password).then((res)=>{
+                axios.put('users/reset_password/'  +  this.user_id,new_password).then((res)=>{
                     this.is_correct_pwd = res.data.success
                     this.error_status = res.data.error
                     if (this.is_correct_pwd){
                         return this.$emit("save-change",new_password);
                     }
+                    console.log('run reset');
                 })
             }
 

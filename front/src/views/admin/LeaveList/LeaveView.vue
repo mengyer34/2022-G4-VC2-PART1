@@ -47,10 +47,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../../../axios-http.js'
 import StudentLeaveList from '../../../components/StudentLeaveList.vue'
 import SearchBar from './../../../components/search/SearchBar.vue';
-const url = 'http://localhost:8000/api/'
 
 export default {
     components: {
@@ -88,9 +87,8 @@ export default {
 
     methods: {
         getLeaves() {
-            axios.get(url + "leaves_user").then(res => {
+            axios.get("/leaves_user").then(res => {
                 this.leaves = res.data.data.reverse();
-                console.log("HI")
             })
         },
 

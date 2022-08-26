@@ -78,8 +78,8 @@
                             <option value="A">A</option>
                             <option value="B">B</option>
                             <option value="C">C</option>
-                            <option value="WEBA">WEB A</option>
-                            <option value="WEBB">WEB B</option>
+                            <option value="WEB A">WEB A</option>
+                            <option value="WEB B">WEB B</option>
                             <option value="SNA">SNA</option>
                         </select>
                             <svg class="fill-current absolute right-2 text-gray-500 top-10 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -139,7 +139,6 @@
 
 <script>
 import axios from "../../axios-http"
-const url = 'http://localhost:8000/api/'
 export default {
     emits: ['add-student'],
     data() {
@@ -178,6 +177,7 @@ export default {
                 random_string += chars.substring(rnum, rnum + 1);
             }
             this.password = random_string;
+            console.log(this.password);
         },
         addStudent() {
             if (this.checkFormValidation()) {
@@ -193,7 +193,7 @@ export default {
                     class: this.choose_class,
                     phone: this.phone
                 }
-                axios.post(url + 'users', newStudent).then((res)=>{
+                axios.post('users', newStudent).then((res)=>{
                     return this.$emit('add-student')
                 }).catch((error)=>{
                     console.log(error.response.data);

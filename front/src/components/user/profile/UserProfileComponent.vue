@@ -14,9 +14,10 @@
                                 </svg>
                             </label>
                             <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
-                            <div class="flex justify-center">
-                                <img  :src="getImage(user.profile_image)" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-primary">
-                            </div>
+                                <div class="w-32 h-32 flex items-center justify-center m-auto">
+                                    <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill">
+                                    <img v-else src="../../../assets/loading_user.png" alt="" class="rounded-full w-32 h-32 object-fill">
+                                </div>
                                 <div class="font-bold text-2xl mt-2">{{user.first_name}} {{user.last_name}}</div>
                         </form>
                     </div>  
@@ -35,9 +36,9 @@
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Gender</div>
-
                                     <div  class="ml-16 inline-block text-gray-500">{{user.gender}}</div>
                                 </div>
+                        
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Tel</div>
                                     
@@ -117,7 +118,6 @@
 
 <script>
     import axios from '../../../axios-http';
-    const url = 'http://127.0.0.1:8000/api/'
     import WarningAlert from "./alerts/WarningAlert.vue";
     import SuccessAlert from "./alerts/SuccessAlert.vue";
     export default {
@@ -126,10 +126,10 @@
             'success-alert': SuccessAlert,
         },
         props: {
-            user: Object,
+            user_id: Number,
+            user: {},
             amountOfLeaves: Number
         },
-        inject: ['user_id'],
 
         data(){
             return {
@@ -142,11 +142,17 @@
             }
         },
 
-        methods: {
-            getImage(imageName) {
-                return 'http://127.0.0.1:8000/api/' +'storage/image/' + imageName;
+        computed: {
+            getImage() {
+                if (this.user.profile_image != undefined) {
+                    return 'http://127.0.0.1:8000/api/' +'storage/image/' + this.user.profile_image;
+                } else {
+                    return "";
+                }
             },
+        },
 
+        methods: {
             onSelectFile(event){
                 let fileExtension = event.target.files[0].name.split('.').pop();
                 if (this.allowImageExtension.includes(fileExtension.toLowerCase())) {
@@ -171,8 +177,8 @@
                 formData.append('_method', 'PUT');
 
                 this.onClosePopup();
-                axios.post(url + "users/reset_profile/" + this.user_id, formData).then((res)=>{
-                    this.$emit('user-updated');
+                axios.post("users/reset_profile/" + this.user_id, formData).then((res)=>{
+                    this.$emit('update-nav');
                     this.successAlert();
                 })
             },

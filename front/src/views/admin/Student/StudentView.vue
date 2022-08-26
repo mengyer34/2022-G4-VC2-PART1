@@ -66,7 +66,7 @@ export default {
     },
     computed: {
         batchFilter() {
-            if (this.search != '') {
+            if (this.searchKeyword != '') {
                 if (this.batch != 'All') {
                     return this.students.filter(student => student.generation == this.batch && (student.first_name.toLowerCase().includes(this.searchKeyword.toLowerCase()) || student.last_name.toLowerCase().includes(this.searchKeyword.toLowerCase())))
                 }else {
@@ -83,12 +83,12 @@ export default {
     },
     methods: {
         getStudent() {
-            axios.get(url + 'users_leaves').then(res => {
+            axios.get('users_leaves').then(res => {
                 this.students = res.data.data.reverse();
             })
         },   
         deleteStudent() {
-            axios.delete(url + 'users/' + this.id).then(res => {
+            axios.delete('/users/' + this.id).then(res => {
                 this.getStudent();
             })
             this.isPop = !this.isPop;
@@ -105,7 +105,7 @@ export default {
             this.isViewDetail = true
         },
         saveEditStudent(object,id){
-            axios.put(url + "users/" + id,object).then((res)=>{
+            axios.put("/users/" + id,object).then((res)=>{
                 this.getStudent()
             })
         },

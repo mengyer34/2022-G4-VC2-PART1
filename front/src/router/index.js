@@ -7,7 +7,6 @@ import Dashboard from '../views/admin/Dashboard/DashboardView.vue'
 import Students from '../views/admin/Student/StudentView.vue'
 import LeaveList from '../views/admin/LeaveList/LeaveView.vue'
 import LoginView from '../views/login&signout/LoginView.vue'
-import ForgotPasswordView from '../views/login&signout/ForgotPasswordView.vue'
 import { useAuth } from '../stores/useAuth';
 
 
@@ -52,11 +51,7 @@ const routes = [
     name: 'login',
     component: LoginView
   },
-  {
-    path: '/forgot',
-    name: 'forgot',
-    component: ForgotPasswordView
-  },
+
   { path: '/:pathMatch(.*)*', redirect: '/' }
 
 ]

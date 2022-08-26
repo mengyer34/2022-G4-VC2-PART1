@@ -68,6 +68,9 @@ export default {
         const userStore = useAuth()
         return { userStore }
     },
+
+    props: ['user_id'],
+
     components: {
         'leave-history': UserLeaveHistory,
         "form-requestion": requestForm,
@@ -84,7 +87,7 @@ export default {
     },
     methods: {
          async getLeave() { 
-            await axios.get('users_leaves/' + 1).then(res => {
+            await axios.get('users_leaves/' + this.user_id).then(res => {
                 this.leaves = res.data.data.leaves.reverse();
             })
         },
@@ -104,8 +107,17 @@ export default {
         },
         
     },
+
+    watch: {
+        user_id() {
+            this.getLeave();
+        }
+    },
+    
     mounted() {
-        this.getLeave();
+        if (this.user_id) {
+            this.getLeave();
+        }
     },
 }
 </script>
