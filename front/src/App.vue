@@ -53,6 +53,10 @@ export default {
   },
   async created(){
     await this.userStore.getUserInfo()
+    // if(this.$cookies.get('slms') && this.$route.path == '/login'){
+    //   this.$router.push('/')
+    // }
+    // console.log(this.$route.path);
   },
 }
 
