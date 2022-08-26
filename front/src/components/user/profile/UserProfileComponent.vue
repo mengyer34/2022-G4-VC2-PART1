@@ -8,7 +8,8 @@
                 <div class="user-profile flex relative">
                     <form >
                         <div class="w-24 h-24 flex items-center justify-center">
-                            <img  :src="getImage(user.profile_image)" alt="" class="rounded-full w-20 h-20 object-fill">
+                            <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-20 h-20 object-fill">
+                            <img v-else src="../../../assets/loading_user.png" alt="" class="rounded-full w-20 h-20 object-fill">
                         </div>
                         <label for="file_input">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute top-16 hover:scale-110 cursor-pointer left-16 bg-slate-300 p-1 text-3xl rounded-full" viewBox="0 0 20 20" fill="currentColor" >
@@ -105,7 +106,6 @@
 </template>
 <script>
     import axios from '../../../axios-http';
-    const url = 'http://127.0.0.1:8000/api/'
     import WarningAlert from "./alerts/WarningAlert.vue";
     import SuccessAlert from "./alerts/SuccessAlert.vue";
     export default {
@@ -114,10 +114,10 @@
             'success-alert': SuccessAlert,
         },
         props: {
-            user: Object,
+            user_id: Number,
+            user: {},
             amountOfLeaves: Number
         },
-        inject: ['user_id'],
 
         data(){
             return {
@@ -130,11 +130,17 @@
             }
         },
 
-        methods: {
-            getImage(imageName) {
-                return 'http://127.0.0.1:8000/api/' +'storage/image/' + imageName;
+        computed: {
+            getImage() {
+                if (this.user.profile_image != undefined) {
+                    return 'http://127.0.0.1:8000/api/' +'storage/image/' + this.user.profile_image;
+                } else {
+                    return "";
+                }
             },
+        },
 
+        methods: {
             onSelectFile(event){
                 let fileExtension = event.target.files[0].name.split('.').pop();
                 if (this.allowImageExtension.includes(fileExtension.toLowerCase())) {
@@ -160,8 +166,8 @@
                 formData.append('_method', 'PUT');
 
                 this.onClosePopup();
-                axios.post(url + "users/reset_profile/" + this.user_id, formData).then((res)=>{
-                    this.$emit('user-updated');
+                axios.post("users/reset_profile/" + this.user_id, formData).then((res)=>{
+                    this.$emit('update-nav');
                     this.successAlert();
                 })
             },

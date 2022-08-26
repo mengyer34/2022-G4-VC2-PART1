@@ -46,13 +46,15 @@ export default {
     components: {
         "imformation-requestion": requestImformation
     },
-    inject: ['user_id'],
-    data() {
 
+    props: ['user_id'],
+
+    data() {
         return {
             datas: [],
         }
     },
+    
     methods: {
         getData() {
             axios.get('users_leaves/' + this.user_id).then((res) => {
@@ -69,18 +71,28 @@ export default {
                         }
                     });
                     
-                    this.$emit('notifUpdated');
+                    this.$emit('update-nav');
                 }
             });
         }
     },
+
     computed: {
         dataOfImformation() {
             return this.datas.filter(data => data.status != "Pending");
         },
     },
-    mounted() {
-        this.getData();
+
+    watch: {
+        user_id() {
+            this.getData();
+        }
+    },
+
+    created() {
+        if (this.user_id) {
+            this.getData();
+        }
     }
 }                                                                           
 </script>
