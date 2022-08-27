@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('/leaves/reject/{id}', [LeaveController::class, 'reject'])->name('request.reject');
 Route::get('/leaves/approve/{id}', [LeaveController::class, 'approve'])->name('request.approve');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

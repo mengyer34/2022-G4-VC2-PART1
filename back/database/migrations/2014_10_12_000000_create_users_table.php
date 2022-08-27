@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('class');
             $table->string('profile_image');
             $table->string('phone');
+            $table->string('role')->default('user');
             $table->rememberToken();
             $table->timestamps();
         });
