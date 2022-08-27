@@ -21,5 +21,5 @@ class Admin extends Authenticatable
         'profile_image'
     ];
 
-    protected $hidden = ['password',  'remember_token', 'role'];
+    protected $hidden = ['password',  'remember_token'];
 }

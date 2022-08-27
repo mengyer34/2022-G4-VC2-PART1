@@ -86,7 +86,6 @@ export default {
   name: "regular-modal",
   props: {
     'datas': Object
-
   },
   data() {
     return {

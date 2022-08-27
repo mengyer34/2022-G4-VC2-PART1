@@ -77,7 +77,6 @@
 import axios from '../../../axios-http.js'
 import RejectAlert from '../../Respone/RejectAlert.vue'
 import ApprovedAlert from '../../Respone/ApprovedAlert.vue'
-const url = 'http://localhost:8000/api/'
 export default ({
     emits: ['close', 'getLeaves'],
     props: {
@@ -100,13 +99,13 @@ export default ({
         isApprove() {
             this.approve = true;
             let status = {status: "Approved"};
-            axios.put(url + "leaves/status/" + this.leave.id, status).then(res => {
+            axios.put("leaves/status/" + this.leave.id, status).then(res => {
                 console.log(res);
             });
         },
         reject() {
             let status = {status: "Rejected"};
-            axios.put(url + "leaves/status/" + this.leave.id, status).then(res => {
+            axios.put("leaves/status/" + this.leave.id, status).then(res => {
                 console.log(res);
                 this.$emit('getLeaves');
                 this.$emit('close');

@@ -71,11 +71,6 @@ router.beforeEach(async (to) => {
     return '/login';
   }
 });
-// router.beforeEach((to) => {
-//   const auth = useAuth();
-//   auth.getUserInfo();
-//   if (!auth.token) return '/login'
-// })
 
 
 export default router

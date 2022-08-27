@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AuthenticationController;
 
 
 /*
@@ -29,15 +30,16 @@ Auth::routes();
 
 
 // Register, Login
+Route::post('/account/login', [AuthenticationController::class, 'loginAccount']);
+Route::get('/account/find', [AuthenticationController::class, 'getInfoByToken']);
 Route::post('/register', [UserController::class, 'register']); /* The route to register the user */
-Route::post('/login', [UserController::class, 'login']); /* The route to login the user */
-Route::get('/findUser', [UserController::class, 'findUserByToken']); /* The route to login the user */
 Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.user']);
+// Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.admin']);
 
 
 // Admin Controller 
-Route::post('/admins', [AdminController::class, 'store'])->middleware('restrictothers'); /* The route to create a new admin (By admin) */
-Route::post('/admins/login', [AdminController::class, 'login']); /* The route to delete a admin */
+// Route::post('/admins', [AdminController::class, 'store'])->middleware('restrictothers'); /* The route to create a new admin (By admin) */
+Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
 
 Route::group(['middleware'=> ['auth:sanctum', 'type.admin']], function(){
     Route::get('/admins', [AdminController::class, 'index']); /* The route to index the user */ 
@@ -48,8 +50,9 @@ Route::group(['middleware'=> ['auth:sanctum', 'type.admin']], function(){
     Route::get('/admin', [AdminController::class, 'findAdminByToken']); /* The route to delete a admin */
 });
 
+// Route::get('/leaves_user', [LeaveController::class, 'getLeavesUser'])->middleware(['auth:sanctum']); /* The route to get all leaves with belonged user */
 // Leaves routes
-Route::group(['middleware'=> ['auth:sanctum', 'type.user']], function(){ 
+Route::group(['middleware'=> ['auth:sanctum']], function(){ 
     Route::get('/leaves', [LeaveController::class, 'index']); /* The route to get all leaves */
     Route::get('/leaves_user', [LeaveController::class, 'getLeavesUser']); /* The route to get all leaves with belonged user */
     Route::get('/leaves/{leave}', [LeaveController::class, 'show']); /* The route to get one leave */
@@ -76,3 +79,4 @@ Route::group(['middleware'=> ['auth:sanctum']], function(){
     Route::put('/users/reset_password/{user}', [UserController::class, 'updatePassword']); /* The route to update a user’s password (By user) */
     Route::delete('/users/{user}', [UserController::class, 'destroy']); /* The route to delete a user */
 });
+Route::get('/storage/image/{imageNname}', [UserController::class, 'getProfileImage']); /* The route to display a specific profile image */

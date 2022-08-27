@@ -42,7 +42,6 @@
 <script>
 import axios from '../axios-http.js'
 import leaveDetail from "./user/leaves/LeaveDetails.vue"
-const url = 'http://localhost:8000/api/'
 
 export default {
     props: ['leaves'],
@@ -69,7 +68,7 @@ export default {
         viewLeaveDetail(id){
             this.leave_detail = this.leaves.find((leave)=>leave.id == id);
             this.isViewDetail = true;
-            axios.put(url + "leaves/admin_seen/" + id).then(res => {
+            axios.put("leaves/admin_seen/" + id).then(res => {
                 console.log(res);
                 this.$emit('getLeaves');
             });

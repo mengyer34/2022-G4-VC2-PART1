@@ -321,24 +321,8 @@ class UserController extends Controller
 
         return response()->json($response);
     }
-    public function login(Request $request){
-        $user = User::where('email', $request->email)->first();
-        $user->tokens()->delete();
-        if(!$user || !Hash::check($request->password, $user->password))
-        {
-            return response('Login Invalid !!!', 503);
-        }
-        return response()->json(['token'=> $user->createToken('myToken', ['user'])->plainTextToken]);
-    }
     public function logout(Request $request){
         auth()->user()->tokens()->delete();
         return response()->json(['sms'=>'logged out']);
     }
-
-    public function findUserByToken(User $request)
-    {
-        $user = auth('sanctum')->user();
-        return Response()->json(['data'=>$user]);
-    }
-
 }

@@ -70,9 +70,8 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from '../../../axios-http'
 import StudentLeaveList from '../../../components/StudentLeaveList.vue'
-const url = 'http://localhost:8000/api/'
 export default {
 
     components: {
@@ -99,13 +98,13 @@ export default {
     },
     methods: {
         getLeaveUser() {
-            axios.get(url + "leaves_user").then(res => {
+            axios.get("leaves_user").then(res => {
                 this.leaveUsers = res.data.data.reverse();
                 this.leaveUserHistory = this.leaveUsers.filter((leave)=>leave.status != "Pending")
             })
         }, 
         getUser() {
-            axios.get(url + "users").then(res => {
+            axios.get("users").then(res => {
                 this.users = res.data.data;
             })
         }, 

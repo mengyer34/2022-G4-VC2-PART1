@@ -55,7 +55,7 @@
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Generation</div>
                                     
-                                    <div  class="ml-12 inline-block text-gray-500">{{user.generation}}</div>
+                                    <div  class="ml-12 inline-block text-gray-500">{{user.batch}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Class</div>

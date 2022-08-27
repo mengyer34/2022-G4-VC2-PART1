@@ -1,12 +1,12 @@
 <template>
   <div>
-    <nav-component :role="role" :user_id="userStore.userId" ref="navigation" />
+    <nav-component :role="userStore.role" :user_id="userStore.userId" ref="navigation" />
 
     <div >
-      <admin-nav-drawer v-if="role == 'admin'" />
+      <admin-nav-drawer v-if="userStore.role == 'admin'" />
 
-      <div :class="{'flex justify-center w-[70] ml-[13rem]': role == 'admin'}">
-        <div :class="{'w-[100%]': role == 'admin'}">
+      <div :class="{'flex justify-center ml-[13rem]': userStore.role == 'admin'}">
+        <div :class="{'w-[100%]': userStore.role == 'admin'}">
           <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <footer class="mt-24 text-center  text-sm" :class="{'w-full ': role == 'student', 'w-[70] ml-[13rem]': role=='admin'}">
+    <footer class="mt-24 text-center  text-sm" :class="{'w-full ': userStore.role == 'student', 'ml-[13rem]': userStore.role=='admin'}">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved.
     </footer>
   </div>
@@ -35,20 +35,6 @@ export default {
   components: {
     'nav-component': TheNavigation,
     'admin-nav-drawer': AdminNavDrawer
-  },
-  data() {
-    return {
-      role: 'student',
-    }
-  },
-  methods: {
-    async getUserInfo(){
-      const result = await axios.get('findUser')
-      const data = await result.data.data;
-      console.log(data);
-      this.userStore.userId = data.id;
-      this.userStore.userEmail = data.email;
-    },
   },
   created(){
     axios.get(url + "users_leaves/" + this.user_id).then((res)=>{

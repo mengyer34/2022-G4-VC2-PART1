@@ -42,7 +42,6 @@ import SearchBar from './../../../components/search/SearchBar.vue';
 import studentDetail from '../../../components/StudentList/StudentDetail.vue'
 import studentForm from "../../../components/StudentList/StudentForm.vue"
 import axios from '../../../axios-http.js'
-const url = 'http://localhost:8000/api/'
 export default {
     components: {
         'student-lists': StudentListView,

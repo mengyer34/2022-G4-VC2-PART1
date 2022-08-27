@@ -90,22 +90,4 @@ class AdminController extends Controller
         ];
         return Response()->json($response, 200);
     }
-    public function login(Request $request){
-        $admin = Admin::where('email', $request->email)->first();
-        $admin->tokens()->delete();
-        if (!$admin || !Hash::check($request->password, $admin->password)) {
-            return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
-        }
-        $token = $admin->createToken('myToken', ['admin'])->plainTextToken;
-        return response()->json(['message'=>'successful login', 'token' => $token, 'user' => $admin, 'role'=>Auth::guard()], 200);
-    }
-    
-    public function logout(Request $request){
-    }
-
-    public function findAdminByToken(Admin $request)
-    {
-        $admin = auth('sanctum')->user();
-        return Response()->json(['data'=>$admin]);
-    }
 }
