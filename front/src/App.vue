@@ -3,11 +3,11 @@
     <nav-component :role="role" :user_id="userStore.userId" ref="navigation" />
 
     <div >
-      <admin-nav-drawer v-if="role == 'admin'" />
+      <admin-nav-drawer v-if="role == 'admin'" :user_id="userStore.userId" ref="drawer" />
 
       <div :class="{'flex justify-center w-[70] ml-[13rem]': role == 'admin'}">
         <div :class="{'w-[100%]': role == 'admin'}">
-          <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" v-slot="{Component}">
+          <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" @update-drawer="$refs.drawer.getData()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      role: 'student',
+      role: 'admin',
     }
   },
   methods: {
