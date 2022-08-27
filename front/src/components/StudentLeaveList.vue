@@ -68,10 +68,10 @@ export default {
         viewLeaveDetail(id){
             this.leave_detail = this.leaves.find((leave)=>leave.id == id);
             this.isViewDetail = true;
-            axios.put("leaves/admin_seen/" + id).then(res => {
-                console.log(res);
-                this.$emit('getLeaves');
-            });
+            axios.put("leaves/admin_seen/" + id).then(
+                this.$emit('getLeaves'),
+                this.$emit('update-drawer')
+            );
         },
     },
 }

@@ -104,7 +104,7 @@
 
 <script>
     import axios from "../../../axios-http"
-    import { useAuth } from '../../../stores/useAuth';
+    import { useAuth } from "../../../stores/useAuth"
     export default({
         setup() {
             const userStore = useAuth()

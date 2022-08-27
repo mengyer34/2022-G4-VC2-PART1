@@ -52,7 +52,7 @@
                 <leave-history :leaves="leaves" :status="status" :type="type" class="print-container" />
             </div>
             <form-requestion v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
-            <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
+            <request-sent v-if="isSentRequest" :user_id="user_id" @addNewRequest="addNewRequest"/>
     </div>
 </template>
 

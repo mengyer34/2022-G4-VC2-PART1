@@ -3,11 +3,11 @@
     <nav-component :role="userStore.role" :user_id="userStore.userId" ref="navigation" />
 
     <div >
-      <admin-nav-drawer v-if="userStore.role == 'admin'" />
+      <admin-nav-drawer v-if="userStore.role == 'admin'" :user_id="userStore.userId" ref="drawer" />
 
-      <div :class="{'flex justify-center ml-[13rem]': userStore.role == 'admin'}">
+      <div :class="{'flex justify-center w-[70] ml-[13rem]': userStore.role == 'admin'}">
         <div :class="{'w-[100%]': userStore.role == 'admin'}">
-          <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" v-slot="{Component}">
+          <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" @update-drawer="$refs.drawer.getData()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -35,6 +35,20 @@ export default {
   components: {
     'nav-component': TheNavigation,
     'admin-nav-drawer': AdminNavDrawer
+  },
+  data() {
+    return {
+      role: 'admin',
+    }
+  },
+  methods: {
+    async getUserInfo(){
+      const result = await axios.get('findUser')
+      const data = await result.data.data;
+      console.log(data);
+      this.userStore.userId = data.id;
+      this.userStore.userEmail = data.email;
+    },
   },
   created(){
     axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
