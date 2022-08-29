@@ -51,8 +51,8 @@
                 </div>
                 <leave-history :leaves="leaves" :status="status" :type="type" class="print-container" />
             </div>
-            <form-requestion v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
-            <request-sent v-if="isSentRequest" :user_id="user_id" @addNewRequest="addNewRequest"/>
+            <form-request :user_id="user_id" :user_email="userStore.userEmail" v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
+            <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
     </div>
 </template>
 
@@ -73,7 +73,7 @@ export default {
 
     components: {
         'leave-history': UserLeaveHistory,
-        "form-requestion": requestForm,
+        "form-request": requestForm,
         "request-sent":requestSent,
     },
     data() {
