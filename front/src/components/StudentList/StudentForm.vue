@@ -59,30 +59,16 @@
                 <div class=" flex">
                     <div class="w-[50%] m-1 relative">
                         <label class="block text-gray-700 text-[15px] mb-1">Batch</label>
-                        <select
-                            class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
-                            :class="{ 'border-red-500 bg-red-100': is_generation }" v-model="generation"
+                        <input type="text" placeholder="e.g: 2022" class="shadow appearance-none border border-gray-400  rounded w-full py-2 px-2 text-l text-gray-700 mb-1 focus:outline-primary focus:shadow-outline"
+                            :class="{ 'border-red-500 bg-red-100': is_generation }" v-model="batch"
                             @change="is_generation = false">
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                        </select>
-                        <svg class="fill-current absolute right-2 text-gray-500 top-10 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        
                     </div>
                     <div class="w-[50%] m-1 relative">
                         <label class="block text-gray-700 text-[15px] mb-1">Class</label>
-
-                        <select 
-                            class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
+                        <input class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline" type="text" placeholder="e.g: WEB A "
                             :class="{ 'border-red-500 bg-red-100': is_choose_class }" v-model="choose_class"
                             @change="is_choose_class = false">
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="WEB A">WEB A</option>
-                            <option value="WEB B">WEB B</option>
-                            <option value="SNA">SNA</option>
-                        </select>
-                            <svg class="fill-current absolute right-2 text-gray-500 top-10 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                     </div>
                     <div class="w-[50%] m-1">
                         <label class="block text-gray-700 text-[15px] mb-1">Personal ID:
@@ -90,7 +76,7 @@
                         <input
                             class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                             id="number" type="text" placeholder="ID..."
-                            :class="{ 'border-red-500 bg-red-100': is_personal_id }" v-model="id"
+                            :class="{ 'border-red-500 bg-red-100': is_personal_id }" v-model="personal_id"
                             @change="is_personal_id = false">
                     </div>
                 </div>
@@ -148,10 +134,10 @@ export default {
             phone: '',
             first_name: '',
             last_name: '',
-            generation: '',
+            batch: '',
             choose_class: '',
             gender: '',
-            id: '',
+            personal_id: '',
             is_email: false,
             is_phone: false,
             is_first_name: false,
@@ -160,9 +146,8 @@ export default {
             is_choose_class: false,
             is_gender: false,
             is_personal_id: false,
-            student: [],
             sms_error_email: "",
-            sms_error: ""
+            sms_error: "",
         }
     },
     computed: {
@@ -180,57 +165,59 @@ export default {
             console.log(this.password);
         },
         addStudent() {
-            if (this.checkFormValidation()) {
-                this.generatePassword()
-                var newStudent = {
-                    first_name: this.first_name,
-                    last_name: this.last_name,
-                    personal_id: this.id,
-                    gender: this.gender,
-                    email: this.email,
-                    password: this.password,
-                    generation: this.generation,
-                    class: this.choose_class,
-                    phone: this.phone
-                }
-                axios.post('users', newStudent).then((res)=>{
-                    return this.$emit('add-student')
-                }).catch((error)=>{
-                    console.log(error.response.data);
-                    let error_status = error.response.data
-                    if (error_status.success == false){
-                        this.is_personal_id = true;
-                        this.is_email = true;
-                        alert("Email and personal id have already exist!");
+            this.sms_error =  ""
+            axios.get('users').then((res)=>{
+                console.log(res.data.data);
+                console.log(this.batch);
+                console.log(this.personal_id);
+                let findStudent = res.data.data.find((student)=>student.batch == this.batch && student.personal_id == this.personal_id)
+                // console.log(students);
+                    if (this.checkFormValidation()) {
+                        if (findStudent == undefined){ 
+                            this.generatePassword()
+                            var newStudent = {
+                                first_name: this.first_name,
+                                last_name: this.last_name,
+                                personal_id: this.personal_id,
+                                gender: this.gender,
+                                email: this.email,
+                                password: this.password,
+                                batch: this.batch,
+                                class: this.choose_class,
+                                phone: this.phone
+                            }
+                            console.log(newStudent);
+                            axios.post('register', newStudent).then((res)=>{
+                                return this.$emit('add-student')
+                            }).catch((error)=>{
+                                let error_status = error.response.data.errors
+                                    this.is_email = false
+                                    this.sms_error_email = ""
+                                // if (error_status.email[0]){
+                                //     this.is_email = true;
+                                //     this.sms_error_email = error_status.email[0]
+                                // }
+                            })
+                        } else {
+                                this.sms_error = "Personal id has already taken"
+                            }
+                    }else{
+                        alert("Not enough requirement");
                     }
-                    if ( error_status.email_error == false){
-                        this.is_email = true;
-                        this.sms_error_email = error_status.message;
-                    }else {
-                        this.is_email = false
-                    }
-                    if (error_status.personal_id_error == false) {
-                        this.is_personal_id = true;
-                        this.sms_error = error_status.message
-                    }else {
-                        this.is_personal_id = false
-                    }
-                })
-            } else {
-                alert("Not enough requirement");
-            }
+                
+            })
         },
         checkFormValidation() {
                 this.is_first_name = false
-            if (this.first_name == '') {
+            if (this.first_name.trim() == '') {
                 this.is_first_name = true
             }
                 this.is_last_name = false
-            if (this.last_name == '') {
+            if (this.last_name.trim() == '') {
                 this.is_last_name = true
             }
                 this.is_personal_id = false
-            if (this.id == '') {
+            if (this.personal_id.trim() == '') {
                 this.is_personal_id = true
             }
                 this.is_gender = false
@@ -238,27 +225,31 @@ export default {
                 this.is_gender = true
             }
                 this.is_generation = false
-            if (this.generation == '') {
+            if (this.batch.trim() == '') {
                 this.is_generation = true
             }
                 this.is_choose_class = false
-            if (this.choose_class == '') {
+            if (this.choose_class.trim() == '') {
                 this.is_choose_class = true
             }
                 this.is_phone = false
-            if (this.phone == '') {
+            if (this.phone.trim() == '') {
                 this.is_phone = true
             }
                 this.is_email = false
-            if (this.email == '') {
+                this.sms_error_email = ""
+            if (this.email.trim() == '' ) {
                 this.is_email = true
+            } else if (!(/@student.passerellesnumeriques.org\s*$/.test(this.email))){
+                this.is_email = true
+                this.sms_error_email = "Email must be passerellesnumeriques"
             }
             var message = true
             if (this.is_email || this.is_first_name || this.is_last_name || this.is_generation || this.is_gender  || this.is_choose_class || this.is_phone) {
                 message = false
             }
             return message
-        }
+        },
     }
 }
 </script>

@@ -21,12 +21,13 @@
         </button>
       </div>
     </div>
-    <form-requestion v-if="isShow" @closePopup="closePopup" @saveChange="saveChange"/>
+    <form-requestion v-if="isShow" @closePopup="closePopup" @add-leave="saveChange"/>
     <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
    </div>
 </template>
 
 <script>
+  import axios from '../../axios-http'
   import requestForm from "./newRequest/RequestFormView.vue"
   import requestSent from "../../components/user/request/RequestSentSuccess.vue"
   export default{
@@ -47,13 +48,16 @@
       closePopup(){
           this.isShow = false;
       },
-      addNewRequest(){
-        this.isSentRequest = false;
-        this.$router.push({name: "histories"})
-      },
-      saveChange(){
-        this.isSentRequest = true;
+      // addNewRequest(){
+      //   this.isSentRequest = false;
+      //   this.$router.push({name: "histories"})
+      // },
+      saveChange(newRequest){
+        // this.isSentRequest = true;
         this.isShow = false;
+        axios.post('leaves',newRequest).then((res)=>{
+          this.$router.push({name: "histories"})
+        })
       }
   }
   }

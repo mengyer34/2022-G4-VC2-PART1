@@ -51,8 +51,8 @@
                 </div>
                 <leave-history :leaves="leaves" :status="status" :type="type" class="print-container" />
             </div>
-            <form-request :user_id="user_id" :user_email="userStore.userEmail" v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
-            <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
+            <form-request  v-if="isShow" @close-popup="closePopup" @add-leave="saveChange"/>
+            <request-sent v-if="isSentRequest" :user_id="user_id" :user_email="userStore.userEmail" @addNewRequest="addNewRequest"/>
     </div>
 </template>
 
@@ -86,7 +86,7 @@ export default {
         }
     },
     methods: {
-         async getLeave() { 
+        async getLeave() { 
             await axios.get('users_leaves/' + this.user_id).then(res => {
                 this.leaves = res.data.data.leaves.reverse();
             })
@@ -97,9 +97,12 @@ export default {
         closePopup(){
             this.isShow = false;
         },
-        saveChange(){
+        saveChange(newRequest){
             this.isShow = false;
-            this.isSentRequest = true;
+            // this.isSentRequest = true;
+            axios.post('leaves',newRequest).then((res)=>{
+                this.getLeave();
+            })
         },
         addNewRequest(){
             this.isSentRequest = false;
