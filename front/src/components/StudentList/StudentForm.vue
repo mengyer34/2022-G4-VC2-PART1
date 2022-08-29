@@ -61,7 +61,7 @@
                         <label class="block text-gray-700 text-[15px] mb-1">Batch</label>
                         <select
                             class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
-                            :class="{ 'border-red-500 bg-red-100': is_generation }" v-model="generation"
+                            :class="{ 'border-red-500 bg-red-100': is_generation }" v-model="batch"
                             @change="is_generation = false">
                             <option value="2022">2022</option>
                             <option value="2023">2023</option>
@@ -148,7 +148,7 @@ export default {
             phone: '',
             first_name: '',
             last_name: '',
-            generation: '',
+            batch: '',
             choose_class: '',
             gender: '',
             id: '',
@@ -182,6 +182,7 @@ export default {
         addStudent() {
             if (this.checkFormValidation()) {
                 this.generatePassword()
+                const linkToNotification = new URL(location.href).origin
                 var newStudent = {
                     first_name: this.first_name,
                     last_name: this.last_name,
@@ -189,11 +190,12 @@ export default {
                     gender: this.gender,
                     email: this.email,
                     password: this.password,
-                    generation: this.generation,
+                    batch: this.batch,
                     class: this.choose_class,
-                    phone: this.phone
+                    phone: this.phone,
+                    linkTo: linkToNotification
                 }
-                axios.post('users', newStudent).then((res)=>{
+                axios.post('/account/create', newStudent).then((res)=>{
                     return this.$emit('add-student')
                 }).catch((error)=>{
                     console.log(error.response.data);
