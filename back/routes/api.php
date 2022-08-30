@@ -38,8 +38,8 @@ Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanc
 
 
 // Admin Controller 
-// Route::post('/admins', [AdminController::class, 'store'])->middleware('restrictothers'); /* The route to create a new admin (By admin) */
 Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
+// Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
 
 Route::group(['middleware'=> ['auth:sanctum', 'type.admin']], function(){
     Route::get('/admins', [AdminController::class, 'index']); /* The route to index the user */ 
