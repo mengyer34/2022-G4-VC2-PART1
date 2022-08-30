@@ -1,5 +1,6 @@
 <template>
     <div>
+        <success-alert v-if="sms_success" :content="'Reset password successfully'" />
         <user-profile @update-nav="getProfileInfo(); $emit('update-nav')" @resetPassword="toggleFormReset = true" :user_id="user_id" :user="user" :amountOfLeaves="amountOfLeaves"/>
         <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :user_id="user_id" :oldPassword="password" @save-change="saveChange"/>
     </div>
@@ -7,11 +8,13 @@
 <script>
 import userProfile from "../../../components/user/profile/UserProfileComponent.vue"
 import resetPassword from "../../../components/user/profile/ResetPassword.vue"
+import successAlert from "../../../components/user/profile/alerts/SuccessAlert.vue"
 import axios from "../../../axios-http"
 export default {
     components: {
         "user-profile": userProfile,
-        'form-resetPD': resetPassword
+        'form-resetPD': resetPassword,
+        'success-alert': successAlert
     },
 
     props: ['user_id'],
@@ -22,6 +25,7 @@ export default {
             amountOfLeaves: 0,
             password: null,
             user: {},
+            sms_success: false
         }
     },
 
@@ -33,11 +37,15 @@ export default {
                 this.amountOfLeaves = this.user.leaves.length;
             })
         },
-
-        saveChange(newPwd){
-            axios.put('users/reset_password/'  +  this.user_id,newPwd)
-            alert("Reset password success")
+        saveChange(){
             this.toggleFormReset = false;
+            this.successAlert()
+        },
+        successAlert() {
+            this.sms_success = true
+            setTimeout(() => {
+                this.sms_success = false;
+            }, 2000);
         },
     },
 

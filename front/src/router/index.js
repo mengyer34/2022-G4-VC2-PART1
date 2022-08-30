@@ -6,6 +6,7 @@ import ProfileView from '../views/user/profile/ProfileView.vue'
 import Dashboard from '../views/admin/Dashboard/DashboardView.vue'
 import Students from '../views/admin/Student/StudentView.vue'
 import LeaveList from '../views/admin/LeaveList/LeaveView.vue'
+import AdminProfile from '../views/admin/profile/AdminProfile.vue'
 import LoginView from '../views/login&signout/LoginView.vue'
 import { useAuth } from '../stores/useAuth';
 
@@ -50,6 +51,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminProfile
   },
 
   { path: '/:pathMatch(.*)*', redirect: '/' }

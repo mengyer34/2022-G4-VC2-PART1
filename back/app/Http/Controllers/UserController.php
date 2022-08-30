@@ -96,7 +96,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->gender = $request->gender;
         $user->email = $request->email;
-        $user->generation = $request->generation;
+        $user->batch = $request->batch;
         $user->class = $request->class;
         $user->phone = $request->phone;
         $user->personal_id = $request->personal_id;
@@ -115,7 +115,7 @@ class UserController extends Controller
      * Update the specified user profile image.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $user
+     * @param  $user
      * @return \Illuminate\Http\Response
      */
     public function updateProfileImage(Request $request, User $user)
@@ -123,9 +123,7 @@ class UserController extends Controller
         if($user->profile_image !== 'female_default_profile.png' 
             && $user->profile_image !== 'male_default_profile.png') {
 
-            $previousProfilePathInfo = pathinfo($user->profile_image);
-            $previousProfileName = $previousProfilePathInfo['filename'] . '.' . $previousProfilePathInfo['extension'];
-            $previousProfileStoragePath = storage_path('profile_images/' . $previousProfileName);
+            $previousProfileStoragePath = storage_path('profile_images/' . $user->profile_image);
             if(File::exists($previousProfileStoragePath)){
                 File::delete($previousProfileStoragePath);
             }
@@ -233,7 +231,7 @@ class UserController extends Controller
         $request -> validate([
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
-            'personal_id' => 'required|string|max:20|unique:users',
+            'personal_id' => 'required|string|max:20',
             'gender' => 'required|string|max:1',
             'email' => 'required|unique:users|max:255|email',
             'password' => 'required|min:8',

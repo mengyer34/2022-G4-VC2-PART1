@@ -7,7 +7,7 @@
 
       <div :class="{'flex justify-center w-[70] ml-[13rem]': userStore.role == 'admin'}">
         <div :class="{'w-[100%]': userStore.role == 'admin'}">
-          <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" @update-drawer="$refs.drawer.getData()" v-slot="{Component}">
+          <router-view :user_id="userStore.userId" :user_email="userStore.userEmail" @update-nav="$refs.navigation.getData()" @update-drawer="$refs.drawer.getData()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      role: 'admin',
+      // role: 'admin',
     }
   },
   methods: {
@@ -50,13 +50,7 @@ export default {
       this.userStore.userEmail = data.email;
     },
   },
-  created(){
-    axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
-      this.user = res.data.data
-      this.emailStore.email = res.data.data.email
-      this.leaves = res.data.data.leaves;
-    })
-  },
+
   async created(){
     await this.userStore.getUserInfo()
   },
