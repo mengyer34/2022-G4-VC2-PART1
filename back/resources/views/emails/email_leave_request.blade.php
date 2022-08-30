@@ -100,12 +100,18 @@
                 <td>{{ $details['leave_type'] }} </td>
               </tr>
               <tr>
+                <?php 
+                  $startDate = date("F j, Y", strtotime($details['start_date']));
+                ?>
                 <td class="title">Start Date</td>
-                <td>{{ $details['start_date'] }} {{$details['start_time']}}</td>
+                <td>{{ $startDate }} {{$details['start_time']}}</td>
               </tr>
               <tr>
+                <?php 
+                  $endDate = date("F j, Y", strtotime($details['end_date']));
+                ?>
                 <td class="title">End Date</td>
-                <td>{{ $details['end_date'] }} {{$details['end_time']}}</td>
+                <td>{{ $endDate }} {{$details['end_time']}}</td>
               </tr>
               <tr>
                 <td class="title">Status</td>
