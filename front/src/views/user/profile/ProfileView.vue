@@ -2,7 +2,7 @@
     <div>
         <success-alert v-if="sms_success" :content="'Reset password successfully'" />
         <user-profile @update-nav="getProfileInfo(); $emit('update-nav')" @resetPassword="toggleFormReset = true" :user_id="user_id" :user="user" :amountOfLeaves="amountOfLeaves"/>
-        <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :user_id="user_id" :oldPassword="password" @save-change="saveChange"/>
+        <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :user_id="user_id" @save-change="saveChange"/>
     </div>
 </template>
 <script>
@@ -23,7 +23,6 @@ export default {
         return {
             toggleFormReset: false,
             amountOfLeaves: 0,
-            password: null,
             user: {},
             sms_success: false
         }
