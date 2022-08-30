@@ -136,10 +136,10 @@
         },
         methods: {
             requestLeave(){
-                const linkToNotification = new URL(location.href).origin+'/notifications'
+                const linkToNotification = new URL(location.href).origin+'/leaves'
                 if (this.checkFormRequest()){
                     let newRequest = {user_id: this.user_id, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration, email: this.user_email, urlApp: linkToNotification}
-                    // console.log(newRequest)
+                    console.log(newRequest)
                     // axios.post('leaves', newRequest);
                     // // this.$router.push({name: "histories"})
                     return this.$emit('add-leave',newRequest)

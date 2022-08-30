@@ -32,7 +32,7 @@ Auth::routes();
 // Register, Login
 Route::post('/account/login', [AuthenticationController::class, 'loginAccount']);
 Route::get('/account/find', [AuthenticationController::class, 'getInfoByToken']);
-Route::post('/register', [UserController::class, 'register']); /* The route to register the user */
+Route::post('/account/create', [UserController::class, 'register']); /* The route to register the user */
 Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.user']);
 // Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.admin']);
 

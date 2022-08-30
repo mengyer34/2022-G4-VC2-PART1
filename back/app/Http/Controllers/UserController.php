@@ -7,9 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
-use Laravel\Passport\Token;
+use App\Http\Controllers\SendEmailController;
+
 
 
 class UserController extends Controller
@@ -254,6 +253,11 @@ class UserController extends Controller
         $newUser->profile_image = $ProfileImage;
         $newUser->save();
 
+        // send mail
+        (new SendEmailController)->sendMailLoginInfo($request);
+
+        // Token for login
+        $token = $newUser->createToken('myToken')->plainTextToken;
         $response = [
             'user'=>$newUser,
             'token'=>$token,

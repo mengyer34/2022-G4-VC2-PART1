@@ -59,7 +59,8 @@
                 <div class=" flex">
                     <div class="w-[50%] m-1 relative">
                         <label class="block text-gray-700 text-[15px] mb-1">Batch</label>
-                        <input type="text" placeholder="e.g: 2022" class="shadow appearance-none border border-gray-400  rounded w-full py-2 px-2 text-l text-gray-700 mb-1 focus:outline-primary focus:shadow-outline"
+                        <input type="text" placeholder="e.g: 2022" 
+                            class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                             :class="{ 'border-red-500 bg-red-100': is_generation }" v-model="batch"
                             @change="is_generation = false">
                         
@@ -166,46 +167,33 @@ export default {
         },
         addStudent() {
             this.sms_error =  ""
-            axios.get('users').then((res)=>{
-                console.log(res.data.data);
-                console.log(this.batch);
-                console.log(this.personal_id);
-                let findStudent = res.data.data.find((student)=>student.batch == this.batch && student.personal_id == this.personal_id)
-                // console.log(students);
-                    if (this.checkFormValidation()) {
-                        if (findStudent == undefined){ 
-                            this.generatePassword()
-                            var newStudent = {
-                                first_name: this.first_name,
-                                last_name: this.last_name,
-                                personal_id: this.personal_id,
-                                gender: this.gender,
-                                email: this.email,
-                                password: this.password,
-                                batch: this.batch,
-                                class: this.choose_class,
-                                phone: this.phone
-                            }
-                            console.log(newStudent);
-                            axios.post('register', newStudent).then((res)=>{
-                                return this.$emit('add-student')
-                            }).catch((error)=>{
-                                let error_status = error.response.data.errors
-                                    this.is_email = false
-                                    this.sms_error_email = ""
-                                // if (error_status.email[0]){
-                                //     this.is_email = true;
-                                //     this.sms_error_email = error_status.email[0]
-                                // }
-                            })
-                        } else {
-                                this.sms_error = "Personal id has already taken"
-                            }
-                    }else{
-                        alert("Not enough requirement");
+            if (this.checkFormValidation()) {
+                this.generatePassword()
+                const linkToNotification = new URL(location.href).origin
+                var newStudent = {
+                    first_name: this.first_name,
+                    last_name: this.last_name,
+                    personal_id: this.id,
+                    gender: this.gender,
+                    email: this.email,
+                    password: this.password,
+                    batch: this.batch,
+                    class: this.choose_class,
+                    phone: this.phone,
+                    linkTo: linkToNotification
+                }
+                axios.post('/account/create', newStudent).then((res)=>{
+                    return this.$emit('add-student')
+                }).catch((error)=>{
+                    console.log(error.response.data);
+                    let error_status = error.response.data
+                    if (error_status.success == false){
+                        this.is_personal_id = true;
+                        this.is_email = true;
+                        alert("Email and personal id have already exist!");
                     }
-                
-            })
+                })
+            }
         },
         checkFormValidation() {
                 this.is_first_name = false
@@ -249,10 +237,7 @@ export default {
                 message = false
             }
             return message
-        },
+        }
     }
 }
 </script>
-
-<style>
-</style>

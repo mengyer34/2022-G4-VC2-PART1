@@ -24,7 +24,7 @@
                     </svg>
                     Leaves
 
-                    <div class="ml-5 flex justify-center items-center">
+                    <div v-if="countUnseenNotification > 0" class="ml-5 flex justify-center items-center">
                         <small class="bg-red-400 text-white rounded-lg px-[0.30rem] border">{{ countUnseenNotification }}</small>
                     </div>
                 </router-link>

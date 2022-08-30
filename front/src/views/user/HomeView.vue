@@ -1,6 +1,6 @@
 <template>
    <div>
-     <div class="card w-8/12 m-auto mt-24 rounded-xl p-10 bg-white">
+     <div class="card w-8/12 m-auto mt-40 rounded-xl p-10 bg-white">
       <div class="card-header">
         <h1 class="text-3xl mb-5 font-bold">Student Leave Management System (SLMS)</h1>
       </div>
@@ -21,7 +21,7 @@
         </button>
       </div>
     </div>
-    <form-requestion v-if="isShow" @closePopup="closePopup" @add-leave="saveChange"/>
+    <form-requestion v-if="isShow" :user_id="user_id" :user_email="user_email" @closePopup="closePopup" @add-leave="saveChange"/>
     <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
    </div>
 </template>
@@ -31,9 +31,14 @@
   import requestForm from "./newRequest/RequestFormView.vue"
   import requestSent from "../../components/user/request/RequestSentSuccess.vue"
   export default{
+    
       components: {
           "form-requestion": requestForm,
           "request-sent":requestSent
+      },
+      props: {
+          user_id: Number,
+          user_email: String
       },
       data(){
         return {
@@ -48,18 +53,16 @@
       closePopup(){
           this.isShow = false;
       },
-      // addNewRequest(){
-      //   this.isSentRequest = false;
-      //   this.$router.push({name: "histories"})
-      // },
       saveChange(newRequest){
-        // this.isSentRequest = true;
-        this.isShow = false;
-        axios.post('leaves',newRequest).then((res)=>{
-          this.$router.push({name: "histories"})
-        })
-      }
-  }
+        this.isSentRequest = true;
+        this.closePopup()
+        axios.post('leaves',newRequest);
+      },
+      addNewRequest(){
+        this.isSentRequest = false;
+        this.$router.push({name: "histories"})
+      },
+  },
   }
 </script>
 
