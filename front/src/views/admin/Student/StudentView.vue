@@ -20,9 +20,6 @@
                         <div class="w-32 flex justify-end">
                             <button class="text-white bg-orange-500 py-2 px-4 rounded border-none" @click="showFormAddStudent">Add Student</button>
                         </div>
-                        <div class="w-32 flex justify-end">
-                            <button class="text-white bg-orange-500 py-2 px-4 rounded border-none" @click="downloadFile">Excell</button>
-                        </div>
 
                     </div>
                 </div>
@@ -129,9 +126,6 @@ export default {
                 this.isCreatedSuccess = false;
             }, 3000);
         },
-        downloadFile(){
-            
-        }
     },
     mounted() {
         this.getStudent();
