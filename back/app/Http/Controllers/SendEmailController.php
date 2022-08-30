@@ -4,18 +4,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Mail;
 use App\Mail\RequestMail;
+use App\Mail\LoginInformationMail;
+use App\Models\Admin;
+
 
 
 class SendEmailController extends Controller
 {
     public function sendMailRequest($details)
     {
-      Mail::to("mengyi.yoeng34@gmail.com")->send(new RequestMail($details));
+      $adminEmail = Admin::where('role', '=', 'admin')->first()->email;
+      Mail::to($adminEmail)->send(new RequestMail($details));
  
       if (Mail::flushMacros()) {
            return Response()->json(['fail' => 'Sorry! Please try again latter'], 401);
       }else{
            return response()->json(['success', 'Great! Successfully send in your mail'], 201);
-         }
+     }
     } 
+
+    public function sendMailLoginInfo($details){
+     Mail::to($details->email)->send(new LoginInformationMail($details));
+ 
+     if (Mail::flushMacros()) {
+          return Response()->json(['fail' => 'Sorry! Please try again latter'], 401);
+     }else{
+          return response()->json(['success', 'Great! Successfully send in your mail'], 201);
+     }
+    }
 }

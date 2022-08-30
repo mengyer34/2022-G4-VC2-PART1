@@ -24,7 +24,7 @@
                     {{student.email}}
                 </td>
                 <td class="text-center">
-                    {{student.generation}}
+                    {{student.batch}}
                 </td>
                 <td class="text-center relative">
                     <button class="view-detail bg-blue-500 rounded px-5 py-2 hover:bg-primary" @click="$emit('viewDetail',student.id)">

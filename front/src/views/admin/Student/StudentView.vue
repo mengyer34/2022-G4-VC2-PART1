@@ -68,13 +68,13 @@ export default {
         batchFilter() {
             if (this.searchKeyword != '') {
                 if (this.batch != 'All') {
-                    return this.students.filter(student => student.generation == this.batch && (student.first_name.toLowerCase().includes(this.searchKeyword.toLowerCase()) || student.last_name.toLowerCase().includes(this.searchKeyword.toLowerCase())))
+                    return this.students.filter(student => student.batch == this.batch && (student.first_name.toLowerCase().includes(this.searchKeyword.toLowerCase()) || student.last_name.toLowerCase().includes(this.searchKeyword.toLowerCase())))
                 }else {
                     return this.students.filter(student => student.first_name.toLowerCase().includes(this.searchKeyword.toLowerCase()) || student.last_name.toLowerCase().includes(this.searchKeyword.toLowerCase()))
                 }
             }else {
                 if (this.batch != 'All') {
-                    return this.students.filter(student => student.generation == this.batch);
+                    return this.students.filter(student => student.batch == this.batch);
                 }else {
                     return this.students;
                 }
