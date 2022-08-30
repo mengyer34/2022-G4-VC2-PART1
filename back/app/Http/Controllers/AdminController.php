@@ -105,8 +105,8 @@ class AdminController extends Controller
      */
     public function updateProfile(Request $request, Admin $admin)
     {   
-        if(File::exists($admin->profile_image)){
-            $previousProfileStoragePath = storage_path('profile_images/' . $admin->profile_image);
+        $previousProfileStoragePath = storage_path('profile_images/' . $admin->profile_image);
+        if(File::exists($previousProfileStoragePath)){
             File::delete($previousProfileStoragePath);
         }
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="home w-10/12 mt-24 bg-gray-100 m-auto rounded shadow p-3 relative " v-cloak>
+        <div class="w-10/12 mt-24 bg-gray-100 m-auto rounded shadow p-3 relative " v-cloak>
             <div class=" p-3 ">
                 <div class="rounded shadow bg-white shadow-gray-400 text-center relative p-2">
                     <form >
@@ -11,20 +11,20 @@
                         </label>
                         <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
                             <div class="w-32 h-32 flex items-center justify-center m-auto">
-                                <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill border border-black">
+                                <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-blue-400">
                                 <img v-else src="../../../assets/loading_user.png" alt="" class="rounded-full w-32 h-32 object-fill">
                             </div>
                             <div class="font-bold text-2xl mt-2">{{user.username}}</div>
                     </form>
                     <hr class="mt-4 border-gray-400 mb-4">
                     <div class="text-start">
-                        <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
-                            <div class="text-lg w-[40%]">Username</div>
-                            <div class="w-[60%] inline-block text-gray-500">{{user.username}}</div>
+                        <div class="flex justify-around items-center mt-1 p-2 rounded border border-b-gray-300">
+                            <div class="text-lg w-[40%] ml-40">Username</div>
+                            <div class="w-[40%] inline-block">{{user.username}}</div>
                         </div>
-                        <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
-                            <div class="text-lg w-[40%]">Email</div>
-                            <div class="w-[60%] inline-block text-gray-500">{{user.email}}</div>
+                        <div class="flex justify-around items-center mt-1 p-2 rounded border border-b-gray-300">
+                            <div class="text-lg w-[40%] ml-40">Email</div>
+                            <div class="w-[40%] inline-block">{{user.email}}</div>
                         </div>
                     </div>
                     <div class="reset-password pt-6 flex justify-end">
@@ -41,31 +41,29 @@
                 </div>  
             </div>
         </div>
-        <div>
-            <div class="fixed flex items-center justify-center bg-[#23242986] w-full h-full top-0 z-100" v-if="isUploaded">
-                <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="w-[32%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
-                    <div class="flex items-center justify-between mb-4 text-lg">
-                        <p>Crop your new profile picture</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" @click="isUploaded=false">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <div class="max-h-72 overflow-auto">
-                        <img :src="selectedImage" alt="" class="w-full max-h-[52vh] overflow-auto">
-                    </div>
-                    <div class="w-full mt-5">
-                        <button type="submit" class="btn bg-warning rounded p-2 text-white w-full">
-                            Set new profile picture
-                        </button>
-                    </div>
-                </form>
+        <div class="flex items-center w-[85%] p-4 bg-[#23242986] fixed h-full top-0 z-100" v-if="isUploaded">
+            <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="bg-[#ddd] rounded p-5 m-auto text-center">
+                <div class="flex items-center justify-between mb-4 text-lg">
+                    <p>Crop your new profile picture</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" @click="isUploaded=false">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="max-h-72 overflow-auto">
+                    <img :src="selectedImage" alt="" class="w-full max-h-[52vh] overflow-auto">
+                </div>
+                <div class="w-full mt-5">
+                    <button type="submit" class="btn bg-warning rounded p-2 text-white w-full">
+                        Set new profile picture
+                    </button>
+                </div>
+            </form>
 
-            </div>
-
-            <!-- Alerts -->
-            <success-alert v-if="isSuccessAlert" :content="'Update profile success!'" />
-            <warning-alert v-if="isWarningAlert" :content="'File must be an image!'" />
         </div>
+
+        <!-- Alerts -->
+        <success-alert v-if="isSuccessAlert" :content="'Update profile success!'" />
+        <warning-alert v-if="isWarningAlert" :content="'File must be an image!'" />
     </div>
 </template>
 

@@ -184,8 +184,8 @@ class UserController extends Controller
         if($user->profile_image !== 'female_default_profile.png' 
             && $user->profile_image !== 'male_default_profile.png') {
 
-            if(File::exists($user->profile_image)){
-                $previousProfileStoragePath = storage_path('profile_images/' . $user->profile_image);
+            $previousProfileStoragePath = storage_path('profile_images/' . $user->profile_image);
+            if(File::exists($previousProfileStoragePath)){
                 File::delete($previousProfileStoragePath);
             }
         }
