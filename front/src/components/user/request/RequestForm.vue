@@ -103,7 +103,7 @@
 </template>
 
 <script>
-    import axios from "../../../axios-http"
+    // import axios from "../../../axios-http"
     import { useAuth } from '../../../stores/useAuth'
     export default({
         setup() {
@@ -115,7 +115,7 @@
             'user_id': Number,
             'user_email': String
         },
-
+        emits: ['add-leave'],
         data(){
             return {
                 leaveType: "",
@@ -140,8 +140,9 @@
                 if (this.checkFormRequest()){
                     let newRequest = {user_id: this.user_id, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration, email: this.user_email, urlApp: linkToNotification}
                     console.log(newRequest)
-                    axios.post('/leaves', newRequest);
-                    this.$router.push({name: "histories"})
+                    // axios.post('leaves', newRequest);
+                    // // this.$router.push({name: "histories"})
+                    return this.$emit('add-leave',newRequest)
                 }
             },
             checkFormRequest(){

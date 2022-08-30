@@ -26,7 +26,7 @@
                             </button>
                         </div>
                         <div v-if="isClickEdit" class="flex justify-center absolute p-2 bottom-1 m-auto w-full">
-                            <button class="p-2 px-4 bg-red-500 rounded shadow text-white" @click="isClickEdit=false">Cancel</button>
+                            <button class="p-2 px-4 bg-red-500 rounded shadow text-white" @click="cancelEdit">Cancel</button>
                             <button class="p-2 px-4 bg-primary rounded shadow text-white ml-2" @click="saveEditStudent(student_detail.id)">Save Change</button>
                         </div>
                     </div>  
@@ -45,7 +45,14 @@
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Gender</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.gender">
+                                    <select
+                                        v-if="isClickEdit"
+                                        class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.gender"
+                                        >
+                                        <option value="M">M</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                    <!-- <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.gender"> -->
                                     <div v-else class="ml-16 inline-block text-gray-500">{{detail_student_list.gender}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
@@ -61,15 +68,16 @@
                                     <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.personal_id" >
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.personal_id}}</div>
                                 </div>
+                                <div class="text-red-500">{{personal_id_invalid}}</div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Generation</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[70%] border border-gray-300 " v-model="student_edit.generation" >
-                                    <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.generation}}</div>
+                                    <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[70%] border border-gray-300 " v-model="student_edit.batch" >
+                                    <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.batch}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
-                                    <div class="text-lg">Class</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[70%] border border-gray-300 " v-model="student_edit.class">
-                                    <div v-else class="ml-24 inline-block text-gray-500">{{detail_student_list.class}}</div>
+                                    <div class="text-lg ">Class</div>
+                                    <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:outline-[#0081CA] uppercase  inline-block p-2 rounded shadow w-[70%] border border-gray-300 " v-model="student_edit.class">
+                                    <div v-else class="ml-24 inline-block text-gray-500 uppercase">{{detail_student_list.class}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Leaves</div>
@@ -83,6 +91,7 @@
                                 <input v-if="isClickEdit" type="email" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-full border border-gray-300 " v-model="student_edit.email">
                                 <div v-else class="ml-[78px] inline-block text-gray-500">{{detail_student_list.email}}</div>
                         </div>
+                        <div class="text-red-500">{{email_invalid}}</div>
                     </div>
                 </div>
                 <div class="">
@@ -156,7 +165,9 @@ export default ({
             isInvalidPhoneNumber: false,
             student_edit: {},
             detail_student_list: this.student_detail,
-            isEditSuccess: false
+            isEditSuccess: false,
+            personal_id_invalid: "",
+            email_invalid: ""
         }
     },
     methods: {
@@ -168,39 +179,66 @@ export default ({
                 gender: this.detail_student_list.gender,
                 email: this.detail_student_list.email,
                 class: this.detail_student_list.class,
-                generation: this.detail_student_list.generation,
+                batch: this.detail_student_list.batch,
                 phone: this.detail_student_list.phone,
                 personal_id: this.detail_student_list.personal_id
             }
         },
         saveEditStudent(id){
             let student_edited = this.student_edit;
-            if (student_edited.phone[1] != '0' && student_edited.phone[0] == '0' && student_edited.phone.length < 11 &&student_edited.phone.length > 8){
-
-                    if (this.filterStudentId(student_edited.personal_id)){
-                        this.isInvalidPhoneNumber = false;
-                        this.isClickEdit = false;
-                        let new_update = {
-                            first_name: student_edited.first_name,
-                            last_name: student_edited.last_name,
-                            gender: student_edited.gender,
-                            email: student_edited.email,
-                            class: student_edited.class,
-                            generation: student_edited.generation,
-                            phone: student_edited.phone,
-                            personal_id: student_edited.personal_id
+            this.personal_id_invalid = ""
+            this.email_invalid = ""
+            if (this.checkForm()){
+                
+                if (student_edited.phone[1] != '0' && student_edited.phone[0] == '0' && student_edited.phone.length < 11 &&student_edited.phone.length > 8){
+                    if (this.filterStudentEmail(student_edited.email)){
+                        if (this.filterStudentId(student_edited.personal_id)){
+                            this.isInvalidPhoneNumber = false;
+                            this.isClickEdit = false;
+                            let new_update = {
+                                first_name: student_edited.first_name,
+                                last_name: student_edited.last_name,
+                                gender: student_edited.gender,
+                                email: student_edited.email,
+                                class: student_edited.class,
+                                batch: student_edited.batch,
+                                phone: student_edited.phone,
+                                personal_id: student_edited.personal_id
+                            }
+                            this.detail_student_list = new_update;
+                            this.successAlert()
+                            return this.$emit('save-edit',new_update,id);
+                        }else{
+                            this.personal_id_invalid = "Personal id has already taken"
                         }
-                        this.detail_student_list = new_update;
-                        this.successAlert()
-                        return this.$emit('save-edit',new_update,id);
-                    }else{
-                        alert("Personal Id already exist!")
+                    }else {
+                        this.email_invalid = "Email has already taken"
                     }
+                }else{
+                    this.isInvalidPhoneNumber = true;
+                }
             }else{
-                this.isInvalidPhoneNumber = true;
+                alert("All requirements should be completed")
             }
         },
-
+        checkForm (){
+            let student = this.student_edit
+            let sms = false;
+            if (student.first_name.trim() != '' && student.last_name.trim() != '' && student.email.trim() != '' && student.personal_id.trim() != '' && student.batch.trim() != '' && student.class.trim() != '' ){
+                sms = true;
+            }
+            if (!(/@student.passerellesnumeriques.org\s*$/.test(student.email)) && student.email.trim() != ''){
+                this.email_invalid = "Email must be passerellesnumeriques"
+                sms = false
+            }
+                return sms
+        },
+        cancelEdit(){
+            this.personal_id_invalid = "",
+            this.email_invalid = "",
+            this.isClickEdit = false,
+            this.isInvalidPhoneNumber = false
+        },
         getImage(imageName) {
             return url +'storage/image/' + imageName;
         },
@@ -214,6 +252,15 @@ export default ({
             let find = this.students.filter((student)=>student.personal_id == id && student.personal_id != this.student_detail.personal_id);
             let sms = true
             if (find.length >= 1){
+                sms = false
+            }
+            return sms
+        },
+        filterStudentEmail(email){
+            let find = this.students.find((student)=>student.email == email && student.email != this.student_detail.email);
+            let sms = true
+            console.log(find);
+            if (find >= 1){
                 sms = false
             }
             return sms

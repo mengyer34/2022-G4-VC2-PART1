@@ -1,5 +1,5 @@
 <template>
-    <form-requestion :user_id="user_id" />
+    <form-requestion :user_id="user_id" :user_email="user_email" />
 </template>
 <script>
 import requestForm from "../../../components/user/request/RequestForm.vue"
@@ -7,7 +7,9 @@ import requestForm from "../../../components/user/request/RequestForm.vue"
         components: {
             "form-requestion": requestForm
         },
-
-        props: ['user_id'],
+        props: {
+            user_id: Number,
+            user_email: String,
+        }
 }
 </script>
