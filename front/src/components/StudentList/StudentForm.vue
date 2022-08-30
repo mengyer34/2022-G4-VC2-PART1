@@ -43,7 +43,7 @@
                     <input
                         class="shadow appearance-none border border-gray-400  rounded w-full px-2 py-2.5 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                         id="email" type="email" placeholder="Email..." required
-                        :class="{ 'border-red-500 bg-red-100': is_email }" v-model="email" @change="is_email = false">
+                        :class="{ 'border-red-500 bg-red-100': is_email }" v-model="emailUser" @change="is_email = false" >
                 </div>
                 <div class="text-red-500 text-sm mb-2">{{sms_error_email}}</div>
                 <div class="mb-1 relative">
@@ -166,6 +166,13 @@ export default {
         }
     },
     computed: {
+        emailUser() {
+            if (this.first_name != '' && this.last_name != '') {
+                this.email = this.first_name.toLowerCase() + '.' + this.last_name.toLowerCase() + '@student.passerellesnumeriques.org';
+                return this.email;
+
+            }
+        }
         },
     methods: {
         generatePassword() {

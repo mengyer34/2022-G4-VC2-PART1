@@ -20,7 +20,6 @@ export const useAuth = defineStore({
         await axios.get('/account/find').then(res => {
           this.userId = res.data.data.id;
           this.userEmail = res.data.data.email;
-          this.user = res.data.data.data;
           this.role = res.data.data.role;
           console.log(res.data.data);
         })

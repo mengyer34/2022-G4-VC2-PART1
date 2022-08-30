@@ -65,7 +65,12 @@
 
 <script>
 import axios from '../../../axios-http';
+import { useAuth } from '../../../stores/useAuth';
 export default ({
+    setup() {
+        const userStore = useAuth()
+        return {userStore}
+    },
     props: {
         oldPassword: String,
         user_id: Number,
@@ -101,7 +106,11 @@ export default ({
             }
             if (this.checkFormValidation() && !this.isMatch){
                 var new_password = {confirm_old_password: this.current_password, new_password: this.new_password}
-                axios.put('users/reset_password/'  +  this.user_id,new_password).then((res)=>{
+                let url = 'users/reset_password/';
+                if (userStore.role == 'admin') {
+                    url = 'admins/reset_password/';
+                }
+                axios.put('url'  +  this.user_id,new_password).then((res)=>{
                     this.is_correct_pwd = res.data.success
                     this.error_status = res.data.error
                     if (this.is_correct_pwd){

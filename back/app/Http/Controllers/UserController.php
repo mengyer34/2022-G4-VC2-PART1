@@ -177,7 +177,7 @@ class UserController extends Controller
      * Update the specified user profile image.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $user
+     * @param  $user
      * @return \Illuminate\Http\Response
      */
     public function updateProfileImage(Request $request, User $user)
@@ -185,10 +185,8 @@ class UserController extends Controller
         if($user->profile_image !== 'female_default_profile.png' 
             && $user->profile_image !== 'male_default_profile.png') {
 
-            $previousProfilePathInfo = pathinfo($user->profile_image);
-            $previousProfileName = $previousProfilePathInfo['filename'] . '.' . $previousProfilePathInfo['extension'];
-            $previousProfileStoragePath = storage_path('profile_images/' . $previousProfileName);
-            if(File::exists($previousProfileStoragePath)){
+            if(File::exists($user->profile_image)){
+                $previousProfileStoragePath = storage_path('profile_images/' . $user->profile_image);
                 File::delete($previousProfileStoragePath);
             }
         }
