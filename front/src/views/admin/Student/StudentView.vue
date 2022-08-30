@@ -24,7 +24,8 @@
                 </div>
             </div>
             <div>
-                <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+                <student-lists :allStudents="students" :isGettingResources="isGettingResources" :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/>
                 <form-student v-if="isShow" @close-popup="isShow=false" @add-student="addNewStudent"/>
             </div>
@@ -60,7 +61,8 @@ export default {
             batch: 'All',
             searchKeyword: '',
             isShow: false,
-            isCreatedSuccess: false
+            isCreatedSuccess: false,
+            isGettingResources: true,
         }
     },
     computed: {
@@ -84,6 +86,7 @@ export default {
         getStudent() {
             axios.get('users_leaves').then(res => {
                 this.students = res.data.data.reverse();
+                this.isGettingResources = false;
             })
         },   
         deleteStudent() {

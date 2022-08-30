@@ -14,7 +14,8 @@
                     <div  class="flex justify-between mt-2">
                         <div @click="viewStudent" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
-                                <p class="text-3xl font-semibold">{{users.length}}</p>
+                                <p v-if="!isGettingResources" class="text-3xl font-semibold">{{users.length}}</p>
+                                <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Total Students</p>
                             </div>
                             <div class="bg-blue-500 w-[20%] flex items-center justify-center rounded-r">
@@ -25,7 +26,8 @@
                         </div>
                         <div @click="viewLeaves('Pending')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]  ">
-                                <p class="text-3xl text-yellow-500 font-semibold">{{getPendingLeave.length}}</p>
+                                <p v-if="!isGettingResources" class="text-3xl text-yellow-500 font-semibold">{{getPendingLeave.length}}</p>
+                                <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Pending Leaves</p>
                             </div>
                             <div class="bg-blue-500 w-[20%] flex items-center justify-center rounded-r">
@@ -36,7 +38,8 @@
                         </div>
                         <div @click="viewLeaves('Approved')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
-                                <p class="text-3xl text-green-700 font-semibold">{{getApprovedLeave.length}}</p>
+                                <p v-if="!isGettingResources" class="text-3xl text-green-700 font-semibold">{{getApprovedLeave.length}}</p>
+                                <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Approved Leaves</p>
                             </div>
                             <div class="bg-blue-500 w-[20%] flex items-center justify-center rounded-r">
@@ -47,7 +50,8 @@
                         </div>
                         <div @click="viewLeaves('Rejected')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%] ">
-                                <p class="text-3xl text-red-600 font-semibold">{{getRejectedLeave.length}}</p>
+                                <p v-if="!isGettingResources" class="text-3xl text-red-600 font-semibold">{{getRejectedLeave.length}}</p>
+                                <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Rejected Leaves</p>
                             </div>
                             <div class="bg-blue-500 w-[20%] rounded-r flex items-center justify-center">
@@ -61,7 +65,11 @@
                 <div class="mt-4">
                     <h1 class="font-bold text-lg uppercase mt-6 ">All student's leave History </h1>
                     <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded mt-2">
-                        <student-leave :leaves="leaveUserHistory" />
+                        <student-leave :isGettingResources="isGettingResources" :leaves="leaveUserHistory" />
+                        <div v-if="leaveUserHistory.length <= 0 && !isGettingResources">
+                            <img class="w-32 m-auto mt-3" src="./../../../assets/request_empty.png" alt="Image not found">
+                            <p class="text-center">No any histories for now!</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,18 +79,20 @@
 </template>
 <script>
 import axios from '../../../axios-http'
-import StudentLeaveList from '../../../components/StudentLeaveList.vue'
+import StudentLeaveList from '../../../components/user/leaves/StudentLeaveList.vue';
+import CountingData from './../../../components/animations/CountingData.vue';
 export default {
 
     components: {
         'student-leave': StudentLeaveList,
+        'counting-data': CountingData,
     },
     data() {
         return {
             leaveUsers: [],
             users: [],
-            leaveUserHistory: []
-
+            leaveUserHistory: [],
+            isGettingResources: true,
         }
     },
     computed: {
@@ -101,6 +111,9 @@ export default {
             axios.get("leaves_user").then(res => {
                 this.leaveUsers = res.data.data.reverse();
                 this.leaveUserHistory = this.leaveUsers.filter((leave)=>leave.status != "Pending")
+                setTimeout(() => {
+                    this.isGettingResources = false;
+                }, 700)
             })
         }, 
         getUser() {

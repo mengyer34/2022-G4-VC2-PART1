@@ -34,20 +34,30 @@
                     </td>
                 </tr>
             </tbody>
+
+            <tbody v-if="isGettingResources">
+                <tr>
+                    <td colspan="7" class="p-2 text-center">
+                        <getting-resources>Loading leaves...</getting-resources>
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <leave-detail v-if="isViewDetail" @closeStudentDetail="isViewDetail=false" @close="isViewDetail=false" @getLeaves="$emit('getLeaves')" :leave="leave_detail"/>
     </div>
 </template>
 
 <script>
-import axios from '../axios-http.js'
-import leaveDetail from "./user/leaves/LeaveDetails.vue"
+import axios from '../../../axios-http.js'
+import leaveDetail from "./LeaveDetails.vue"
+import GettingResources from './../../animations/GettingResources.vue';
 
 export default {
-    props: ['leaves'],
+    props: ['leaves', 'isGettingResources'],
     emits: ['getLeaves'],
     components: {
         'leave-detail': leaveDetail,
+        'getting-resources': GettingResources,
     },
     data() {
         return {

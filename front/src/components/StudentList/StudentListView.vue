@@ -13,7 +13,8 @@
             <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
                 <td class="text-center pl-4">
                     <div class="flex items-center space-x-2 p-2">
-                        <img class="rounded-full w-14 h-14 border-2 border-primary" :src="getImage(student.profile_image)" alt="">
+                        <img v-if="student.profile_image" class="rounded-full w-14 h-14 border-2 border-primary" :src="getImage(student.profile_image)" alt="">
+                        <img v-else class="rounded-full w-14 h-14 border-2 border-primary" src="./../../assets/avatar.png" alt="">
                         <p class="pl-6">{{student.first_name}} {{student.last_name}}</p>
                     </div>
                 </td>
@@ -42,9 +43,30 @@
                 </td>
             </tr>
         </tbody>
-        <tbody v-else>
+
+        <tbody v-else-if="allStudents.length <= 0 && !isGettingResources">
             <tr>
-                <td colspan="5" class="p-2 text-center">No Student Found!!</td>
+                <td colspan="7" class="p-2 text-center">
+                    <img class="w-32 m-auto mt-3" src="./../../assets/request_empty.png" alt="Image not found">
+                    <p class="mb-5">No students found!</p>
+                </td>
+            </tr>
+        </tbody>
+
+        <tbody v-else-if="students.length <= 0 && !isGettingResources">
+            <tr>
+                <td colspan="7" class="p-2 text-center">
+                    <img class="w-32 m-auto mt-3" src="./../../assets/no_requests_found.png" alt="Image not found">
+                    <p class="mb-5">No students found!</p>
+                </td>
+            </tr>
+        </tbody>
+
+        <tbody v-if="isGettingResources">
+            <tr>
+                <td colspan="7" class="p-2 text-center">
+                    <getting-resources>Loading leaves...</getting-resources>
+                </td>
             </tr>
         </tbody>
     </table>     
@@ -52,9 +74,15 @@
 
 <script>
 const url = 'http://127.0.0.1:8000/api/'
+import GettingResources from './../animations/GettingResources.vue';
 export default {
+    components: {
+        'getting-resources': GettingResources,
+    },
     props:{
-        students: Array
+        students: Array,
+        isGettingResources: Boolean,
+        allStudents: Array,
     },
     methods: {
         getImage(imageName) {
