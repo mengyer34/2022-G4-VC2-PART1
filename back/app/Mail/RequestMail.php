@@ -30,7 +30,6 @@ class RequestMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email_leave_request');
-        // return $this->view('emails.email_account_registerd');
+        return $this->view('emails.email_leave_request');
     }
 }
