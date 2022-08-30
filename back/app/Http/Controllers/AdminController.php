@@ -25,6 +25,10 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+        $isExist = Admin::where('role', '=', 'admin')->first()->email;
+        if($isExist){
+            return Response()->json('Admin already exist', 409);
+        }
         $admin = new Admin();
         $admin->username = $request->username;
         $admin->email = $request->email;

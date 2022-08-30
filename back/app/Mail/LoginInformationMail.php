@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class RequestMail extends Mailable
+class LoginInformationMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
@@ -30,6 +30,6 @@ class RequestMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email_leave_request');
+        return $this->view('emails.email_account_registerd');
     }
 }

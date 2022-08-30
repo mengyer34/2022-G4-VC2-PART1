@@ -32,14 +32,14 @@ Auth::routes();
 // Register, Login
 Route::post('/account/login', [AuthenticationController::class, 'loginAccount']);
 Route::get('/account/find', [AuthenticationController::class, 'getInfoByToken']);
-Route::post('/register', [UserController::class, 'register']); /* The route to register the user */
+Route::post('/account/create', [UserController::class, 'register']); /* The route to register the user */
 Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.user']);
 // Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.admin']);
 
 
 // Admin Controller 
-// Route::post('/admins', [AdminController::class, 'store'])->middleware('restrictothers'); /* The route to create a new admin (By admin) */
 Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
+// Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
 
 Route::group(['middleware'=> ['auth:sanctum', 'type.admin']], function(){
     Route::get('/admins', [AdminController::class, 'index']); /* The route to index the user */ 
