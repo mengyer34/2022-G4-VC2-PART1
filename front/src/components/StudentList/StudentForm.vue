@@ -189,7 +189,7 @@ export default {
                     phone: this.phone,
                     linkTo: linkToNotification
                 }
-                axios.post('/account/create', newStudent).then((res)=>{
+                axios.post('/account/register', newStudent).then((res)=>{
                     return this.$emit('add-student')
                 }).catch((error)=>{
                     console.log(error.response.data);

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\SendEmailController;
+use App\Models\Admin;
 
 
 
@@ -223,6 +224,10 @@ class UserController extends Controller
     }
 
     public function register(Request $request){
+        $isAdmin = Admin::where('role', '=', 'admin')->first()->email;
+        if($isAdmin == $request->email){
+            return Response()->json('Your email has existed', 409);
+        }
         $request -> validate([
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
@@ -232,7 +237,7 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'batch' => 'required|string|max:4',
             'class' => 'required|string|max:8',
-            'phone' => 'required'
+            'phone' => 'required|unique:users'
         ]);
         $newUser = new User();
         $newUser->first_name = $request->first_name;
