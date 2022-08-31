@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia'
 import axios from '../axios-http'
 import getCookie from '../helper/getCookie'
+// import Cookies from "js-cookie";
+
 
 
 export const useAuth = defineStore({
   id: 'auth',
   state: () => ({
     token: getCookie('slms'),
+    // token: Cookies.get('slms'),
     userId: null,
     userEmail: null,
     role: null,
@@ -32,3 +35,4 @@ export const useAuth = defineStore({
     
   },
 })
+

@@ -12,19 +12,25 @@
                         <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
                             <div class="w-32 h-32 flex items-center justify-center m-auto">
                                 <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-blue-400">
-                                <img v-else src="../../../assets/loading_user.png" alt="" class="rounded-full w-32 h-32 object-fill">
+                                <downloading-image class="rounded-full w-32 h-32 object-fill border-2 border-blue-400" v-else></downloading-image>
                             </div>
-                            <div class="font-bold text-2xl mt-2">{{user.username}}</div>
+
+                            <div class="flex justify-center items-center">
+                                <div v-if="user.username" class="font-bold text-2xl mt-2">{{user.username}}</div>
+                                <loading-text class="m-auto mt-4 mb-1" v-else />
+                            </div>
                     </form>
                     <hr class="mt-4 border-gray-400 mb-4">
                     <div class="text-start">
                         <div class="flex justify-around items-center mt-1 p-2 rounded border border-b-gray-300">
                             <div class="text-lg w-[40%] ml-40">Username</div>
-                            <div class="w-[40%] inline-block">{{user.username}}</div>
+                            <div v-if="user.username" class="w-[40%] inline-block">{{user.username}}</div>
+                            <loading-text class="w-[40%] inline-block" v-else />
                         </div>
                         <div class="flex justify-around items-center mt-1 p-2 rounded border border-b-gray-300">
                             <div class="text-lg w-[40%] ml-40">Email</div>
-                            <div class="w-[40%] inline-block">{{user.email}}</div>
+                            <div v-if="user.email" class="w-[40%] inline-block">{{user.email}}</div>
+                            <loading-text class="w-[40%] inline-block" v-else />
                         </div>
                     </div>
                     <div class="reset-password pt-6 flex justify-end">
@@ -41,7 +47,7 @@
                 </div>  
             </div>
         </div>
-        <div class="flex items-center w-[85%] p-4 bg-[#23242986] fixed h-full top-0 z-100" v-if="isUploaded">
+        <div class="flex items-center w-full p-4 bg-[#23242986] fixed h-full top-0 z-100" v-if="isUploaded">
             <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="bg-[#ddd] rounded p-5 m-auto text-center">
                 <div class="flex items-center justify-between mb-4 text-lg">
                     <p>Crop your new profile picture</p>
@@ -71,10 +77,14 @@
     import axios from '../../axios-http'
     import WarningAlert from "../../components/user/profile/alerts/WarningAlert.vue";
     import SuccessAlert from "../../components/user/profile/alerts/SuccessAlert.vue";
+    import DownloadingImage from "./../animations/DownloadingImage.vue";
+    import LoadingText from "./../animations/LoadingText.vue";
     export default {
         components: {
             'warning-alert': WarningAlert,
             'success-alert': SuccessAlert,
+            'downloading-image': DownloadingImage,
+            'loading-text': LoadingText,
         },
         props: ['user'],
         emits: ['getUser'],

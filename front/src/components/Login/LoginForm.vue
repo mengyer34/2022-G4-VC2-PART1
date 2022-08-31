@@ -36,6 +36,10 @@
                     </button>
                 </form>
             </div>
+
+            <loading-show v-if="isLoggingIn">
+                Logging in...
+            </loading-show>
         </div>
     </section>
 </template>
@@ -45,7 +49,11 @@ import axios from '../../axios-http'
 
 import { useAuth } from '../../stores/useAuth';
 import getCookie from '../../helper/getCookie';
+import LoadingShow from './../animations/LoadingShow.vue';
 export default {
+    components: {
+        'loading-show': LoadingShow,
+    },
     setup(){
         const authStore = useAuth()
         return { authStore }
@@ -54,19 +62,25 @@ export default {
         return {
             email: null,
             password: null,
+            isLoggingIn: false,
         }
     },
     methods: {
         login(){
+            this.isLoggingIn = true;
             axios.post('/account/login', {email: this.email, password: this.password})
             .then(res=>{
                     this.$cookies.set('slms',res.data.token);
                     this.authStore.getUserInfo();
-                    console.log(this.$cookies.get('slms'));
                     this.$router.push("/");
-                    setTimeout(function () {
+                    setTimeout(() => {
+                        this.isLoggingIn = false;
                         window.location.reload();
                     }, 1000);
+            }).catch(res => {
+                if (res) {
+                    this.isLoggingIn = false
+                }
             })
         }
     },

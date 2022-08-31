@@ -12,10 +12,13 @@
                             </label>
                             <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
                                 <div class="w-32 h-32 flex items-center justify-center m-auto">
-                                    <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill">
-                                    <img v-else src="../../../assets/loading_user.png" alt="" class="rounded-full w-32 h-32 object-fill">
+                                    <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-blue-400">
+                                    <downloading-image v-else></downloading-image>
                                 </div>
-                                <div class="font-bold text-2xl mt-2">{{user.first_name}} {{user.last_name}}</div>
+                                <div class="mt-2 w-full flex justify-center">
+                                    <div v-if="user.first_name != undefined && user.last_name != undefined" class="font-bold text-2xl">{{user.first_name}} {{user.last_name}}</div>
+                                    <loading-text class="mt-3" v-else />
+                                </div>
                         </form>
                     </div>  
                     <div class="ml-4 bg-white shadow-gray-400 shadow rounded  w-[74%] p-2">
@@ -24,22 +27,27 @@
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">First name</div>
                                     
-                                    <div class="ml-12 inline-block text-gray-500">{{user.first_name}}</div>
+                                    <div v-if="user.first_name != undefined" class="ml-10 inline-block text-gray-500">{{user.first_name}}</div>
+                                    <loading-text class="ml-10" v-else />
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Last name</div>
                                     
-                                    <div class="ml-12 inline-block text-gray-500">{{user.last_name}}</div>
+                                    <div v-if="user.last_name != undefined" class="ml-10 inline-block text-gray-500">{{user.last_name}}</div>
+                                    <loading-text class="ml-10" v-else />
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Gender</div>
-                                    <div  class="ml-16 inline-block text-gray-500">{{user.gender}}</div>
+
+                                    <div v-if="user.gender != undefined" class="ml-16 inline-block text-gray-500">{{user.gender}}</div>
+                                    <loading-text class="ml-16" v-else />
                                 </div>
                         
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Tel</div>
                                     
-                                    <div  class="ml-[100px] inline-block text-gray-500">{{user.phone}}</div>
+                                    <div v-if="user.phone != undefined" class="ml-[100px] inline-block text-gray-500">{{user.phone}}</div>
+                                    <loading-text class="ml-[100px]" v-else />
                                 </div>
 
                             </div>
@@ -47,28 +55,35 @@
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Student Id</div>
                                     
-                                    <div  class="ml-12 inline-block text-gray-500">{{user.personal_id}}</div>
+                                    <div v-if="user.personal_id != undefined" class="ml-12 inline-block text-gray-500">{{user.personal_id}}</div>
+                                    <loading-text class="ml-12" v-else />
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Generation</div>
                                     
-                                    <div  class="ml-12 inline-block text-gray-500">{{user.batch}}</div>
+                                    <div v-if="user.batch != undefined" class="ml-11 inline-block text-gray-500">{{user.batch}}</div>
+                                    <loading-text class="ml-11" v-else />
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Class</div>
                                     
-                                    <div  class="ml-24 inline-block text-gray-500">{{user.class}}</div>
+                                    <div v-if="user.class != undefined" class="ml-[5.8rem] inline-block text-gray-500">{{user.class}}</div>
+                                    <loading-text class="ml-[5.8rem]" v-else />
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Leaves</div>
-                                    <div class="ml-20 inline-block text-gray-500">{{amountOfLeaves}}</div>
+
+                                    <div v-if="amountOfLeaves" class="ml-20 inline-block text-gray-500">{{amountOfLeaves}}</div>
+                                    <loading-text class="ml-20" v-else />
                                 </div>
                                 
                             </div>
                         </div>
                         <div class="flex mt-1 items-cente p-2 rounded border border-b-gray-300 w-full m-auto">
-                                <div class="text-lg">Gmail</div>
-                                <div  class="ml-[78px] inline-block text-gray-500">{{user.email}}</div>
+                            <div class="text-lg">Gmail</div>
+
+                            <div v-if="user.email != undefined" class="ml-[78px] inline-block text-gray-500">{{user.email}}</div>
+                            <loading-text class="ml-[78px]" v-else />
                         </div>
                     </div>
                 </div>
@@ -87,7 +102,7 @@
         </div>
         <div>
             <div class="fixed flex items-center justify-center bg-[#23242986] w-full h-full top-0 z-100" v-if="isUploaded">
-                <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="w-[32%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
+                <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="bg-[#ddd] h-auto rounded p-5  m-auto text-center">
                     <div class="flex items-center justify-between mb-4 text-lg">
                         <p>Crop your new profile picture</p>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" @click="isUploaded=false">
@@ -95,7 +110,7 @@
                         </svg>
                     </div>
                     <div class="max-h-72 overflow-auto">
-                        <img :src="selectedImage" alt="" class="w-full max-h-[52vh] overflow-auto">
+                        <img :src="selectedImage" alt="" class="max-h-[52vh] overflow-auto">
                     </div>
                     <div class="w-full mt-5">
                         <button type="submit" class="btn bg-warning rounded p-2 text-white w-full">
@@ -117,10 +132,14 @@
     import axios from '../../../axios-http';
     import WarningAlert from "./alerts/WarningAlert.vue";
     import SuccessAlert from "./alerts/SuccessAlert.vue";
+    import DownloadingImage from "./../../animations/DownloadingImage.vue";
+    import LoadingText from "./../../animations/LoadingText.vue";
     export default {
         components: {
             'warning-alert': WarningAlert,
             'success-alert': SuccessAlert,
+            'downloading-image': DownloadingImage,
+            'loading-text': LoadingText,
         },
         props: {
             user_id: Number,

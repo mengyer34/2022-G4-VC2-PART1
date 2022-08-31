@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\SendEmailController;
 class AuthenticationController extends Controller
 {
     // login user
@@ -60,6 +60,8 @@ class AuthenticationController extends Controller
                 'message'=> "Email not found"
             ];
         }
+                // send mail
+                (new SendEmailController)->sendMailResetPassword($request);
         return Response()->json($response);
     }
     public function resetForgotPassword(Request $request,User $user){
@@ -73,6 +75,7 @@ class AuthenticationController extends Controller
             $admin->password = Hash::make($request->new_password);
             $admin->save();
         }
+
         $response = [
             'message' => "Reset password success"
         ];
