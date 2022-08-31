@@ -272,4 +272,6 @@ class UserController extends Controller
         auth()->user()->tokens()->delete();
         return response()->json(['sms'=>'logged out']);
     }
+
+
 }

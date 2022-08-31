@@ -47,4 +47,35 @@ class AuthenticationController extends Controller
         $info = auth('sanctum')->user();
         return Response()->json(['data'=>$info]);
     }
+    public function forgotPassword(Request $request){
+        $user = User::where('email', "=", $request->email)->first();
+        $admin = Admin::where('email', "=", $request->email)->first();
+        if ($user || $admin){
+            $response = [
+                'success' => true
+            ];
+        }else{
+            $response = [
+                'success' => false,
+                'message'=> "Email not found"
+            ];
+        }
+        return Response()->json($response);
+    }
+    public function resetForgotPassword(Request $request,User $user){
+        $user = User::where('email', $request->email)->first();
+        $admin = Admin::where('email',$request->email)->first();
+        if ($user){
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+        }
+        else if ($admin){
+            $admin->password = Hash::make($request->new_password);
+            $admin->save();
+        }
+        $response = [
+            'message' => "Reset password success"
+        ];
+        return response()->json($response , 202);
+    }
 }
