@@ -98,9 +98,7 @@ export default {
             })
         },
         deleteStudent() {
-            axios.delete('/users/' + this.id).then(res => {
-                this.getStudent();
-            })
+            axios.delete('users/' + this.id).then((this.getStudent()));
             this.isPop = !this.isPop;
         },
         popUp(id) {
@@ -114,10 +112,9 @@ export default {
             this.student_detail = this.students.find((student) => student.id == id);
             this.isViewDetail = true
         },
-        saveEditStudent(object, id) {
-            axios.put("/users/" + id, object).then((res) => {
-                this.getStudent()
-            })
+
+        saveEditStudent(object,id){
+            axios.put("users/" + id,object).then((this.getStudent()))
         },
         showFormAddStudent() {
             this.isShow = true
@@ -154,7 +151,7 @@ export default {
             this.isCreatedSuccess = true;
             setTimeout(() => {
                 this.isCreatedSuccess = false;
-            }, 3000);
+            }, 1500);
         },
 
     },
