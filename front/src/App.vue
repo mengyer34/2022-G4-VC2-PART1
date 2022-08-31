@@ -2,10 +2,6 @@
   <div>
     <nav-component :role="userStore.role" :user_id="userStore.userId" ref="navigation" />
 
-    <!-- <div >
-      <admin-nav-drawer v-if="userStore.role == 'admin'" :user_id="userStore.userId" ref="drawer" />
-
-      <div :class="{'flex justify-center w-[70] ml-[13rem]': userStore.role == 'admin'}"> -->
         <div :class="{'w-[100%]': userStore.role == 'admin'}">
           <router-view :user_id="userStore.userId" :user_email="userStore.userEmail" @update-nav="$refs.navigation.getData(); $refs.navigation.getLeaves()" v-slot="{Component}">
             <transition name="fade">
@@ -13,8 +9,7 @@
             </transition>
           </router-view>
         </div>
-      <!-- </div>
-    </div> -->
+
     <footer class="mt-24 text-center  text-sm" :class="{'w-full ': userStore.role == 'student', 'ml-[13rem]': userStore.role=='admin'}">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved.
     </footer>
@@ -34,11 +29,7 @@ export default {
   components: {
     'nav-component': TheNavigation,
   },
-  data() {
-    return {
-      // role: 'admin',
-    }
-  },
+
   methods: {
     async getUserInfo(){
       const result = await axios.get('findUser')
