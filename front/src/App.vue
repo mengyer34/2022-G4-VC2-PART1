@@ -2,7 +2,7 @@
   <div>
     <nav-component :role="userStore.role" :user_id="userStore.userId" ref="navigation" />
 
-        <div :class="{'w-[100%]': userStore.role == 'admin'}">
+        <div>
           <router-view :user_id="userStore.userId" :user_email="userStore.userEmail" @update-nav="$refs.navigation.getData(); $refs.navigation.getLeaves()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
@@ -10,7 +10,7 @@
           </router-view>
         </div>
 
-    <footer class="mt-24 text-center  text-sm" :class="{'w-full ': userStore.role == 'student', 'ml-[13rem]': userStore.role=='admin'}">
+    <footer class="mt-14 text-center  text-sm">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved. 
     </footer>
   </div>

@@ -26,34 +26,39 @@ const routes = [
     path: '/histories',
     name: 'histories',
     component: HistoryView,
+    meta:{ middleware: [user] }
   },
   {
     path: '/notifications',
     name: 'notifications',
-    component: NotificatonView
+    component: NotificatonView,
+    meta:{ middleware: [user] }
   },
   {
     path: '/profile',
     name: 'profile',
-    component: ProfileView
+    component: ProfileView,
+    meta:{ middleware: [user] }
   },
   {
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
     meta:{ middleware: [admin] }
-
+    
   },
   {
     path: '/students',
     name: 'students',
     component: Students,
-    meta:{ middleware: true }
+    meta:{ middleware: [admin] }
+    // meta:{ middleware: true }
   },
   {
     path: '/leaves',
     name: 'leaves',
-    component: LeaveList
+    component: LeaveList,
+    meta:{ middleware: [admin] }
   },
   {
     path: '/login',
@@ -63,7 +68,8 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminProfile
+    component: AdminProfile,
+    meta:{ middleware: [admin] }
   },
 
   { path: '/:pathMatch(.*)*', redirect: '/' }

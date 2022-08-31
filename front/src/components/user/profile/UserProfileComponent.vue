@@ -12,7 +12,7 @@
                             </label>
                             <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
                                 <div class="w-32 h-32 flex items-center justify-center m-auto">
-                                    <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill">
+                                    <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-blue-400">
                                     <downloading-image v-else></downloading-image>
                                 </div>
                                 <div class="mt-2 w-full flex justify-center">
@@ -102,7 +102,7 @@
         </div>
         <div>
             <div class="fixed flex items-center justify-center bg-[#23242986] w-full h-full top-0 z-100" v-if="isUploaded">
-                <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="w-[32%] bg-[#ddd] h-auto rounded p-5  m-auto text-center">
+                <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="bg-[#ddd] h-auto rounded p-5  m-auto text-center">
                     <div class="flex items-center justify-between mb-4 text-lg">
                         <p>Crop your new profile picture</p>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor" @click="isUploaded=false">
@@ -110,7 +110,7 @@
                         </svg>
                     </div>
                     <div class="max-h-72 overflow-auto">
-                        <img :src="selectedImage" alt="" class="w-full max-h-[52vh] overflow-auto">
+                        <img :src="selectedImage" alt="" class="max-h-[52vh] overflow-auto">
                     </div>
                     <div class="w-full mt-5">
                         <button type="submit" class="btn bg-warning rounded p-2 text-white w-full">
