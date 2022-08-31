@@ -9,18 +9,23 @@ import LeaveList from '../views/admin/LeaveList/LeaveView.vue'
 import AdminProfile from '../views/admin/profile/AdminProfile.vue'
 import LoginView from '../views/login&signout/LoginView.vue'
 import { useAuth } from '../stores/useAuth';
+import user from '../middleware/user'
+import admin from '../middleware/admin'
+
 
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta:{ middleware: [user] }
+
   },
   {
     path: '/histories',
     name: 'histories',
-    component: HistoryView
+    component: HistoryView,
   },
   {
     path: '/notifications',
@@ -40,7 +45,8 @@ const routes = [
   {
     path: '/students',
     name: 'students',
-    component: Students
+    component: Students,
+    meta:{ middleware: true }
   },
   {
     path: '/leaves',
@@ -72,7 +78,6 @@ router.beforeEach(async (to) => {
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
   const auth = useAuth();
-  auth.getUserInfo()
   if (authRequired && !auth.token) {
     return '/login';
   }
