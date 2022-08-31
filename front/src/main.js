@@ -5,11 +5,12 @@ import './axios-http'
 import router from './router'
 import { createPinia } from 'pinia'
 import VueCookies from 'vue-cookies'
-import TheNavigation from './components/navigation/TheNavigation.vue';
-import AdminNavDrawer from './components/navigation/AdminNavDrawer.vue';
+import middleware from "vue-router-middleware-system"
+import {store} from './store'
 
 
-
+router.beforeEach(middleware({ store }))
 const app = createApp(App).use(createPinia())
+app.use(store)
 app.use(VueCookies)
 app.use(router).mount('#app')
