@@ -4,7 +4,7 @@ import App from './App.vue'
 import './axios-http'
 import router from './router'
 import { createPinia } from 'pinia'
-import VueCookies from 'vue-cookies'
+import VueCookies from 'vue3-cookies'
 import middleware from "vue-router-middleware-system"
 import {store} from './store'
 

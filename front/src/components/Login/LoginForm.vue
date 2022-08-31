@@ -62,7 +62,6 @@ export default {
             .then(res=>{
                     this.$cookies.set('slms',res.data.token);
                     this.authStore.getUserInfo();
-                    console.log(this.$cookies.get('slms'));
                     this.$router.push("/");
                     setTimeout(function () {
                         window.location.reload();

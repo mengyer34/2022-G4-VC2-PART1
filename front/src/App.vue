@@ -49,7 +49,9 @@ export default {
       this.userStore.userId = data.id;
       this.userStore.userEmail = data.email;
       this.userStore.role = data.role;
-      this.$store.state.role = data.role;
+      // this.$store.state.role = data.role;
+      this.$cookies.set('role', data.role);
+      console.log(this.$cookies.get('role'));
     },
   },
   async created(){
