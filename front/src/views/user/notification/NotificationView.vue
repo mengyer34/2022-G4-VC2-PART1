@@ -1,6 +1,6 @@
 <template>
     <div class=" w-full h-full pt-[100px]">
-        <div v-if="dataOfImformation.length > 0" class="card w-9/12 m-auto rounded shadow bg-white">
+        <div v-if="!isLoadingNotifications && dataOfImformation.length > 0" class="card w-9/12 m-auto rounded shadow bg-white">
             <div class="card-header rounded-tl rounded-tr bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
                 <h1>Notifications</h1>
             </div>
@@ -32,19 +32,24 @@
                 <p class="text-[12px] text-[#AAAAAA] flex justify-end pb-2">From: Socail Affair</p>
             </div>
         </div>
-        <div v-else class="text-center mt-10 text-2xl m-auto">
+
+        <div v-if="!isLoadingNotifications && dataOfImformation.length <= 0" class="text-center mt-10 text-2xl m-auto">
             <img src="../../../assets/notification.png" class="m-auto w-20 h-20">
-            No Notification Here
+            No any notifications here!
         </div>
+
+        <getting-resources class="mt-9" v-if="isLoadingNotifications">Loading notifications...</getting-resources>
     </div>
 </template>
 
 <script>
 import axios from "../../../axios-http"
 import requestImformation from "../../../components/user/request/RequestInformation.vue"
+import GettingResources from "./../../../components/animations/GettingResources.vue";
 export default {
     components: {
-        "imformation-requestion": requestImformation
+        "imformation-requestion": requestImformation,
+        "getting-resources": GettingResources,
     },
 
     props: ['user_id'],
@@ -52,6 +57,7 @@ export default {
     data() {
         return {
             datas: [],
+            isLoadingNotifications: true,
         }
     },
     
@@ -59,6 +65,7 @@ export default {
         getData() {
             axios.get('users_leaves/' + this.user_id).then((res) => {
                 this.datas = res.data.data.leaves.reverse();
+                this.isLoadingNotifications = false;
             })
         },
 

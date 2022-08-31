@@ -40,7 +40,9 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta:{ middleware: [admin] }
+
   },
   {
     path: '/students',

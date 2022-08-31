@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="shadow-gray-400 mt-3 p-3 bg-white shadow rounded w-full" v-if="student_detail.leaves.length > 0">
+                    <div class="shadow-gray-400 mt-3 p-3 bg-white shadow rounded w-full" v-if="!isGettingResources && student_detail.leaves.length > 0">
                         <div class="text-1xl font-bold ml-4 uppercase">Student Leave Request</div>
                         <table class=" w-full m-auto">
                             <thead>
@@ -139,7 +139,12 @@
                             </tbody>
                         </table>
                     </div>
-                    <div v-else class=" mt-6 flex items-center justify-center w-full">
+
+                    <div v-if="isGettingResources" class=" mt-6 flex items-center justify-center w-full">
+                        <getting-resources>Loading leaves...</getting-resources>
+                    </div>
+
+                    <div v-if="!isGettingResources && student_detail.leaves.length <= 0" class=" mt-6 flex items-center justify-center w-full">
                         <div class="text-center">
                             <img class="w-32" src="../../assets/request_empty.png" alt="Image not found">
                             <td colspan="7" class="p-2 text-center">No leaves Found!!</td>
@@ -153,7 +158,12 @@
 
 <script>
 const url = 'http://127.0.0.1:8000/api/'
+import GettingResources from './../animations/GettingResources.vue';
 export default ({
+    components: {
+        'getting-resources': GettingResources,
+    },
+
     props: {
         student_detail: Object,
         students: Array
@@ -167,7 +177,8 @@ export default ({
             detail_student_list: this.student_detail,
             isEditSuccess: false,
             personal_id_invalid: "",
-            email_invalid: ""
+            email_invalid: "",
+            isGettingResources: true,
         }
     },
     methods: {
@@ -272,6 +283,12 @@ export default ({
             return sms
         },
     },
+
+    created() {
+        setTimeout(() => {
+            this.isGettingResources = false;
+        }, 800)
+    }
 })
 </script>
 <style>
