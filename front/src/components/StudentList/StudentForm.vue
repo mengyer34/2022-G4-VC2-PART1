@@ -52,7 +52,7 @@
                     </label>
                     <input
                         class="shadow appearance-none border border-gray-400  rounded w-full px-2 py-2.5 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
-                        id="phone" type="text" placeholder="Tel..."
+                        id="phone" type="text" maxlength="10" placeholder="Tel..."
                         :class="{ 'border-red-500 bg-red-100': is_phone }" v-model="phone" @change="is_phone = false">
                 </div>
 
@@ -88,18 +88,18 @@
                     <div class="flex">
                         <div class="flex items-center mb-4 ">
                             <input  type="radio" value="M"
-                                class="w-4 h-4 bg-gray-100 border-gray-300   dark:ring-offset-gray-800 focus:ring-2"
+                                class="w-4 h-4 bg-gray-100 border-gray-300   dark:ring-offset-gray-800 focus:ring-2" id="m"
                                 v-model="gender">
                             <label 
-                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="m"
                                 >Male</label>
                         </div>
                         <div class="flex items-center mb-4 ml-2">
-                            <input  type="radio" value="F"
+                            <input  type="radio" id="f" value="F"
                                 class="w-4 h-4 bg-gray-100 border-gray-300   dark:ring-offset-gray-800 focus:ring-2"
                                 v-model="gender">
                             <label
-                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Female</label>
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="f">Female</label>
                         </div>
                     </div>
                 </div>
@@ -149,6 +149,7 @@ export default {
             is_personal_id: false,
             sms_error_email: "",
             sms_error: "",
+            list_users: []
         }
     },
     computed: {
@@ -159,7 +160,7 @@ export default {
 
             }
         }
-        },
+    },
     methods: {
         generatePassword() {
             let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -172,34 +173,42 @@ export default {
             this.password = random_string;
             console.log(this.password);
         },
-        addStudent() {
-            this.sms_error =  ""
+        async addStudent() {
+            this.sms_error = ""
+            let availableId = this.checkBatchAndPersonalId(this.batch,this.personal_id);
             if (this.checkFormValidation()) {
-                this.generatePassword()
-                const linkToNotification = new URL(location.href).origin
-                var newStudent = {
-                    first_name: this.first_name,
-                    last_name: this.last_name,
-                    personal_id: this.personal_id,
-                    gender: this.gender,
-                    email: this.email,
-                    password: this.password,
-                    batch: this.batch,
-                    class: this.choose_class,
-                    phone: this.phone,
-                    linkTo: linkToNotification
-                }
-                axios.post('/account/register', newStudent).then((res)=>{
-                    return this.$emit('add-student')
-                }).catch((error)=>{
-                    console.log(error.response.data);
-                    let error_status = error.response.data
-                    if (error_status.success == false){
-                        this.is_personal_id = true;
-                        this.is_email = true;
-                        alert("Email and personal id have already exist!");
+                this.generatePassword();
+                if (availableId){
+                    const linkToNotification = new URL(location.href).origin
+                    var newStudent = {
+                        first_name: this.first_name,
+                        last_name: this.last_name,
+                        personal_id: this.personal_id,
+                        gender: this.gender,
+                        email: this.email,
+                        password: this.password,
+                        batch: this.batch,
+                        class: this.choose_class,
+                        phone: this.phone,
+                        linkTo: linkToNotification
+                    };
+                    try{
+                        await axios.post('/account/register', newStudent).then((res)=>{
+                            return this.$emit('add-student');
+                        })
+                    } catch(err){
+                        let error = err.response.data
+                        console.log(error);
+                        let sms = "The email has already been taken." 
+                        if (error.message == sms || error.message == sms + ' (and 1 more error)' || error == "Your email has existed"){
+                            this.sms_error_email = sms
+                            this.is_email = true;
+                        }
                     }
-                })
+                }else{
+                    this.sms_error = "Personal id has already been token";
+                    this.is_personal_id = true;
+                }
             }
         },
         checkFormValidation() {
@@ -244,7 +253,21 @@ export default {
                 message = false
             }
             return message
+        },
+        checkBatchAndPersonalId(batch,id){
+            let newStudent = this.list_users.find(student=>student.batch == batch && student.personal_id == id);
+            let sms = false;
+            if (newStudent == undefined){
+                sms = true;
+            }
+            return sms;
         }
+    },
+    created(){
+        axios.get('users').then((res)=>{
+            this.list_users = res.data.data;
+        })
     }
+
 }
 </script>
