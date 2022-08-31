@@ -33,9 +33,10 @@
                 </div>
             </div>
             <div>
-                <student-lists :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail" />
-                <alert-dialog v-if="isPop" @closePopup="isPop = false" @deleteStudent="deleteStudent" />
-                <form-student v-if="isShow" @close-popup="isShow = false" @add-student="addNewStudent" />
+                <student-lists :isUpdating="isUpdating" :allStudents="students" :isGettingResources="isGettingResources" :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+
+                <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/>
+                <form-student v-if="isShow" @close-popup="isShow = false" @add-student="addNewStudent"/>
             </div>
         </div>
         <div v-else>
@@ -72,7 +73,9 @@ export default {
             batch: 'All',
             searchKeyword: '',
             isShow: false,
-            isCreatedSuccess: false
+            isCreatedSuccess: false,
+            isGettingResources: true,
+            isUpdating: false,
         }
     },
     computed: {
@@ -96,10 +99,15 @@ export default {
         getStudent() {
             axios.get('users_leaves').then(res => {
                 this.students = res.data.data.reverse();
+                this.isGettingResources = false;
+                this.isUpdating = false;
             })
         },
         deleteStudent() {
-            axios.delete('users/' + this.id).then((this.getStudent()));
+            this.isUpdating = true;
+            axios.delete('/users/' + this.id).then((res) => {
+                this.getStudent();
+            })
             this.isPop = !this.isPop;
         },
         popUp(id) {
@@ -115,7 +123,10 @@ export default {
         },
 
         saveEditStudent(object,id){
-            axios.put("users/" + id,object).then((this.getStudent()))
+            this.isUpdating = true;
+            axios.put("/users/" + id,object).then((res)=>{
+                this.getStudent()
+            })
         },
         showFormAddStudent() {
             this.isShow = true
@@ -123,7 +134,8 @@ export default {
         closePopup() {
             this.isShow = false
         },
-        addNewStudent() {
+        addNewStudent(){
+            this.isUpdating = true;
             this.getStudent()
             this.closePopup()
             this.successAlert()

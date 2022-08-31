@@ -44,9 +44,30 @@
                         </td>
                     </tr>
                 </tbody>
-                <tbody v-else>
+
+                <tbody v-if="isGettingResources">
                     <tr>
-                        <td colspan="7" class="p-2 text-center">No leaves Found!!</td>
+                        <td colspan="7" class="p-2 text-center">
+                            <getting-resources>Loading leaves...</getting-resources>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody v-if="!isGettingResources && leavesstatus.length <= 0 && leaves.length > 0">
+                    <tr>
+                        <td colspan="7" class="p-2 text-center">
+                            <img class="w-32 m-auto" src="./../../../assets/no_requests_found.png" alt="Image not found">
+                            <p>No leaves Found!</p>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody v-if="!isGettingResources && leaves.length <= 0">
+                    <tr>
+                        <td colspan="7" class="p-2 text-center">
+                            <img class="w-32 m-auto" src="./../../../assets/request_empty.png" alt="Image not found">
+                            <h1 class="text-stone-500">No any leaves for now!</h1>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -58,8 +79,13 @@
 <script>
 
     import requestForm from "../request/RequestForm.vue"
+    import GettingResources from './../../animations/GettingResources.vue';
     export default {
-        props: ['leaves', 'status', 'type'],
+        components: {
+            'getting-resources': GettingResources,
+        },
+
+        props: ['leaves', 'status', 'type', 'isGettingResources'],
         computed: {
             leavesstatus() {
                 if (this.status != "All" && this.type == "All") {
