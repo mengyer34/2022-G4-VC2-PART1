@@ -200,10 +200,9 @@ export default ({
             this.personal_id_invalid = ""
             this.email_invalid = ""
             if (this.checkForm()){
-                
                 if (student_edited.phone[1] != '0' && student_edited.phone[0] == '0' && student_edited.phone.length < 11 &&student_edited.phone.length > 8){
                     if (this.filterStudentEmail(student_edited.email)){
-                        if (this.filterStudentId(student_edited.personal_id)){
+                        if (this.filterStudentId(student_edited.personal_id) &&filterStudentBatch(student_edited.batch)){
                             this.isInvalidPhoneNumber = false;
                             this.isClickEdit = false;
                             let new_update = {
@@ -220,10 +219,10 @@ export default ({
                             this.successAlert()
                             return this.$emit('save-edit',new_update,id);
                         }else{
-                            this.personal_id_invalid = "Personal id has already taken"
+                            this.personal_id_invalid = "Personal id has already been taken"
                         }
                     }else {
-                        this.email_invalid = "Email has already taken"
+                        this.email_invalid = "Email has already been taken"
                     }
                 }else{
                     this.isInvalidPhoneNumber = true;
@@ -267,10 +266,17 @@ export default ({
             }
             return sms
         },
+        filterStudentBatch(batch){
+            let find = this.students.filter((student)=>student.batch == batch);
+            let sms = true
+            if (find.length >= 1){
+                sms = false
+            }
+            return sms
+        },
         filterStudentEmail(email){
             let find = this.students.find((student)=>student.email == email && student.email != this.student_detail.email);
             let sms = true
-            console.log(find);
             if (find >= 1){
                 sms = false
             }

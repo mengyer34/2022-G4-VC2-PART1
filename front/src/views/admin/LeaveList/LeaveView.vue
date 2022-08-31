@@ -8,7 +8,7 @@
                 <div class="flex justify-between mb-2">
                     <!-- search bar -->
                     <search-bar @update-keyword="updateKeyword" />
-
+                    
                     <!-- filter options -->
                     <div class="flex">
                         <div class="flex justify-between">
