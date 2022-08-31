@@ -1,134 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style type="text/css">
-        body {
-            background-color: #D1D5DB;  
-            font-family: sans-serif;
-        }
-        .main-container {
-            background-color: #D1D5DB;  
-            height: 100vh;
-        }
-        .container {
-            margin: 0 auto;
-            display: block; 
-            position: relative; 
-            background-color: #ffffff; 
-            width: 70%; 
-            border-radius: 0.5rem; 
-            border-width: 0; 
-            outline: 0; 
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
-        }
-        .header-container h3 {
-            font-size: 1.5rem; 
-            font-weight: 600; 
-            text-align: center; 
-        }
-
-        .body-container {
-            padding: 1rem; 
-            width: 91.666667%; 
-        }
-        table {
-            margin-top: -1.5rem;
-            background-color: #ffffff; 
-            width: 100%; 
-            border-width: 1px; 
-            border-collapse: collapse;
-        }
-        table tr:hover {
-            background: #F5F5F5;
-        }
-        tr{
-            border: 1px solid grey;
-        }
-        tr .title {
-            font-weight: bold;
-        }
-        tr td {
-            text-align: center; 
-            border-width: 1px; 
-            color: 13px;
-            color: #6E6E6E;
-            padding: 1rem;
-            border-right: 1px solid grey;
-        }
-        .footer-container {
-            display: flex; 
-            margin-top: 0.75rem; 
-            justify-content: flex-end; 
-        }
-        .footer-container button {
-            padding: 0.5rem 1.3rem;
-            color: #ffffff; 
-            border-radius: 0.25rem; 
-            border: none;
-        }
-        button.view_app {
-            background-color: #3B82F6;  
-            margin-left: 10px;
-        }
-        button.view_app:hover {
-            background-color: #80a8e9; 
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!--header-->
-        <div class="header-container">
-          <h3>
-            Request Leave Information
-          </h3>
-        </div>
-        <!--body-->
-        <div class="body-container">
-          <table>
-            <tbody>
-              <tr>
-                <td class="title">From</td>
-                <td>{{ $details['email'] }}</td>
-              </tr>
-              <tr>
-                <td class="title">Reason</td>
-                <td>{{ $details['reason'] }}</td>
-              </tr>
-              <tr>
-                <td class="title">Leave Type</td>
-                <td>{{ $details['leave_type'] }} </td>
-              </tr>
-              <tr>
-                <td class="title">Start Date</td>
-                <td>{{ $details['start_date'] }} {{$details['start_time']}}</td>
-              </tr>
-              <tr>
-                <td class="title">End Date</td>
-                <td>{{ $details['end_date'] }} {{$details['end_time']}}</td>
-              </tr>
-              <tr>
-                <td class="title">Status</td>
-                <td>Panding </td>
-              </tr>
-              <tr>
-                <td class="title">Duration</td>
-                <td>{{ $details['duration'] }}</td>
-              </tr>
-              <tr>
-                <td class="title">Requested</td>
-                <td>{{date("F j, Y, g:i a")}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="footer-container">
-              <a href="{{ $details['urlApp'] }}">
-                <button type="submit" class="view_app">
-                    View in App
-                </button>
-              </a>
-          </div>
-        </div>
-    </div>
-</body>
-</html>
+<body style="font-family: Arial; margin: 0; font-size: 20px">
+  <table style=" background-color: #f3f3f5; padding: 16px 12px; min-height: 100vh; width: 80%; margin: 0 auto; " >
+     <tbody>
+        <tr>
+           <td style="vertical-align: top">
+              <table border="0" width="600" cellpadding="0" cellspacing="0" align="center" style=" width: 600px !important; min-width: 600px !important; max-width: 600px !important; margin: auto; border-spacing: 0; border-collapse: collapse; background: white; border-radius: 8px; padding-left: 30px; padding-right: 30px; padding-top: 30px; padding-bottom: 30px; display: block; " >
+                 <tbody>
+                    <tr>
+                       <td style=" text-align: center; vertical-align: top; border-collapse: collapse; " >
+                          <table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="#F8F8F8" style="border-spacing: 0; border-collapse: collapse" >
+                             <tbody>
+                                <tr style="background-size: cover">
+                                   <td style=" width: 60%; text-align: left; border-collapse: collapse; background: #fff; border-radius: 10px 10px 0px 0px; color: white; height: 50px; " > <img src="https://www.passerellesnumeriques.org/misc/logo-en.png" width="120px" class="CToWUd"/> </td>
+                                   <td style=" width: 40%; text-align: right; border-collapse: collapse; background: #fff; border-radius: 10px 10px 0px 0px; color: white; height: 50px; " >
+                                      <div style="color: #828282; font-size: 14px"> {{date("F j, Y, g:i a")}} </div>
+                                   </td>
+                                </tr>
+                             </tbody>
+                          </table>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td style="vertical-align: top; border-collapse: collapse">
+                          <table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="#F8F8F8" style="border-spacing: 0; border-collapse: collapse" >
+                             <tbody style="font-size: 14px;">
+                                <tr>
+                                   <td style=" padding-top: 30px; padding-bottom: 5px; background-color: white; " > <span style="color: #363636" >Dear <b>Admin,</b></span > </td>
+                                </tr>
+                                <tr>
+                                   <td style=" padding-top: 5px; padding-bottom: 9px; background-color: white; " > 
+                                    <span style="color: #363636;" >
+                                       Due to a student's request for a leave of absence, please check the SLMS (Student Leave Management System).
+                                    </span > </td>
+                                </tr>
+                                <tr style="background-color: #9ff59980;">
+                                   <td style=" padding: 16px; border-collapse: collapse; border-radius: 8px; " >
+                                      <div style="color: #363636;"> Here is more information on student leave</div>
+                                      <table style="width:100%; text-align: left; margin-top: 10px; border: 1px solid black; border-collapse: collapse; font-size: 14px">
+                                       <tr>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">From :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">{{ $details['email'] }}</td>
+                                       </tr>
+                                       <tr>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">Reason :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">{{ $details['reason'] }}</td>
+                                       </tr>
+                                       <tr>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">Leave type :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">{{ $details['leave_type'] }}</td>
+                                       </tr>
+                                       <tr>
+                                        <?php 
+                                          $startDate = date("F j, Y", strtotime($details['start_date']));
+                                        ?>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">Start date :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">{{ $startDate }} {{$details['start_time']}}</td>
+                                       </tr>
+                                       <tr>
+                                          <?php 
+                                            $endDate = date("F j, Y", strtotime($details['end_date']));
+                                          ?>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">End date :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">{{ $endDate }} {{$details['end_time']}}</td>
+                                       </tr>
+                                       <tr>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">Status :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">Pending</td>
+                                       </tr>
+                                       <tr>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">Duration :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">{{ $details['duration'] }}</td>
+                                       </tr>
+                                       <tr>
+                                         <th style="border-collapse: collapse; padding: 5px; width: 100px;">Request date :</th>
+                                         <td style="border-collapse: collapse; padding: 5px;">{{date("F j, Y, g:i a")}}</td>
+                                       </tr>
+                                     </table>
+                                   </td>
+                                </tr>
+                                <tr>
+                                   <td style="background: #ffffff; height: 20px">
+                                    <button style=" border-radius: 2px; margin-top: 10px; border: none; background: #0000FF; padding: 10px;">
+                                      <a href="{{ $details['urlApp'] }}" style=" border-radius: 2px; margin-top: 10px; border: none; color: #fff; padding: 10px; text-decoration: none;">Check on app</a>
+                                    </button>
+                                  </a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                   <td style="background: #ffffff; height: 20px"></td>
+                                </tr>
+                                <tr>
+                                   <td bgcolor="#F8F8F8" style=" border-radius: 8px !important; border-collapse: collapse; " ></td>
+                                </tr>
+                             </tbody>
+                          </table>
+                       </td>
+                    </tr>
+                 </tbody>
+              </table>
+           </td>
+        </tr>
+     </tbody>
+  </table>
+ </body>

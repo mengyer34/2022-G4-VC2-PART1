@@ -126,7 +126,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Update the specified user password.
+     * Update the specified admin password.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  $admin

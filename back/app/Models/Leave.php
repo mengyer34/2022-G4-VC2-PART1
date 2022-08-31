@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DateTimeInterface;
+
 
 class Leave extends Model
 {
@@ -15,13 +17,16 @@ class Leave extends Model
         'is_user_seen' => 'boolean',
         'start_date' => 'date:F j, Y',
         'end_date' => 'date:F j, Y',
-        'created_at' => 'date:F j, Y, g:i a',
-        'updated_at' => 'date:F j, Y, g:i a',
     ];
 
     // Relationship
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('F j, Y H:i:s A');
     }
 }

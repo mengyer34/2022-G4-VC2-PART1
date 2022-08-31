@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DateTimeInterface;
+
 
 class Admin extends Authenticatable
 {
@@ -22,4 +24,9 @@ class Admin extends Authenticatable
     ];
 
     protected $hidden = ['password',  'remember_token'];
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('F j, Y H:i:s A');
+    }
 }
