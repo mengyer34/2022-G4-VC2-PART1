@@ -2,19 +2,19 @@
   <div>
     <nav-component :role="userStore.role" :user_id="userStore.userId" ref="navigation" />
 
-    <div >
+    <!-- <div >
       <admin-nav-drawer v-if="userStore.role == 'admin'" :user_id="userStore.userId" ref="drawer" />
 
-      <div :class="{'flex justify-center w-[70] ml-[13rem]': userStore.role == 'admin'}">
+      <div :class="{'flex justify-center w-[70] ml-[13rem]': userStore.role == 'admin'}"> -->
         <div :class="{'w-[100%]': userStore.role == 'admin'}">
-          <router-view :user_id="userStore.userId" @update-nav="$refs.navigation.getData()" @update-drawer="$refs.drawer.getData()" v-slot="{Component}">
+          <router-view :user_id="userStore.userId" :user_email="userStore.userEmail" @update-nav="$refs.navigation.getData(); $refs.navigation.getLeaves()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
           </router-view>
         </div>
-      </div>
-    </div>
+      <!-- </div>
+    </div> -->
     <footer class="mt-24 text-center  text-sm" :class="{'w-full ': userStore.role == 'student', 'ml-[13rem]': userStore.role=='admin'}">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved.
     </footer>
@@ -22,7 +22,6 @@
 </template>
 <script>
 import TheNavigation from './components/navigation/TheNavigation.vue';
-import AdminNavDrawer from './components/navigation/AdminNavDrawer.vue';
 import axios from "./axios-http"
 import { useAuth } from './stores/useAuth';
 
@@ -34,11 +33,10 @@ export default {
 
   components: {
     'nav-component': TheNavigation,
-    'admin-nav-drawer': AdminNavDrawer
   },
   data() {
     return {
-      role: 'admin',
+      // role: 'admin',
     }
   },
   methods: {
@@ -50,13 +48,7 @@ export default {
       this.userStore.userEmail = data.email;
     },
   },
-  created(){
-    axios.get(url + "users_leaves/" + this.user_id).then((res)=>{
-      this.user = res.data.data
-      this.emailStore.email = res.data.data.email
-      this.leaves = res.data.data.leaves;
-    })
-  },
+
   async created(){
     await this.userStore.getUserInfo()
   },

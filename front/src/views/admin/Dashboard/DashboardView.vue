@@ -113,7 +113,7 @@ export default {
                 this.leaveUserHistory = this.leaveUsers.filter((leave)=>leave.status != "Pending")
                 setTimeout(() => {
                     this.isGettingResources = false;
-                }, 700)
+                }, 650)
             })
         }, 
         getUser() {

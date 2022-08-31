@@ -80,7 +80,7 @@ export default {
             this.isViewDetail = true;
             axios.put("leaves/admin_seen/" + id).then(
                 this.$emit('getLeaves'),
-                this.$emit('update-drawer')
+                this.$emit('update-nav')
             );
         },
     },

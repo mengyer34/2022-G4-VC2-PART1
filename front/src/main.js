@@ -6,7 +6,6 @@ import router from './router'
 import { createPinia } from 'pinia'
 import VueCookies from 'vue-cookies'
 import TheNavigation from './components/navigation/TheNavigation.vue';
-import AdminNavDrawer from './components/navigation/AdminNavDrawer.vue';
 
 
 

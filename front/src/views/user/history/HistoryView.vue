@@ -51,8 +51,8 @@
                 </div>
                 <leave-history :isGettingResources="isGettingResources" :leaves="leaves" :status="status" :type="type" class="print-container" />
             </div>
-            <form-request :user_id="user_id" :user_email="userStore.userEmail" v-if="isShow" @close-popup="closePopup" @saveChange="saveChange"/>
-            <request-sent v-if="isSentRequest" @addNewRequest="addNewRequest"/>
+            <form-request  v-if="isShow" :user_id="user_id" :user_email="user_email" @close-popup="closePopup" @add-leave="saveChange"/>
+            <request-sent v-if="isSentRequest"  @addNewRequest="addNewRequest"/>
     </div>
 </template>
 
@@ -64,12 +64,15 @@ import requestForm from "../newRequest/RequestFormView.vue"
 import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
 import { useAuth } from '../../../stores/useAuth'
 export default {
-    setup() {
-        const userStore = useAuth()
-        return { userStore }
-    },
+    // setup() {
+    //     const userStore = useAuth()
+    //     return { userStore }
+    // },
 
-    props: ['user_id'],
+    props: {
+        user_id: Number,
+        user_email: String
+    },
 
     components: {
         'leave-history': UserLeaveHistory,
@@ -87,7 +90,7 @@ export default {
         }
     },
     methods: {
-         async getLeave() { 
+        async getLeave() { 
             await axios.get('users_leaves/' + this.user_id).then(res => {
                 this.leaves = res.data.data.leaves.reverse();
                 this.isGettingResources = false;
@@ -99,13 +102,15 @@ export default {
         closePopup(){
             this.isShow = false;
         },
-        saveChange(){
+        saveChange(newRequest){
             this.isShow = false;
             this.isSentRequest = true;
+            axios.post('leaves',newRequest).then((res)=>{
+                this.getLeave();
+            })
         },
         addNewRequest(){
             this.isSentRequest = false;
-            this.getLeave()
         },
         
     },

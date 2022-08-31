@@ -1,9 +1,6 @@
 <template>
     <div>
         <div class="home w-10/12 mt-32 bg-gray-100 m-auto rounded shadow p-3 relative " v-cloak>
-            <div class=" w-full absolute text-3xl p-3 flex justify-center -top-[68px]">
-                <div class="inline-block rounded-t-full px-6 bg-gray-100 text-primary rounded shadow absolute text-2xl p-3 ">Student Information</div>
-            </div>
             <div class=" p-3 ">
                 <div class="flex mt-3">
                     <div class="rounded shadow bg-white shadow-gray-400 w-[26%] text-center relative p-2">

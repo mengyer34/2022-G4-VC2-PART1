@@ -10,6 +10,12 @@
             </tr>
         </thead>
         <tbody v-if="students.length > 0" class="w-full">
+            <tr v-if="isUpdating" class="w-full bg-orange-300">
+                <td colspan="7">
+                    <updating-data>Updating data...</updating-data>
+                </td>
+            </tr>
+
             <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
                 <td class="text-center pl-4">
                     <div class="flex items-center space-x-2 p-2">
@@ -25,7 +31,7 @@
                     {{student.email}}
                 </td>
                 <td class="text-center">
-                    {{student.generation}}
+                    {{student.batch}}
                 </td>
                 <td class="text-center relative">
                     <button class="view-detail bg-blue-500 rounded px-5 py-2 hover:bg-primary" @click="$emit('viewDetail',student.id)">
@@ -75,14 +81,17 @@
 <script>
 const url = 'http://127.0.0.1:8000/api/'
 import GettingResources from './../animations/GettingResources.vue';
+import UpdatingData from './../animations/UpdatingData.vue';
 export default {
     components: {
         'getting-resources': GettingResources,
+        "updating-data": UpdatingData,
     },
     props:{
         students: Array,
         isGettingResources: Boolean,
         allStudents: Array,
+        isUpdating: Boolean,
     },
     methods: {
         getImage(imageName) {

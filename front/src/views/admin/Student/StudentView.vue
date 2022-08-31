@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div>
-                <student-lists :allStudents="students" :isGettingResources="isGettingResources" :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
+                <student-lists :isUpdating="isUpdating" :allStudents="students" :isGettingResources="isGettingResources" :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
 
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/>
                 <form-student v-if="isShow" @close-popup="isShow=false" @add-student="addNewStudent"/>
@@ -63,19 +63,20 @@ export default {
             isShow: false,
             isCreatedSuccess: false,
             isGettingResources: true,
+            isUpdating: false,
         }
     },
     computed: {
         batchFilter() {
             if (this.searchKeyword != '') {
                 if (this.batch != 'All') {
-                    return this.students.filter(student => student.generation == this.batch && (student.first_name.toLowerCase().includes(this.searchKeyword.toLowerCase()) || student.last_name.toLowerCase().includes(this.searchKeyword.toLowerCase())))
+                    return this.students.filter(student => student.batch == this.batch && (student.first_name.toLowerCase().includes(this.searchKeyword.toLowerCase()) || student.last_name.toLowerCase().includes(this.searchKeyword.toLowerCase())))
                 }else {
                     return this.students.filter(student => student.first_name.toLowerCase().includes(this.searchKeyword.toLowerCase()) || student.last_name.toLowerCase().includes(this.searchKeyword.toLowerCase()))
                 }
             }else {
                 if (this.batch != 'All') {
-                    return this.students.filter(student => student.generation == this.batch);
+                    return this.students.filter(student => student.batch == this.batch);
                 }else {
                     return this.students;
                 }
@@ -87,9 +88,11 @@ export default {
             axios.get('users_leaves').then(res => {
                 this.students = res.data.data.reverse();
                 this.isGettingResources = false;
+                this.isUpdating = false;
             })
-        },   
+        },
         deleteStudent() {
+            this.isUpdating = true;
             axios.delete('/users/' + this.id).then(res => {
                 this.getStudent();
             })
@@ -107,6 +110,7 @@ export default {
             this.isViewDetail = true
         },
         saveEditStudent(object,id){
+            this.isUpdating = true;
             axios.put("/users/" + id,object).then((res)=>{
                 this.getStudent()
             })
@@ -118,6 +122,7 @@ export default {
             this.isShow = false
         },
         addNewStudent(){
+            this.isUpdating = true;
             this.getStudent()
             this.closePopup()
             this.successAlert()

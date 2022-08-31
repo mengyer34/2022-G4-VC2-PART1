@@ -6,13 +6,9 @@
                     <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
                     <span :class="{'text-black': !isReady}" class="text-2xl font-semibold">SLMS</span>
                 </li>
-                <!-- <li v-else class="flex items-center space-x-2">
-                    <div class="rounded-full bg-slate-200 h-[3.1rem] w-[3.1rem]"></div>
-                    <div class="h-6 w-20 bg-slate-200 rounded-xl"></div>
-                </li> -->
             </ul>
-            <ul v-if="role !== 'admin'" @click="show=false" id="animation" class="flex">
-                <li v-if="isReady">
+            <ul @click="show=false" id="animation" class="flex">
+                <li v-if="role !== 'admin' && isReady">
                     <router-link class="p-2 px-6 flex" to="/">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-[1.35rem] w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -20,7 +16,7 @@
                         Home
                     </router-link>
                 </li>
-                <li v-if="isReady">
+                <li v-if="role !== 'admin' && isReady">
                     <router-link class="flex p-2 px-6" to="/histories">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
@@ -29,9 +25,38 @@
                     </router-link>
                 </li>
 
-                <div v-else class="h-10 w-72 bg-slate-300 rounded"></div>
+                <li v-if="role == 'admin' && isReady">
+                    <router-link class="flex p-2 px-6" to="/dashboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-[1.35rem] w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z" clip-rule="evenodd" />
+                        </svg>
+                        Dashboard
+                    </router-link>
+                </li>
+                <li v-if="role == 'admin' && isReady">
+                    <router-link class="flex p-2 px-6" to="/students">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-[1.35rem] w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        </svg>
+                        Students
+                    </router-link>
+                </li>
+                <li v-if="role == 'admin' && isReady">
+                    <router-link class="flex p-2 px-6" to="/leaves">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                        </svg>
+                        Leaves
 
+                        <div v-if="isReady && countUnseenNotification > 0" class="ml-3 flex justify-center items-center">
+                            <small class="bg-red-400 text-white rounded-lg px-[0.30rem] border">{{ countUnseenNotification }}</small>
+                        </div>
+                    </router-link>
+                </li>
+                <div v-if="!isReady" class="h-10 w-96 bg-slate-300 rounded"></div>
             </ul>
+
+
             <ul class="flex space-x-5 relative">
 
                 <li v-if="role !== 'admin'" >
@@ -48,7 +73,8 @@
                             <img v-if="user.profile_image != undefined" :src="getImage" alt="" class=" w-[30px] h-[30px] rounded-full">
                             <img v-else src="../../assets/avatar.png" alt="" class=" w-[30px] h-[30px] rounded-full">
                         </div>
-                        <span class="mr-2">{{user.first_name}} {{user.last_name}}</span>
+                        <span v-if="role != 'admin'">{{user.first_name}} {{user.last_name}}</span>
+                        <span v-else>{{user.username}}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
@@ -60,7 +86,7 @@
                     </div>
 
                     <div v-if="show" class="py-1 rounded-md shadow-xs absolute bg-gray-200 mt-10 right-0">
-                        <router-link class="flex px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-warning hover:text-white focus:outline-none focus:bg-gray-100" to="/profile">
+                        <router-link class="flex px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-warning hover:text-white focus:outline-none focus:bg-gray-100" :to="role =='admin'?'/admin':'/profile'">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -120,26 +146,48 @@ export default {
         },
 
         getData() {
-            axios.get('users_leaves/' + this.user_id).then(res=> {
+            axios.get('account/find').then(res=> {
                 this.user = res.data.data;
-                this.leaves = res.data.data.leaves;
+                this.getLeaves();
             })
+        },
+
+        getLeaves() {
+            if(this.user != null) {
+                if (this.user.role != 'admin') {
+                    axios.get('users_leaves/' + this.user_id).then(res => {
+                        this.leaves = res.data.data.leaves;
+                    })
+                } else {
+                    axios.get('leaves_user/').then(res => {
+                        this.leaves = res.data.data;
+                    })
+                }
+            }
         }
     },
 
     computed: {
         countUnseenNotification() {
             let countUnseen = 0;
-            this.leaves.forEach(eachLeave => {
-                if (!eachLeave.is_user_seen && eachLeave.status !== 'Pending') {
-                    countUnseen += 1
-                }
-            });
+            if (this.role != 'admin') {
+                this.leaves.forEach(eachLeave => {
+                    if (!eachLeave.is_user_seen && eachLeave.status !== 'Pending') {
+                        countUnseen += 1
+                    }
+                });
+            } else {
+                this.leaves.forEach(eachLeave => {
+                    if (!eachLeave.is_admin_seen) {
+                        countUnseen += 1
+                    }
+                });
+            }
             return countUnseen;
         },
 
         isReady() {
-            return this.user !== null && this.getImage;
+            return this.user !== null;
         },
 
         getImage() {
@@ -156,6 +204,12 @@ export default {
             this.getData();
         },
     },
+
+    created() {
+        if (this.user_id) {
+            this.getData();
+        }
+    }
 }
 </script>
 

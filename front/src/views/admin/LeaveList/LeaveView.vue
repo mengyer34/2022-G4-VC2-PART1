@@ -32,7 +32,7 @@
                 </div>
 
                 <!-- list all leaves -->
-                <student-leave :isGettingResources="isGettingResources" :leaves="filterLeaves" @getLeaves="getLeaves" @update-drawer="$emit('update-drawer')" />
+                <student-leave :isGettingResources="isGettingResources" :leaves="filterLeaves" @getLeaves="getLeaves" @update-nav="$emit('update-nav')" />
 
                 <div v-if="leaves.length <= 0 && !isGettingResources" class="flex flex-col items-center mt-8 mb-3">
                     <img class="w-32" src="./../../../assets/request_empty.png" alt="Image not found">
