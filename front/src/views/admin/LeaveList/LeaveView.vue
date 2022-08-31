@@ -25,7 +25,7 @@
                             <select v-model="filterLeaveTypeKey" id="filter-type" class=" w-44 rounded border border-gray-400 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
                                 <option value="All">All</option>
                                 <option value="Sick">Sick</option>
-                                <option value="Family's events">Family's Event</option>
+                                <option value="Family's event">Family's Event</option>
                             </select>
                         </div>
                     </div>
@@ -69,7 +69,6 @@ export default {
     computed: {
         filterLeaves() {
             let leavesToDisplay = this.leaves;
-
             if (this.keyword) {
                 leavesToDisplay = this.leaves.filter((leave) => (leave.user.first_name+" "+leave.user.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
             }
