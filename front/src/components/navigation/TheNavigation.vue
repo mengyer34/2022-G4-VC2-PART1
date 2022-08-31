@@ -55,7 +55,7 @@
                 </li>
                 <div v-if="!isReady" class="h-10 w-96 bg-slate-300 rounded"></div>
             </ul>
-<ul class="flex space-x-5 relative">
+            <ul class="flex space-x-5 relative">
 
                 <li v-if="role !== 'admin'" >
                     <router-link class="relative" to="notifications">
