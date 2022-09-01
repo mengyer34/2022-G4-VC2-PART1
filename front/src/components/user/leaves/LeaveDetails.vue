@@ -90,6 +90,8 @@ export default ({
         return {
             alert: false,
             approve: false,
+            linkToNotification: new URL(location.href).origin + '/notifications',
+            dataToSend: {}
         }
     },
     methods: {
@@ -98,14 +100,16 @@ export default ({
         },
         isApprove() {
             this.approve = true;
-            let status = {status: "Approved"};
-            axios.put("leaves/status/" + this.leave.id, status).then(res => {
+            this.dataToSend.status = "Approved";
+            this.dataToSend.linkTo = this.linkToNotification;
+            axios.put("leaves/status/" + this.leave.id, this.dataToSend).then(res => {
                 console.log(res);
             });
         },
         reject() {
-            let status = {status: "Rejected"};
-            axios.put("leaves/status/" + this.leave.id, status).then(res => {
+            this.dataToSend.status = "Rejected";
+            this.dataToSend.linkTo = this.linkToNotification;
+            axios.put("leaves/status/" + this.leave.id, this.dataToSend).then(res => {
                 console.log(res);
                 this.$emit('getLeaves');
                 this.$emit('close');
