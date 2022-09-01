@@ -198,7 +198,6 @@ export default {
                         })
                     } catch(err){
                         let error = err.response.data
-                        console.log(error);
                         let sms = "The email has already been taken." 
                         if (error.message == sms || error.message == sms + ' (and 1 more error)' || error == "Your email has existed"){
                             this.sms_error_email = sms

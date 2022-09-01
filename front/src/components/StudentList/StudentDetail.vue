@@ -52,7 +52,6 @@
                                         <option value="M">M</option>
                                         <option value="F">F</option>
                                     </select>
-                                    <!-- <input v-if="isClickEdit" type="text" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.gender"> -->
                                     <div v-else class="ml-16 inline-block text-gray-500">{{detail_student_list.gender}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
@@ -68,7 +67,7 @@
                                     <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.personal_id" >
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.personal_id}}</div>
                                 </div>
-                                <div class="text-red-500">{{personal_id_invalid}}</div>
+                                <div class="text-red-500 text-sm">{{personal_id_invalid}}</div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Generation</div>
                                     <input v-if="isClickEdit" type="text" class="ml-8 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[70%] border border-gray-300 " v-model="student_edit.batch" >
@@ -91,7 +90,7 @@
                                 <input v-if="isClickEdit" type="email" class="ml-20 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-full border border-gray-300 " v-model="student_edit.email">
                                 <div v-else class="ml-[78px] inline-block text-gray-500">{{detail_student_list.email}}</div>
                         </div>
-                        <div class="text-red-500">{{email_invalid}}</div>
+                        <div class="text-red-500 text-sm ml-36">{{email_invalid}}</div>
                     </div>
                 </div>
                 <div class="">
@@ -202,7 +201,7 @@ export default ({
             if (this.checkForm()){
                 if (student_edited.phone[1] != '0' && student_edited.phone[0] == '0' && student_edited.phone.length < 11 &&student_edited.phone.length > 8){
                     if (this.filterStudentEmail(student_edited.email)){
-                        if (this.filterStudentId(student_edited.personal_id) && this.filterStudentBatch(student_edited.batch)){
+                        if (this.filterStudentId()){
                             this.isInvalidPhoneNumber = false;
                             this.isClickEdit = false;
                             let new_update = {
@@ -258,26 +257,25 @@ export default ({
                 this.isEditSuccess = false;
             }, 3000);
         },
-        filterStudentId(id){
-            let find = this.students.filter((student)=>student.personal_id == id && student.personal_id != this.student_detail.personal_id);
-            let sms = true
-            if (find.length >= 1){
-                sms = false
-            }
-            return sms
-        },
-        filterStudentBatch(batch){
-            let find = this.students.filter((student)=>student.batch == batch);
-            let sms = true
-            if (find.length >= 1){
-                sms = false
+        filterStudentId(){
+            console.log(this.student_detail.personal_id);
+            console.log(this.student_edit.personal_id);
+            console.log(this.student_detail.batch)
+            let generation = this.student_edit.batch;
+            let id = this.student_edit.personal_id
+            let find = this.students.find(student=>( (student.personal_id == id) && (this.student_detail.id != student.id) && student.batch == generation));
+            let sms = false
+            console.log(find, 'di');
+            if (find == undefined){
+                sms = true
             }
             return sms
         },
         filterStudentEmail(email){
             let find = this.students.find((student)=>student.email == email && student.email != this.student_detail.email);
             let sms = true
-            if (find >= 1){
+            console.log(find,' email');
+            if (find != undefined){
                 sms = false
             }
             return sms

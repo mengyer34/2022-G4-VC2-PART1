@@ -32,14 +32,14 @@ export default {
 
   methods: {
     async getUserInfo(){
-      const result = await axios.get('/account/find')
-      const data = await result.data.data;
-      console.log(data);
-      this.userStore.userId = data.id;
-      this.userStore.userEmail = data.email;
-      this.userStore.role = data.role;
-      this.$cookies.set('role', data.role);
-      console.log(this.$cookies.get('role'));
+      if(this.$cookies.get('slms')){
+        const result = await axios.get('/account/find')
+        const data = await result.data.data;
+        this.userStore.userId = data.id;
+        this.userStore.userEmail = data.email;
+        this.userStore.role = data.role;
+        this.$cookies.set('role', data.role);
+      }
     },
   },
   async created(){
