@@ -52,7 +52,6 @@ const routes = [
     name: 'students',
     component: Students,
     meta:{ middleware: [admin] }
-    // meta:{ middleware: true }
   },
   {
     path: '/leaves',

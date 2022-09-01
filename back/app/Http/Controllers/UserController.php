@@ -212,7 +212,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
-    {
+    {   
+        if($user->profile_image !== 'female_default_profile.png' 
+            && $user->profile_image !== 'male_default_profile.png') {
+
+            $previousProfileStoragePath = storage_path('profile_images/' . $user->profile_image);
+            if(File::exists($previousProfileStoragePath)){
+                File::delete($previousProfileStoragePath);
+            }
+        }
         $user->delete();
         $response = [
             'success' => true,
