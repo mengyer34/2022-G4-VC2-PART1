@@ -1,12 +1,13 @@
 <template>
     <div class="w-full sm:px-6 mt-24">
         <div>
-            <div class="flex bg-white shadow items-start p-3 rounded">
-                <img class="w-56" src="https://www.lakservices.com/LakAdminPanal/dist/img/banner-img.png" alt="">
-                <div>
+            <div class="w-full flex bg-white shadow items-center justify-around py-3 rounded">
+                <img class="w-[20%] scale-x-[-1]" src="../../../assets/banner-img.png" alt="">
+                <div class="w-[80% text-center">
                     <h1 class="font-bold text-3xl">Welcome to Students Leave Management System!!</h1>
                     <p class="mt-2 text-lg">Manage your student by using this application</p>
                 </div>
+                <img class="w-[20%]" src="../../../assets/banner_img.jpg" alt="">
             </div>
             <div>
                 <div class="mt-3">
