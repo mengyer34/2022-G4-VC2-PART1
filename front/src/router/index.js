@@ -48,7 +48,6 @@ const routes = [
     path: '/students',
     name: 'students',
     component: Students,
-    meta:{ middleware: true }
   },
   {
     path: '/leaves',
@@ -76,7 +75,6 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-  // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
   const auth = useAuth();

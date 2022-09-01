@@ -138,9 +138,10 @@ export default {
     methods: {
         submitLogout(){
             this.isLoggingOut = true;
+            let dataToDel = {token: 'slms', role: 'role'}
             setTimeout(() => {
                 this.isLoggingOut = false;
-                this.userStore.logout('slms')
+                this.userStore.logout(dataToDel)
                 this.$router.push('/login')
             }, 1000);
         },

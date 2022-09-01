@@ -10,7 +10,7 @@
           </router-view>
         </div>
 
-    <footer class="mt-24 text-center  text-sm" :class="{'w-full ': userStore.role == 'student', 'ml-[13rem]': userStore.role=='admin'}">
+    <footer class="mt-24 text-center  text-sm">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved. 
     </footer>
   </div>
@@ -32,15 +32,14 @@ export default {
 
   methods: {
     async getUserInfo(){
-      const result = await axios.get('/account/find')
-      const data = await result.data.data;
-      console.log(data);
-      this.userStore.userId = data.id;
-      this.userStore.userEmail = data.email;
-      this.userStore.role = data.role;
-      // this.$store.state.role = data.role;
-      this.$cookies.set('role', data.role);
-      console.log(this.$cookies.get('role'));
+      if(this.$cookies.get('slms')){
+        const result = await axios.get('/account/find')
+        const data = await result.data.data;
+        this.userStore.userId = data.id;
+        this.userStore.userEmail = data.email;
+        this.userStore.role = data.role;
+        this.$cookies.set('role', data.role);
+      }
     },
   },
   async created(){
