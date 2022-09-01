@@ -67,26 +67,26 @@ export default {
     },
     methods: {
         login(){
-            this.isLoggingIn = true;
+            // this.isLoggingIn = true;
             axios.post('/account/login', {email: this.email, password: this.password})
             .then(res=>{
                     this.$cookies.set('slms',res.data.token);
-                    this.authStore.getUserInfo();
-                    this.$router.push("/");
-                    setTimeout(() => {
-                        this.isLoggingIn = false;
-                        window.location.reload();
-                    }, 1000);
-            }).catch(res => {
-                if (res) {
-                    this.isLoggingIn = false
-                }
+                    window.location.reload();
             })
         }
     },
     created(){
         if(this.$cookies.get('slms')){
-            this.$router.push('/')
+            this.isLoggingIn = true;
+            
+            setTimeout(() => {
+                this.isLoggingIn = false;
+                if(this.$cookies.get('role') == 'admin'){
+                    this.$router.push('/dashboard')
+                }else{
+                    this.$router.push('/')
+                }
+            }, 1000);
         }
     },
 }
