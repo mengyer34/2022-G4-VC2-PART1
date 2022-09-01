@@ -55,8 +55,6 @@
                 </li>
                 <div v-if="!isReady" class="h-10 w-96 bg-slate-300 rounded"></div>
             </ul>
-
-
             <ul class="flex space-x-5 relative">
 
                 <li v-if="role !== 'admin'" >
@@ -67,7 +65,7 @@
                         </svg>
                     </router-link>
                 </li>
-                <li @click="show=!show" class="flex space-x-2 cursor-pointer">
+                <li @click="show=!show" class="flex flex-col items-end min-w-[9rem] space-x-2 cursor-pointer">
                     <div v-if="isReady" class="flex justify-center items-center">
                         <div class="w-8 h-8 mr-2">
                             <img v-if="user.profile_image != undefined" :src="getImage" alt="" class=" w-[30px] h-[30px] rounded-full">
@@ -125,8 +123,7 @@ export default {
         user_id: Number,
         role: String
     },
-
-    data() {
+data() {
         return {
             show: false,
             user: null,

@@ -47,7 +47,7 @@
                 </div>  
             </div>
         </div>
-        <div class="flex items-center w-[85%] p-4 bg-[#23242986] fixed h-full top-0 z-100" v-if="isUploaded">
+        <div class="flex items-center w-full p-4 bg-[#23242986] fixed h-full top-0 z-100" v-if="isUploaded">
             <form @submit.prevent="saveUpload" enctype="multipart/form-data" class="bg-[#ddd] rounded p-5 m-auto text-center">
                 <div class="flex items-center justify-between mb-4 text-lg">
                     <p>Crop your new profile picture</p>

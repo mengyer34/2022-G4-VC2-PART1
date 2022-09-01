@@ -14,21 +14,20 @@
                         <select v-model="batch" name="" id="filter-status"
                             class="w-[20%] rounded  p-2 focus:outline-none focus:border-2 focus:border-primary border border-gray-400">
                             <option value="All">All</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
+                            <option :value="generation" v-for="generation of getBatch" :key="generation">{{ generation }}
+                            </option>
                         </select>
                         <div class="w-[60%] relative flex">
                             <search-bar @update-keyword="updateKeyword" />
                         </div>
 
                         <div class="w-10 rounded bg-green-500 hover:bg-green-600" @click="downloadFile">
-                            <img src="../../../assets/excel.svg" alt="" class="p-1 ">
+                            <img src="../../../assets/excel.svg" alt="" class="p-2 ">
                         </div>
                         <div class="w-32 flex justify-end">
                             <button class="text-white bg-orange-500 hover:bg-orange-600 py-2 px-4 rounded border-none"
                                 @click="showFormAddStudent">Add Student</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -70,7 +69,7 @@ export default {
             id: null,
             isViewDetail: false,
             student_detail: {},
-            batch: 'All',
+            batch: "All",
             searchKeyword: '',
             isShow: false,
             isCreatedSuccess: false,
@@ -93,7 +92,15 @@ export default {
                     return this.students;
                 }
             }
-        }
+        },
+        getBatch() {
+            let generations = []
+            for (let student of this.students) {
+                generations.push(student.batch)
+            }
+            let batches = [...new Set(generations)];
+            return batches.sort();
+        },
     },
     methods: {
         getStudent() {
@@ -142,11 +149,18 @@ export default {
         },
         downloadFile() {
             const datas = []
-            for (let student of this.students) {
+            let students = this.students;
+            if (this.batch != 'All') {
+                students = this.students.filter(student => student.batch == this.batch);
+            }
+            students = students.sort((a, b) => {
+                return a.personal_id - b.personal_id;
+            })
+            for (let student of students) {
                 datas.push({
-                    firstName: student.first_name,
-                    lastName: student.last_name,
-                    personal_id: student.personal_id,
+                    FirstName: student.first_name,
+                    LastName: student.last_name,
+                    Personal_id: student.personal_id,
                     Gender: student.gender,
                     Email: student.email,
                     Batch: student.batch,
@@ -160,6 +174,7 @@ export default {
 
             if (data) exportFromJSON({ data, fileName, exportType });
         },
+
         successAlert() {
             this.isCreatedSuccess = true;
             setTimeout(() => {
