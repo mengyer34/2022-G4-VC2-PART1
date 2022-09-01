@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\SendEmailController;
 class AuthenticationController extends Controller
 {
     // login user
@@ -46,5 +46,39 @@ class AuthenticationController extends Controller
     public function getInfoByToken(){
         $info = auth('sanctum')->user();
         return Response()->json(['data'=>$info]);
+    }
+    public function forgotPassword(Request $request){
+        $user = User::where('email', "=", $request->email)->first();
+        $admin = Admin::where('email', "=", $request->email)->first();
+        if ($user || $admin){
+            $response = [
+                'success' => true
+            ];
+        }else{
+            $response = [
+                'success' => false,
+                'message'=> "Email not found"
+            ];
+        }
+                // send mail
+                (new SendEmailController)->sendMailResetPassword($request);
+        return Response()->json($response);
+    }
+    public function resetForgotPassword(Request $request,User $user){
+        $user = User::where('email', $request->email)->first();
+        $admin = Admin::where('email',$request->email)->first();
+        if ($user){
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+        }
+        else if ($admin){
+            $admin->password = Hash::make($request->new_password);
+            $admin->save();
+        }
+
+        $response = [
+            'message' => "Reset password success"
+        ];
+        return response()->json($response , 202);
     }
 }
