@@ -169,7 +169,7 @@ export default {
                 })
             }
             const data = datas;
-            const fileName = "student-imformatoin";
+            const fileName ="Batch "+ this.batch;
             const exportType = exportFromJSON.types.csv;
 
             if (data) exportFromJSON({ data, fileName, exportType });
