@@ -202,7 +202,7 @@ export default ({
             if (this.checkForm()){
                 if (student_edited.phone[1] != '0' && student_edited.phone[0] == '0' && student_edited.phone.length < 11 &&student_edited.phone.length > 8){
                     if (this.filterStudentEmail(student_edited.email)){
-                        if (this.filterStudentId(student_edited.personal_id) &&filterStudentBatch(student_edited.batch)){
+                        if (this.filterStudentId(student_edited.personal_id) && this.filterStudentBatch(student_edited.batch)){
                             this.isInvalidPhoneNumber = false;
                             this.isClickEdit = false;
                             let new_update = {

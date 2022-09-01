@@ -30,6 +30,6 @@ class ForgotPasswordInfor extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email_account_registerd');
+        return $this->view('emails.reset_password');
     }
 }
