@@ -49,20 +49,20 @@
       methods: {
         showFormRequest(){
           this.isShow = true;
+        },
+        closePopup(){
+            this.isShow = false;
+        },
+        saveChange(newRequest){
+          this.isSentRequest = true;
+          this.closePopup()
+          axios.post('leaves',newRequest);
+        },
+        addNewRequest(){
+          this.isSentRequest = false;
+          this.$router.push({name: "histories"})
+        },
       },
-      closePopup(){
-          this.isShow = false;
-      },
-      saveChange(newRequest){
-        this.isSentRequest = true;
-        this.closePopup()
-        axios.post('leaves',newRequest);
-      },
-      addNewRequest(){
-        this.isSentRequest = false;
-        this.$router.push({name: "histories"})
-      },
-  },
   }
 </script>
 

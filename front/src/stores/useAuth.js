@@ -29,7 +29,8 @@ export const useAuth = defineStore({
       }
     },
     logout(value){
-      document.cookie = `${value}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `${value.token}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `${value.role}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       axios.get('/logout')
     }
     
