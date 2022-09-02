@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="w-10 rounded bg-green-500 hover:bg-green-600" @click="downloadFile">
-                            <img src="../../../assets/excel.svg" alt="" class="p-2 ">
+                            <img src="../../../assets/excel.svg" alt="" class="p-2 cursor-pointer">
                         </div>
                         <div class="w-32 flex justify-end">
                             <button class="text-white bg-orange-500 hover:bg-orange-600 py-2 px-4 rounded border-none"
@@ -53,7 +53,6 @@ import studentDetail from '../../../components/StudentList/StudentDetail.vue'
 import studentForm from "../../../components/StudentList/StudentForm.vue"
 import exportFromJSON from "export-from-json";
 import axios from '../../../axios-http.js'
-import { useAuth } from '../../../stores/useAuth';
 export default {
     components: {
         'student-lists': StudentListView,
@@ -179,7 +178,7 @@ export default {
             this.isCreatedSuccess = true;
             setTimeout(() => {
                 this.isCreatedSuccess = false;
-            }, 1500);
+            }, 2500);
         },
 
     },

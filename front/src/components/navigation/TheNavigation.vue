@@ -48,7 +48,7 @@
                         </svg>
                         Leaves
 
-                        <div v-if="isReady && countUnseenNotification > 0" class="ml-3 flex justify-center items-center">
+                        <div v-if="isReady && countUnseenNotification > 0" :class="{'animate-bounce': ringing}" class="ml-3 flex justify-center items-center">
                             <small class="bg-red-400 text-white rounded-lg px-[0.30rem] border">{{ countUnseenNotification }}</small>
                         </div>
                     </router-link>
@@ -59,7 +59,7 @@
 
                 <li v-if="role !== 'admin'" >
                     <router-link class="relative" to="notifications">
-                        <span v-if="countUnseenNotification > 0" class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
+                        <span v-if="countUnseenNotification > 0" :class="{'animate-bounce': ringing}" class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                         </svg>
@@ -107,28 +107,23 @@
     </div>
 </template>
 <script>
-import { useAuth } from '../../stores/useAuth'
 import axios from "../../axios-http"
 import LoadingShow from './../animations/LoadingShow.vue';
 export default {
     components: {
         'loading-show': LoadingShow,
     },
-    setup() {
-        const userStore = useAuth()
-        return {userStore}
-    },
-
     props: {
         user_id: Number,
         role: String
     },
-data() {
+    data() {
         return {
             show: false,
             user: null,
             leaves: [],
             isLoggingOut: false,
+            ringing: true,
         };
     },
     
@@ -138,7 +133,7 @@ data() {
             let dataToDel = {token: 'slms', role: 'role'}
             setTimeout(() => {
                 this.isLoggingOut = false;
-                this.userStore.logout(dataToDel)
+                this.$store.dispatch('logout')
                 this.$router.push('/login')
             }, 1000);
         },
@@ -200,6 +195,12 @@ data() {
         user_id() {
             this.getData();
         },
+        
+        countUnseenNotification(newValue) {
+            setTimeout(() => {
+                    this.ringing = false;
+                }, 5000)
+        }
     },
 
     created() {

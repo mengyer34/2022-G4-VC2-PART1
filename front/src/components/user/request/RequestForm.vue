@@ -105,14 +105,7 @@
 </template>
 
 <script>
-    // import axios from "../../../axios-http"
-    import { useAuth } from '../../../stores/useAuth'
     export default({
-        setup() {
-            const userStore = useAuth()
-            return { userStore }
-        },
-
         props: {
             'user_id': Number,
             'user_email': String

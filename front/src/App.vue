@@ -1,9 +1,9 @@
 <template>
   <div>
-    <nav-component :role="userStore.role" :user_id="userStore.userId" ref="navigation" />
+    <nav-component :role="this.$store.state.role" :user_id="this.$store.state.userId" ref="navigation" />
 
         <div>
-          <router-view :user_id="userStore.userId" :user_email="userStore.userEmail" @update-nav="$refs.navigation.getData(); $refs.navigation.getLeaves()" v-slot="{Component}">
+          <router-view :user_id="this.$store.state.userId" :user_email="this.$store.state.userEmail" @update-nav="$refs.navigation.getData(); $refs.navigation.getLeaves()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
@@ -18,26 +18,19 @@
 <script>
 import TheNavigation from './components/navigation/TheNavigation.vue';
 import axios from "./axios-http"
-import { useAuth } from './stores/useAuth';
 
 export default {
-  setup() {
-    const userStore = useAuth()
-    return { userStore }
-  },
-
   components: {
     'nav-component': TheNavigation,
   },
-
   methods: {
     async getUserInfo(){
       if(this.$cookies.get('slms')){
         const result = await axios.get('/account/find')
         const data = await result.data.data;
-        this.userStore.userId = data.id;
-        this.userStore.userEmail = data.email;
-        this.userStore.role = data.role;
+        this.$store.state.userId = data.id;
+        this.$store.state.userEmail = data.email;
+        this.$store.state.role = data.role;
         this.$cookies.set('role', data.role);
       }
     },

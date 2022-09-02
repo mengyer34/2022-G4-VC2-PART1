@@ -3,7 +3,7 @@
         <div class="flex h-full items-center bg-slate-400">
             <img src="../../assets/undraw_mobile_login_re_9ntv.svg" alt="logo" class="w-[30%] m-auto ">
             <div class="rounded mb-4 w-[40%] m-auto mt-[30px]">
-                <form class="p-5 bg-[#dddddd98] rounded">
+                <form class="p-5 bg-[#dddddd98] rounded" @submit.prevent="login"  @keyup.enter="login">
                     <img src="../../assets/pnc_logo.png" alt="logo" class="w-[100px] m-auto">
                     <h1 class="text-2xl font-semibold text-center p-1">LOGIN SLMS</h1>
     
@@ -33,8 +33,7 @@
                     </div>
                     <button
                         class="bg-blue-500 hover:bg-blue-700 text-white py-2 w-full px-4 rounded focus:outline-primary focus:shadow-outline"
-                        @click="login"
-                        type="button" >
+                        type="submit" >
                         Login
                     </button>
                 </form>
@@ -50,16 +49,10 @@
 <script>
 import axios from '../../axios-http'
 
-import { useAuth } from '../../stores/useAuth';
-import getCookie from '../../helper/getCookie';
 import LoadingShow from './../animations/LoadingShow.vue';
 export default {
     components: {
         'loading-show': LoadingShow,
-    },
-    setup(){
-        const authStore = useAuth()
-        return { authStore }
     },
     data(){
         return {
@@ -76,12 +69,12 @@ export default {
             try {
                 await axios.post('/account/login', {email: this.email, password: this.password})
                 .then(res=>{
+                    window.location.reload();
+                    this.isLoggingIn = false;
                     this.$cookies.set('slms',res.data.token);
-                        window.location.reload();
                 })
             } catch(err){
                 this.isLoggingIn = false;
-                console.log(err.response.data);
                 this.isInValid = true;
             }
         }

@@ -196,9 +196,8 @@ export default {
                         linkTo: linkToNotification
                     };
                     try{
-                        await axios.post('/account/register', newStudent).then((res)=>{
-                            return this.$emit('add-student');
-                        })
+                        axios.post('/account/register', newStudent);
+                        this.$emit('add-student');
                     } catch(err){
                         let error = err.response.data
                         let sms = "The email has already been taken." 

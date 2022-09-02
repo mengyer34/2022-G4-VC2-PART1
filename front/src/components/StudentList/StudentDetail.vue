@@ -285,7 +285,7 @@ export default ({
     created() {
         setTimeout(() => {
             this.isGettingResources = false;
-        }, 800)
+        }, 400)
     }
 })
 </script>

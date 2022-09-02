@@ -9,9 +9,9 @@ import LeaveList from '../views/admin/LeaveList/LeaveView.vue'
 import AdminProfile from '../views/admin/profile/AdminProfile.vue'
 import LoginView from '../views/login&signout/LoginView.vue'
 import ForgotPassword from '../views/login&signout/ForgotPasswordView.vue'
-import { useAuth } from '../stores/useAuth';
 import user from '../middleware/user'
 import admin from '../middleware/admin'
+import { store } from '../stores/store'
 
 
 
@@ -88,8 +88,7 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const publicPages = ['/login', '/forgot'];
   const authRequired = !publicPages.includes(to.path);
-  const auth = useAuth();
-  if (authRequired && !auth.token) {
+  if (authRequired && !store.state.token) {
     return '/login';
   }
 });
