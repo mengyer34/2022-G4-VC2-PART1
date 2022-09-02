@@ -48,7 +48,7 @@
                         </svg>
                         Leaves
 
-                        <div v-if="isReady && countUnseenNotification > 0" class="ml-3 flex justify-center items-center">
+                        <div v-if="isReady && countUnseenNotification > 0" :class="{'animate-bounce': ringing}" class="ml-3 flex justify-center items-center">
                             <small class="bg-red-400 text-white rounded-lg px-[0.30rem] border">{{ countUnseenNotification }}</small>
                         </div>
                     </router-link>
@@ -59,7 +59,7 @@
 
                 <li v-if="role !== 'admin'" >
                     <router-link class="relative" to="notifications">
-                        <span v-if="countUnseenNotification > 0" class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
+                        <span v-if="countUnseenNotification > 0" :class="{'animate-bounce': ringing}" class="bg-red-700 text-xs rounded-full px-1 absolute">{{ countUnseenNotification }}</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                         </svg>
@@ -123,6 +123,7 @@ export default {
             user: null,
             leaves: [],
             isLoggingOut: false,
+            ringing: true,
         };
     },
     
@@ -136,7 +137,6 @@ export default {
                 this.$router.push('/login')
             }, 1000);
         },
-
         getData() {
             axios.get('account/find').then(res=> {
                 this.user = res.data.data;
@@ -156,7 +156,7 @@ export default {
                     })
                 }
             }
-        }
+        },
     },
 
     computed: {
@@ -195,6 +195,12 @@ export default {
         user_id() {
             this.getData();
         },
+        
+        countUnseenNotification(newValue) {
+            setTimeout(() => {
+                    this.ringing = false;
+                }, 5000)
+        }
     },
 
     created() {

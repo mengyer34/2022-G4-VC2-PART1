@@ -32,7 +32,7 @@
                 </div>
 
                 <!-- list all leaves -->
-                <student-leave :isGettingResources="isGettingResources" :leaves="filterLeaves" @getLeaves="getLeaves" @update-nav="$emit('update-nav')" />
+                <student-leave @updateLeave="updateLeave" :isUpdating="isUpdating" @start-updating="isUpdating = true" :isGettingResources="isGettingResources" :leaves="filterLeaves" @get-leaves="getLeaves" @update-nav="$emit('update-nav')" />
 
                 <div v-if="leaves.length <= 0 && !isGettingResources" class="flex flex-col items-center mt-8 mb-3">
                     <img class="w-32" src="./../../../assets/request_empty.png" alt="Image not found">
@@ -65,6 +65,7 @@ export default {
             filterLeaveTypeKey: "All",
             keyword: "",
             isGettingResources: true,
+            isUpdating: false,
         }
     },
 
@@ -91,12 +92,21 @@ export default {
             axios.get("/leaves_user").then(res => {
                 this.leaves = res.data.data.reverse();
                 this.isGettingResources = false;
+                this.isUpdating = false;
             })
         },
 
         updateKeyword(keyword) {
             this.keyword = keyword;
         },
+
+        updateLeave(id) {
+            this.leaves.forEach((eachLeave, index) => {
+                if (eachLeave.id == id) {
+                    this.leaves[index].is_admin_seen = true;
+                }
+            });
+        }
     },
 
     created() {

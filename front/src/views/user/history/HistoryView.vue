@@ -49,7 +49,7 @@
                     </div>
 
                 </div>
-                <leave-history :isGettingResources="isGettingResources" :leaves="leaves" :status="status" :type="type" class="print-container" />
+                <leave-history :isUpdating="isUpdating" :isGettingResources="isGettingResources" :leaves="leaves" :status="status" :type="type" class="print-container" />
             </div>
             <form-request  v-if="isShow" :user_id="user_id" :user_email="user_email" @close-popup="closePopup" @add-leave="saveChange"/>
             <request-sent v-if="isSentRequest"  @addNewRequest="addNewRequest"/>
@@ -81,6 +81,7 @@ export default {
             isShow: false,
             isSentRequest: false,
             isGettingResources: true,
+            isUpdating: false,
         }
     },
     methods: {
@@ -88,6 +89,7 @@ export default {
             await axios.get('users_leaves/' + this.user_id).then(res => {
                 this.leaves = res.data.data.leaves.reverse();
                 this.isGettingResources = false;
+                this.isUpdating = false;
             })
         },
         showFormRequest(){
@@ -99,6 +101,7 @@ export default {
         saveChange(newRequest){
             this.isShow = false;
             this.isSentRequest = true;
+            this.isUpdating = true;
             axios.post('leaves',newRequest).then((res)=>{
                 this.getLeave();
             })

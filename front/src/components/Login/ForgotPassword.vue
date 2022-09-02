@@ -25,7 +25,11 @@
                 </form>
             </div>
         </div>
-    <reset-password v-if="is_found_email" @submit-change="submitNewPassword" />
+        <reset-password v-if="is_confirmed_code" @submit-change="submitNewPassword" />
+        <form-verify v-if="is_found_email" @confirm-code="confirmCode"/>
+        <loading-show v-if="isFindingMail">
+                Finding email...
+        </loading-show>
     </section>
 </template>
 
@@ -33,36 +37,57 @@
 
 import axios from "../../axios-http"
 import resetPassword from './ResetForgotPassword.vue';
+import formVerify from './FormVerifyEmail.vue';
+import LoadingShow from './../animations/LoadingShow.vue';
 export default({
     components: {
-        'reset-password': resetPassword
+        'reset-password': resetPassword,
+        'form-verify': formVerify,
+        'loading-show': LoadingShow,
     },
     data(){
         return {
             email: '',
             is_not_found: false,
             is_found_email: false,
+            verify_code: '',
+            is_confirmed_code: false,
+            isFindingMail: false
         }
     },
     methods: {
         handleSubmit(){
-            axios.post('forgot',{email: this.email}).then((res)=>{
+            let chars = "01234567890123456789012345678901234567890123456789";
+            let string_length = 6;
+            let random_string = ""
+            for (let i = 0; i < string_length; i++) {
+                let rnum = Math.floor(Math.random() * chars.length)
+                random_string += chars.substring(rnum, rnum + 1);
+            }
+            this.verify_code = random_string;
+            this.isFindingMail = true;
+            axios.post('forgot',{email: this.email, verify_code: this.verify_code}).then((res)=>{
                 let status = res.data;
-                this.is_not_found = false
+                this.is_not_found = false;
+                this.isFindingMail = false;
                 if (!status.success){
                     this.is_not_found = true;
+                    this.isFindingMail = false;
                 }else{
                     this.is_found_email = true;
                 }
             });
         },
         submitNewPassword(newPwd){
-            this.is_found_email = false;
             let new_password = {email: this.email, new_password: newPwd}
             axios.post('resetForgot',new_password).then((res)=>{
                 console.log(res);
                 this.$router.push({name: 'login'})
             });
+        },
+        confirmCode(){
+            this.is_found_email = false;
+            this.is_confirmed_code = true;
         }
     }
 })

@@ -71,7 +71,7 @@
         <tbody v-if="isGettingResources">
             <tr>
                 <td colspan="7" class="p-2 text-center">
-                    <getting-resources>Loading leaves...</getting-resources>
+                    <getting-resources>Loading students...</getting-resources>
                 </td>
             </tr>
         </tbody>
