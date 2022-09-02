@@ -142,7 +142,6 @@ data() {
                 this.$router.push('/login')
             }, 1000);
         },
-
         getData() {
             axios.get('account/find').then(res=> {
                 this.user = res.data.data;
@@ -162,7 +161,7 @@ data() {
                     })
                 }
             }
-        }
+        },
     },
 
     computed: {
