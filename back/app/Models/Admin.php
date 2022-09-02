@@ -20,10 +20,10 @@ class Admin extends Authenticatable
         'username',
         'email',
         'password',
-        'profile_image'
+        'profile_image',
     ];
 
-    protected $hidden = ['password',  'remember_token'];
+    protected $hidden = ['password',  'verify_code'];
 
     protected function serializeDate(DateTimeInterface $date)
     {

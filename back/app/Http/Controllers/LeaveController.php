@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Leave;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SendEmailController;
+use App\Models\User;
+
 
 class LeaveController extends Controller
 {
@@ -121,6 +123,10 @@ class LeaveController extends Controller
     {
         $leave->status = $request->status;
         $leave->save();
+
+        $user = User::where('id', '=', $leave->user_id)->first();
+        $data_for_mail = ['email'=>$user->email, 'status'=>$request->status, 'linkTo'=>$request->linkTo, 'first_name'=>$user->first_name, 'last_name'=>$user->last_name];
+        (new SendEmailController)->sendMailRejectApprove($data_for_mail);
 
         $response = [
             'success' => true,

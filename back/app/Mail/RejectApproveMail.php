@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ForgotPasswordInfor extends Mailable
+class RejectApproveMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
@@ -30,6 +30,7 @@ class ForgotPasswordInfor extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.reset_password');
+        return $this->view('emails.email_reject_approve')
+        ->subject('Leave Request Notification');;
     }
 }

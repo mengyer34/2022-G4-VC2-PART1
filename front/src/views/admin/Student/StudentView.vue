@@ -53,7 +53,6 @@ import studentDetail from '../../../components/StudentList/StudentDetail.vue'
 import studentForm from "../../../components/StudentList/StudentForm.vue"
 import exportFromJSON from "export-from-json";
 import axios from '../../../axios-http.js'
-import { useAuth } from '../../../stores/useAuth';
 export default {
     components: {
         'student-lists': StudentListView,

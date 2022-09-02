@@ -77,7 +77,9 @@
             </div>
             <div v-if="inValid" class="alert text-red-600 w-full bg-red-200 p-2 rounded">Invalid Date</div>
             <div class="mb-2 px-1"  v-if="calculateDay ">
-                <h1 class="text-lg">Duration: {{calculateDay}}</h1>
+                <h1 v-if="isToMuchday && notAllowed" class=" text-red-600">You are not allowed to ask permission more than 2 days!</h1>
+                <h1 v-if="isNoday && notAllowed" class=" text-red-600">No need to ask permission at the weekend!</h1>
+                <h1 class="text-lg">Duration: <span :class="isAllowed?'text-green-500':'text-red-500'"> {{calculateDay}}</span></h1>
             </div>
             <div class="mb-2 w-full m-1 relative">
                 <label class="block text-gray-700 text-[16px] mb-1">
@@ -103,14 +105,7 @@
 </template>
 
 <script>
-    // import axios from "../../../axios-http"
-    import { useAuth } from '../../../stores/useAuth'
     export default({
-        setup() {
-            const userStore = useAuth()
-            return { userStore }
-        },
-
         props: {
             'user_id': Number,
             'user_email': String
@@ -131,7 +126,9 @@
                 isEndTime: null,
                 isReasonInputted: null,
                 duration: 0,
-                inValid: false,     
+                isDuration: null,
+                inValid: false,   
+                notAllowed: false,  
             }
         },
         methods: {
@@ -140,6 +137,8 @@
                 if (this.checkFormRequest()){
                     let newRequest = {user_id: this.user_id, leave_type: this.leaveType, start_date: this.startDate, end_date: this.endDate, start_time: this.startTime, end_time: this.endTime, reason: this.reason, duration: this.duration, email: this.user_email, urlApp: linkToNotification}
                     return this.$emit('add-leave',newRequest)
+                }else {
+                    this.notAllowed = true;
                 }
             },
             checkFormRequest(){
@@ -169,8 +168,12 @@
                 if (this.reason == ""){
                     this.isReasonInputted = true
                 }
+                this.isDuration = false
+                if (this.duration == 0 || this.duration > 2) {
+                    this.isDuration = true
+                }
 
-                if (this.isSelectedType || this.isStartDate || this.isEndDate || this.isStartTime || this.isEndTime || this.isReasonInputted || this.inValid){
+                if (this.isSelectedType || this.isStartDate || this.isEndDate || this.isStartTime || this.isEndTime || this.isReasonInputted || this.inValid || this.isDuration){
                     return false;
                 }else{
                     return true;
@@ -201,27 +204,61 @@
                     if (end - start > -1){
                         this.inValid = false
                         var diffDays = this.getDateCount(start, end);
-                        if (this.startDate == this.endDate){
- 
-                            if (this.startTime == "Afternoon"){
-                                this.endTime = "Afternoon";
+                        if (diffDays > 0) {
+                            if (this.startDate == this.endDate){
+     
+                                if (this.startTime == "Afternoon"){
+                                    this.endTime = "Afternoon";
+                                }
+                                if ((this.startTime == "Morning" && this.endTime == "Morning") || (this.startTime == "Afternoon" && this.endTime == "Afternoon")){
+                                    this.duration = 0.5
+                                } else if (this.startTime == "Morning" && this.endTime == "Afternoon") {
+                                    this.duration = 1
+                                } else if (this.startTime == "Afternoon") {
+                                    this.endTime = "Morning";
+                                    this.duration = 0.5
+                                }
+                            } else {
+                                if (diffDays == 1) {
+                                    if (this.getDateCount(start,start)== 1) {
+                                        if (this.startTime == "Morning") {
+                                            this.duration = 1;
+                                        }else {
+                                            this.duration = 0.5;
+                                        }
+                                    }else {
+                                        if (this.endTime == "Morning") {
+                                            this.duration = 0.5;
+                                        }else {
+                                            this.duration = 1;
+                                        }
+                                    }
+                                }else {
+                                    if (this.getDateCount(start,start) == 0) {
+                                        if (this.endTime == "Morning") {
+                                            this.duration = diffDays - 0.5
+                                        }else {
+                                            this.duration = diffDays
+                                        }
+                                    }else if (this.getDateCount(end,end)== 0) {
+                                        if (this.startTime == "Morning") {
+                                            this.duration = diffDays
+                                        }else {
+                                            this.duration = diffDays - 0.5
+                                        }  
+                                    }else {
+                                        if (this.startTime == "Morning" && this.endTime == "Afternoon"){
+                                            this.duration = diffDays
+                                        } else if (this.startTime == this.endTime){
+                                            this.duration = diffDays - 0.5
+                                        } else if (this.startTime == "Afternoon" && this.endTime == "Morning") {
+                                            this.duration = diffDays - 1
+                                        }
+                                    }
+                                }
                             }
-                            if ((this.startTime == "Morning" && this.endTime == "Morning") || (this.startTime == "Afternoon" && this.endTime == "Afternoon")){
-                                this.duration = 0.5
-                            } else if (this.startTime == "Morning" && this.endTime == "Afternoon") {
-                                this.duration = 1
-                            } else if (this.startTime == "Afternoon") {
-                                this.endTime = "Morning";
-                                this.duration = 0.5
-                            }
-                        } else {
-                            if (this.startTime == "Morning" && this.endTime == "Afternoon"){
-                                this.duration = diffDays
-                            } else if (this.startTime == this.endTime){
-                                this.duration = diffDays - 0.5
-                            } else if (this.startTime == "Afternoon" && this.endTime == "Morning") {
-                                this.duration = diffDays - 1
-                            }
+                        }else {
+                            this.duration = diffDays;
                         }
                         var day = this.duration
                         if (this.duration > 1){
@@ -250,7 +287,29 @@
                 }
 
                 return year + "-" + month + "-" + tday
-            }   
+            },
+            isAllowed() {
+                if (this.duration > 0 && this.duration <= 2) {
+                    return true
+                }else {
+                    return false
+                }
+            },
+            isNoday() {
+                if (this.duration == 0) {
+                    return true
+                }else {
+                    return false
+                }
+            },
+            isToMuchday() {
+                if (this.duration > 2) {
+                    return true
+                }else {
+                    return false
+                }
+            }
+
         }
     })
 </script>

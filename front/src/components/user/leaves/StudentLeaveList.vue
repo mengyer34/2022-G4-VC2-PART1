@@ -11,6 +11,11 @@
                 </tr>
             </thead>
             <tbody class="w-full">
+                <tr v-if="isUpdating" class="w-full bg-orange-300">
+                    <td colspan="7">
+                        <updating-data>Updating requests...</updating-data>
+                    </td>
+                </tr>
                 <tr v-for="leave of leaves" :key="leave" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-100" :class="{'bg-white text-stone-600': leave.is_admin_seen, 'bg-slate-300 font-medium': !leave.is_admin_seen}">
                     <td class="text-center">
                         {{leave.user.last_name}} {{leave.user.first_name}}
@@ -43,7 +48,7 @@
                 </tr>
             </tbody>
         </table>
-        <leave-detail v-if="isViewDetail" @closeStudentDetail="isViewDetail=false" @close="isViewDetail=false" @getLeaves="$emit('getLeaves')" :leave="leave_detail"/>
+        <leave-detail :class="{'hidden': hide}" v-if="isViewDetail" @update-status="$emit('start-updating')" @closeStudentDetail="isViewDetail=false" @hide="hide = true" @close="hide = false; isViewDetail = false; $emit('data-updated')" @get-leaves="$emit('get-leaves')" :leave="leave_detail"/>
     </div>
 </template>
 
@@ -51,18 +56,21 @@
 import axios from '../../../axios-http.js'
 import leaveDetail from "./LeaveDetails.vue"
 import GettingResources from './../../animations/GettingResources.vue';
+import UpdatingData from "./../../animations/UpdatingData.vue";
 
 export default {
-    props: ['leaves', 'isGettingResources'],
+    props: ['leaves', 'isGettingResources', 'isUpdating'],
     emits: ['getLeaves'],
     components: {
         'leave-detail': leaveDetail,
         'getting-resources': GettingResources,
+        'updating-data': UpdatingData,
     },
     data() {
         return {
             isViewDetail: false,
             leave_detail: {},
+            hide: false,
         }
     },
     methods: {
@@ -74,15 +82,20 @@ export default {
             }else if (leaveuser.status == "Rejected") {
                 return "bg-red-500";
             }
-        },   
+        },
+
         viewLeaveDetail(id){
             this.leave_detail = this.leaves.find((leave)=>leave.id == id);
+            this.$emit('updateLeave', id);
             this.isViewDetail = true;
-            axios.put("leaves/admin_seen/" + id).then(
-                this.$emit('getLeaves'),
-                this.$emit('update-nav')
-            );
+            axios.put("leaves/admin_seen/" + id).then(() => {
+                this.$emit('update-nav');
+            });
         },
+
+        getLeaves() {
+            this.$emit('get-leaves');
+        }
     },
 }
 </script>

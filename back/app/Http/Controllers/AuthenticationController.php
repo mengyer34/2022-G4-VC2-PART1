@@ -14,7 +14,7 @@ class AuthenticationController extends Controller
     public function userLogin($request){
         $user = User::where('email', $request->email)->first();
         $user->tokens()->delete();
-        if(!$user  !Hash::check($request->password, $user->password))
+        if(!$user || !Hash::check($request->password, $user->password))
         {   
             return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
@@ -26,7 +26,7 @@ class AuthenticationController extends Controller
     public function adminLogin($request){
         $admin = Admin::where('email', $request->email)->first();
         $admin->tokens()->delete();
-        if (!$admin  !Hash::check($request->password, $admin->password)) {
+        if (!$admin || !Hash::check($request->password, $admin->password)) {
             return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
         $token = $admin->createToken('myToken', ['admin'])->plainTextToken;
@@ -50,7 +50,7 @@ class AuthenticationController extends Controller
     public function forgotPassword(Request $request){
         $user = User::where('email', "=", $request->email)->first();
         $admin = Admin::where('email', "=", $request->email)->first();
-        if ($user  $admin){
+        if ($user || $admin){
             if ($user){
                 $user->verify_code = $request->verify_code;
                 $user->save();
@@ -94,7 +94,7 @@ class AuthenticationController extends Controller
     public function getVerifyCode(Request $request){
         $user = User::where('verify_code', '=', $request->verify_code)->first();
         $admin = Admin::where('verify_code', '=', $request->verify_code)->first();
-        if ($user  $admin){
+        if ($user || $admin){
             if ($user){
                 $user->verify_code = 'Null';
                 $user->save();
