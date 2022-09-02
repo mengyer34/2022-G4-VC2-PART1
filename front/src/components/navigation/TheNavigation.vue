@@ -107,23 +107,17 @@
     </div>
 </template>
 <script>
-import { useAuth } from '../../stores/useAuth'
 import axios from "../../axios-http"
 import LoadingShow from './../animations/LoadingShow.vue';
 export default {
     components: {
         'loading-show': LoadingShow,
     },
-    setup() {
-        const userStore = useAuth()
-        return {userStore}
-    },
-
     props: {
         user_id: Number,
         role: String
     },
-data() {
+    data() {
         return {
             show: false,
             user: null,
@@ -139,7 +133,7 @@ data() {
             let dataToDel = {token: 'slms', role: 'role'}
             setTimeout(() => {
                 this.isLoggingOut = false;
-                this.userStore.logout(dataToDel)
+                this.$store.dispatch('logout')
                 this.$router.push('/login')
             }, 1000);
         },

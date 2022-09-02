@@ -3,7 +3,7 @@
         <div class="flex h-full items-center bg-slate-400">
             <img src="../../assets/forgot-password.png" alt="logo" class="w-[30%] m-auto ">
             <div class="rounded mb-4 w-[40%] m-auto mt-[30px] ">
-                <form class="p-5 bg-[#dddddd98] shadow rounded">
+                <form class="p-5 bg-[#dddddd98] shadow rounded" @submit.prevent="handleSubmit" @keyup.enter="handleSubmit">
                     <img src="../../assets/pnc_logo.png" alt="logo" class="w-[100px] m-auto">
                     <h1 class="text-1xl font-semibold text-center p-1">Forgot Password</h1>
                     <div class="mb-1 relative">
@@ -13,13 +13,12 @@
                         <input
                             class=" appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 focus:outline-primary focus:shadow-outline"
                             v-model="email"
-                            id="email" type="email" placeholder="Email...">
+                            id="email" type="email" placeholder="Email..." >
                     </div>
                     <div v-if="is_not_found" class="mb-6 text-red-500 text-sm">Email not found</div>
                     <button
                         class="bg-blue-500 mt-6 hover:bg-blue-700 text-white py-2 w-full px-4 rounded focus:outline-primary focus:shadow-outline"
-                        @click="handleSubmit"
-                        type="button" >
+                        type="submit" >
                         Submit
                     </button>
                 </form>
@@ -61,10 +60,11 @@ export default({
             let string_length = 6;
             let random_string = ""
             for (let i = 0; i < string_length; i++) {
-                let rnum = Math.floor(Math.random() * chars.length)
+                let rnum = Math.floor(Math.random() * chars.length);
                 random_string += chars.substring(rnum, rnum + 1);
             }
             this.verify_code = random_string;
+            console.log(this.verify_code);
             this.isFindingMail = true;
             axios.post('forgot',{email: this.email, verify_code: this.verify_code}).then((res)=>{
                 let status = res.data;

@@ -62,13 +62,7 @@ import axios from '../../../axios-http'
 import UserLeaveHistory from '../../../components/user/leaves/UserLeaveHistory.vue'
 import requestForm from "../newRequest/RequestFormView.vue"
 import requestSent from "../../../components/user/request/RequestSentSuccess.vue"
-import { useAuth } from '../../../stores/useAuth'
 export default {
-    // setup() {
-    //     const userStore = useAuth()
-    //     return { userStore }
-    // },
-
     props: {
         user_id: Number,
         user_email: String
