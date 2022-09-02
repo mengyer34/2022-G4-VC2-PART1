@@ -14,7 +14,7 @@
                     <div  class="flex justify-between mt-2">
                         <div @click="viewStudent" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
-                                <p v-if="!isGettingResources" class="text-3xl font-semibold">{{users.length}}</p>
+                                <p v-if="!isCounting" class="text-3xl font-semibold">{{users.length}}</p>
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Total Students</p>
                             </div>
@@ -26,7 +26,7 @@
                         </div>
                         <div @click="viewLeaves('Pending')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]  ">
-                                <p v-if="!isGettingResources" class="text-3xl text-yellow-500 font-semibold">{{getPendingLeave.length}}</p>
+                                <p v-if="!isCounting" class="text-3xl text-yellow-500 font-semibold">{{getPendingLeave.length}}</p>
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Pending Leaves</p>
                             </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div @click="viewLeaves('Approved')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
-                                <p v-if="!isGettingResources" class="text-3xl text-green-700 font-semibold">{{getApprovedLeave.length}}</p>
+                                <p v-if="!isCounting" class="text-3xl text-green-700 font-semibold">{{getApprovedLeave.length}}</p>
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Approved Leaves</p>
                             </div>
@@ -50,7 +50,7 @@
                         </div>
                         <div @click="viewLeaves('Rejected')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%] ">
-                                <p v-if="!isGettingResources" class="text-3xl text-red-600 font-semibold">{{getRejectedLeave.length}}</p>
+                                <p v-if="!isCounting" class="text-3xl text-red-600 font-semibold">{{getRejectedLeave.length}}</p>
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Rejected Leaves</p>
                             </div>
@@ -93,6 +93,7 @@ export default {
             users: [],
             leaveUserHistory: [],
             isGettingResources: true,
+            isCounting: true,
         }
     },
     computed: {
@@ -111,8 +112,9 @@ export default {
             axios.get("leaves_user").then(res => {
                 this.leaveUsers = res.data.data.reverse();
                 this.leaveUserHistory = this.leaveUsers.filter((leave)=>leave.status != "Pending")
+                this.isGettingResources = false;
                 setTimeout(() => {
-                    this.isGettingResources = false;
+                    this.isCounting = false;
                 }, 650)
             })
         }, 

@@ -67,8 +67,8 @@
                         <button @click="isApprove" class="p-2 ml-2 px-3 bg-primary text-white rounded">Approve</button>
                     </div>
                 </div>
+
                 <reject-dialog v-if="alert" @closePopup="alert=false" @reject="reject" />
-                <approve-dialog v-if="approve" @closes="approve=false, $emit('getLeaves'), $emit('close')" />
             </div>
         </div>
 </template>
@@ -76,20 +76,20 @@
 <script>
 import axios from '../../../axios-http.js'
 import RejectAlert from '../../Respone/RejectAlert.vue'
-import ApprovedAlert from '../../Respone/ApprovedAlert.vue'
+
 export default ({
     emits: ['close', 'getLeaves'],
     props: {
         leave: Object
     },
+
     components: {
         'reject-dialog': RejectAlert,
-        'approve-dialog': ApprovedAlert,
     },
+
     data() {
         return {
             alert: false,
-            approve: false,
         }
     },
     methods: {
@@ -97,18 +97,23 @@ export default ({
             this.alert = true;
         },
         isApprove() {
-            this.approve = true;
             let status = {status: "Approved"};
-            axios.put("leaves/status/" + this.leave.id, status).then(res => {
-                console.log(res);
+            this.$emit('update-status');
+            this.$emit('hide');
+            axios.put("leaves/status/" + this.leave.id, status).then(() => {
+                this.$emit('close');
+                this.$emit('get-leaves');
             });
         },
+
         reject() {
             let status = {status: "Rejected"};
-            axios.put("leaves/status/" + this.leave.id, status).then(res => {
-                console.log(res);
-                this.$emit('getLeaves');
+            this.$emit('update-status', 'rejected');
+            this.$emit('hide');
+            axios.put("leaves/status/" + this.leave.id, status).then(() => {
                 this.$emit('close');
+                this.$emit('get-leaves');
+
             });
             this.alert = false;
         }
