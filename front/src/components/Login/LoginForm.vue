@@ -47,16 +47,10 @@
 <script>
 import axios from '../../axios-http'
 
-import { useAuth } from '../../stores/useAuth';
-import getCookie from '../../helper/getCookie';
 import LoadingShow from './../animations/LoadingShow.vue';
 export default {
     components: {
         'loading-show': LoadingShow,
-    },
-    setup(){
-        const authStore = useAuth()
-        return { authStore }
     },
     data(){
         return {
@@ -67,11 +61,10 @@ export default {
     },
     methods: {
         login(){
-            // this.isLoggingIn = true;
             axios.post('/account/login', {email: this.email, password: this.password})
             .then(res=>{
-                    this.$cookies.set('slms',res.data.token);
-                    window.location.reload();
+                this.$cookies.set('slms',res.data.token);
+                window.location.reload();
             })
         }
     },
