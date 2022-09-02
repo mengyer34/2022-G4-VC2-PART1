@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile_image');
             $table->string('role')->default('admin');
-            $table->rememberToken();
+            $table->string('verify_code')->nullable();
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ import Students from '../views/admin/Student/StudentView.vue'
 import LeaveList from '../views/admin/LeaveList/LeaveView.vue'
 import AdminProfile from '../views/admin/profile/AdminProfile.vue'
 import LoginView from '../views/login&signout/LoginView.vue'
+import ForgotPassword from '../views/login&signout/ForgotPasswordView.vue'
 import { useAuth } from '../stores/useAuth';
 import user from '../middleware/user'
 import admin from '../middleware/admin'
@@ -52,7 +53,6 @@ const routes = [
     name: 'students',
     component: Students,
     meta:{ middleware: [admin] }
-    // meta:{ middleware: true }
   },
   {
     path: '/leaves',
@@ -71,7 +71,11 @@ const routes = [
     component: AdminProfile,
     meta:{ middleware: [admin] }
   },
-
+  {
+    path: '/forgot',
+    name: 'forgotPassword',
+    component: ForgotPassword
+  },
   { path: '/:pathMatch(.*)*', redirect: '/' }
 
 ]
@@ -82,8 +86,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-  // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login'];
+  const publicPages = ['/login', '/forgot'];
   const authRequired = !publicPages.includes(to.path);
   const auth = useAuth();
   if (authRequired && !auth.token) {

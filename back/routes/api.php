@@ -35,8 +35,9 @@ Route::get('/account/find', [AuthenticationController::class, 'getInfoByToken'])
 Route::post('/account/register', [UserController::class, 'register']); /* The route to register the user */
 Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.user']);
 // Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanctum', 'type.admin']);
-
-
+Route::post('/forgot',[AuthenticationController::class, 'forgotPassword']);
+Route::post('/resetForgot',[AuthenticationController::class, 'resetForgotPassword']);
+Route::post('/verifyCode', [AuthenticationController::class, 'getVerifyCode']);
 // Admin Controller 
 Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
 // Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */

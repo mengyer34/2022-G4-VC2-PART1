@@ -55,8 +55,6 @@
                 </li>
                 <div v-if="!isReady" class="h-10 w-96 bg-slate-300 rounded"></div>
             </ul>
-
-
             <ul class="flex space-x-5 relative">
 
                 <li v-if="role !== 'admin'" >
@@ -125,8 +123,7 @@ export default {
         user_id: Number,
         role: String
     },
-
-    data() {
+data() {
         return {
             show: false,
             user: null,
@@ -139,13 +136,13 @@ export default {
     methods: {
         submitLogout(){
             this.isLoggingOut = true;
+            let dataToDel = {token: 'slms', role: 'role'}
             setTimeout(() => {
                 this.isLoggingOut = false;
-                this.userStore.logout('slms')
+                this.userStore.logout(dataToDel)
                 this.$router.push('/login')
             }, 1000);
         },
-
         getData() {
             axios.get('account/find').then(res=> {
                 this.user = res.data.data;
@@ -165,7 +162,7 @@ export default {
                     })
                 }
             }
-        }
+        },
     },
 
     computed: {
