@@ -9,13 +9,14 @@
                 <th class="font-bold text-center ">ACTION</th>
             </tr>
         </thead>
-        <tbody v-if="students.length > 0" class="w-full">
-            <tr v-if="isUpdating" class="w-full bg-orange-300">
-                <td colspan="7">
-                    <updating-data>Updating data...</updating-data>
-                </td>
-            </tr>
+        
+        <tr v-if="isUpdating" class="w-full bg-orange-300">
+            <td colspan="7">
+                <updating-data>Updating data...</updating-data>
+            </td>
+        </tr>
 
+        <tbody v-if="students.length > 0" class="w-full">
             <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
                 <td class="text-center pl-4">
                     <div class="flex items-center space-x-2 p-2">
