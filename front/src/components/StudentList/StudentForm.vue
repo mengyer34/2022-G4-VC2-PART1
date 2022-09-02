@@ -173,6 +173,9 @@ export default {
             this.password = random_string;
             console.log(this.password);
         },
+        toCapitalize(string) {
+            return string[0].toUpperCase() + string.slice(1).toLowerCase();
+        },
         async addStudent() {
             this.sms_error = ""
             let availableId = this.checkBatchAndPersonalId(this.batch,this.personal_id);
@@ -181,8 +184,8 @@ export default {
                 if (availableId){
                     const linkToNotification = new URL(location.href).origin
                     var newStudent = {
-                        first_name: this.first_name,
-                        last_name: this.last_name,
+                        first_name: this.toCapitalize(this.first_name),
+                        last_name: this.toCapitalize(this.last_name),
                         personal_id: this.personal_id,
                         gender: this.gender,
                         email: this.email,
