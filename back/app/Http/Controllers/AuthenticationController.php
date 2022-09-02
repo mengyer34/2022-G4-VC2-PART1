@@ -14,9 +14,9 @@ class AuthenticationController extends Controller
     public function userLogin($request){
         $user = User::where('email', $request->email)->first();
         $user->tokens()->delete();
-        if(!$user || !Hash::check($request->password, $user->password))
-        {
-            return response('Login Invalid !!!', 503);
+        if(!$user  !Hash::check($request->password, $user->password))
+        {   
+            return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
         $token = $user->createToken('myToken', ['user'])->plainTextToken;
         return response()->json(['token'=> $token], 202);
@@ -26,7 +26,7 @@ class AuthenticationController extends Controller
     public function adminLogin($request){
         $admin = Admin::where('email', $request->email)->first();
         $admin->tokens()->delete();
-        if (!$admin || !Hash::check($request->password, $admin->password)) {
+        if (!$admin  !Hash::check($request->password, $admin->password)) {
             return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
         $token = $admin->createToken('myToken', ['admin'])->plainTextToken;
@@ -50,7 +50,16 @@ class AuthenticationController extends Controller
     public function forgotPassword(Request $request){
         $user = User::where('email', "=", $request->email)->first();
         $admin = Admin::where('email', "=", $request->email)->first();
-        if ($user || $admin){
+        if ($user  $admin){
+            if ($user){
+                $user->verify_code = $request->verify_code;
+                $user->save();
+            }
+            else if ($admin){
+                $admin->verify_code = $request->verify_code;
+                $admin->save();
+            }
+            (new SendEmailController)->sendMailResetPassword($request);
             $response = [
                 'success' => true
             ];
@@ -60,13 +69,13 @@ class AuthenticationController extends Controller
                 'message'=> "Email not found"
             ];
         }
-                // send mail
-                (new SendEmailController)->sendMailResetPassword($request);
         return Response()->json($response);
     }
     public function resetForgotPassword(Request $request,User $user){
         $user = User::where('email', $request->email)->first();
+        
         $admin = Admin::where('email',$request->email)->first();
+        
         if ($user){
             $user->password = Hash::make($request->new_password);
             $user->save();
@@ -80,5 +89,31 @@ class AuthenticationController extends Controller
             'message' => "Reset password success"
         ];
         return response()->json($response , 202);
+    }
+
+    public function getVerifyCode(Request $request){
+        $user = User::where('verify_code', '=', $request->verify_code)->first();
+        $admin = Admin::where('verify_code', '=', $request->verify_code)->first();
+        if ($user  $admin){
+            if ($user){
+                $user->verify_code = 'Null';
+                $user->save();
+            }else{
+                $admin->verify_code = 'Null';
+                $admin->save();
+            }
+            $response = [
+                'status' => true,
+                'message' => 'Confirmed code'
+            ];
+        } 
+        else {
+            $response = [
+                'status' => false,
+                'message' => 'This code not confirmed'
+            ];
+        }
+
+        return Response()->json($response);
     }
 }

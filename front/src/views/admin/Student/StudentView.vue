@@ -169,10 +169,16 @@ export default {
                 })
             }
             const data = datas;
-            const fileName ="Batch "+ this.batch;
-            const exportType = exportFromJSON.types.csv;
-
-            if (data) exportFromJSON({ data, fileName, exportType });
+            if(this.batch !== "All"){
+                const fileName ="Student Batch " + this.batch;
+                const exportType = exportFromJSON.types.csv;
+                if (data) exportFromJSON({ data, fileName, exportType });
+            }
+            if(this.batch == "All"){
+                const fileName ="Student All Batch ";
+                const exportType = exportFromJSON.types.csv;
+                if (data) exportFromJSON({ data, fileName, exportType });
+            }
         },
 
         successAlert() {
