@@ -24,6 +24,9 @@
                                 v-model="password"
                                 id="password" type="password" placeholder="Password...">
                         </div>
+                        <div v-if="isInValid" class="text-sm text-red-500 mb-2">
+                            Invalid login       
+                        </div>
                             <router-link class="inline-block cursor-pointer align-baseline text-sm text-blue-500 hover:text-blue-800" to="forgot">
                                 Forgot Password?
                             </router-link>
@@ -63,16 +66,24 @@ export default {
             email: null,
             password: null,
             isLoggingIn: false,
+            isInValid: false,
         }
     },
     methods: {
-        login(){
-            // this.isLoggingIn = true;
-            axios.post('/account/login', {email: this.email, password: this.password})
-            .then(res=>{
+        async login(){
+            this.isLoggingIn = true;
+            this.isInValid = false
+            try {
+                await axios.post('/account/login', {email: this.email, password: this.password})
+                .then(res=>{
                     this.$cookies.set('slms',res.data.token);
-                    window.location.reload();
-            })
+                        window.location.reload();
+                })
+            } catch(err){
+                this.isLoggingIn = false;
+                console.log(err.response.data);
+                this.isInValid = true;
+            }
         }
     },
     created(){

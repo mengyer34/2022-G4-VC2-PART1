@@ -15,8 +15,8 @@ class AuthenticationController extends Controller
         $user = User::where('email', $request->email)->first();
         $user->tokens()->delete();
         if(!$user || !Hash::check($request->password, $user->password))
-        {
-            return response('Login Invalid !!!', 503);
+        {   
+            return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
         $token = $user->createToken('myToken', ['user'])->plainTextToken;
         return response()->json(['token'=> $token], 202);
