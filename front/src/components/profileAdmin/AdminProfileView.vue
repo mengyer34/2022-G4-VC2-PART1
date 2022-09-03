@@ -80,14 +80,12 @@
     import SuccessAlert from "../../components/user/profile/alerts/SuccessAlert.vue";
     import DownloadingImage from "./../animations/DownloadingImage.vue";
     import LoadingText from "./../animations/LoadingText.vue";
-    import UpdatingData from "./../animations/UpdatingData.vue";
     export default {
         components: {
             'warning-alert': WarningAlert,
             'success-alert': SuccessAlert,
             'downloading-image': DownloadingImage,
             'loading-text': LoadingText,
-            'updating-data': UpdatingData,
         },
         props: ['user', 'isReloadingProfile'],
         emits: ['getUser'],
