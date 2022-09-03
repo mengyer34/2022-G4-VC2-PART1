@@ -61,7 +61,7 @@ class AuthenticationController extends Controller
             }
             (new SendEmailController)->sendMailResetPassword($request);
             $response = [
-                'success' => true
+                'success' => true,
             ];
         }else{
             $response = [
