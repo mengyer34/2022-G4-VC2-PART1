@@ -1,7 +1,7 @@
 <template>
     <div>
         <success-alert v-if="sms_success" :content="'Reset password successfully'" />
-        <profile-view :user="user" @getUser="getUser" @update-nav="$emit('update-nav')" @resetPassword="toggleFormReset = true" />
+        <profile-view :isReloadingProfile="isReloadingProfile" @reload-profile="isReloadingProfile = true" :user="user" @getUser="getUser" @update-nav="$emit('update-nav')" @resetPassword="toggleFormReset = true" />
         <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :user_id="user.id" @save-change="saveChange"/>
     </div>
 </template>
@@ -22,7 +22,8 @@
             return {
                 user: {},
                 toggleFormReset: false,
-                sms_success: false
+                sms_success: false,
+                isReloadingProfile: false,
             }
         },
 
@@ -39,6 +40,7 @@
         methods: {
             getUser() {
                 axios.get('account/find').then(res=> {
+                    this.isReloadingProfile = false;
                     this.user = res.data.data;
                 })
             },  
