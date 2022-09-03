@@ -92,11 +92,11 @@ export default({
             }
         },
         checkFormValidation(){
-            if (this.new_password == "" || this.new_password.length <= 7){
+            if (this.new_password.trim() == "" || this.new_password.length <= 7){
                 this.is_fill_new_password = true
                 this.sms_alert = "Password should be more than 7 character"
             }
-            if (this.confirm_password == ""){
+            if (this.confirm_password.trim() == ""){
                 this.is_fill_confirm_password = true
             }
             var message = true;

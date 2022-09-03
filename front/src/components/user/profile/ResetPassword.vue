@@ -85,6 +85,7 @@ import axios from '../../../axios-http';
 export default ({
     props: {
         user_id: Number,
+        role: String,
     },
 
     emits: ["save-change"],
@@ -128,7 +129,7 @@ export default ({
             if (this.checkFormValidation() && !this.isMatch){
                 var new_password = {confirm_old_password: this.current_password, new_password: this.new_password};
                 let URL = 'users/reset_password/';
-                if (this.userStore.role == 'admin') {
+                if (this.role == 'admin') {
                     URL = 'admins/reset_password/';
                 }
                 axios.put( URL +  this.user_id,new_password).then((res)=>{
