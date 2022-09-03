@@ -11,11 +11,13 @@
                             Email *
                         </label>
                         <input
-                            class=" appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 focus:outline-primary focus:shadow-outline"
+                            :class="{ 'border-red-500 border bg-red-100': is_not_found }"
+                            class=" appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 focus:outline-primary focus:shadow-outline" 
                             v-model="email"
+                            @change="is_not_found=false"
                             id="email" type="email" placeholder="Email..." >
                     </div>
-                    <div v-if="is_not_found" class="mb-6 text-red-500 text-sm">Email not found</div>
+                    <div v-if="is_not_found" class="mb-6 text-red-500 text-sm">{{sms_alert}}</div>
                     <button
                         class="bg-blue-500 mt-6 hover:bg-blue-700 text-white py-2 w-full px-4 rounded focus:outline-primary focus:shadow-outline"
                         type="submit" >
@@ -51,37 +53,42 @@ export default({
             is_found_email: false,
             verify_code: '',
             is_confirmed_code: false,
-            isFindingMail: false
+            isFindingMail: false,
+            sms_alert: ""
         }
     },
     methods: {
         handleSubmit(){
-            let chars = "01234567890123456789012345678901234567890123456789";
-            let string_length = 6;
-            let random_string = ""
-            for (let i = 0; i < string_length; i++) {
-                let rnum = Math.floor(Math.random() * chars.length);
-                random_string += chars.substring(rnum, rnum + 1);
-            }
-            this.verify_code = random_string;
-            console.log(this.verify_code);
-            this.isFindingMail = true;
-            axios.post('forgot',{email: this.email, verify_code: this.verify_code}).then((res)=>{
-                let status = res.data;
-                this.is_not_found = false;
-                this.isFindingMail = false;
-                if (!status.success){
-                    this.is_not_found = true;
-                    this.isFindingMail = false;
-                }else{
-                    this.is_found_email = true;
+            if (this.email.trim() != ""){
+                let chars = "01234567890123456789012345678901234567890123456789";
+                let string_length = 6;
+                let random_string = ""
+                for (let i = 0; i < string_length; i++) {
+                    let rnum = Math.floor(Math.random() * chars.length);
+                    random_string += chars.substring(rnum, rnum + 1);
                 }
-            });
+                this.verify_code = random_string;
+                console.log(this.verify_code);
+                this.isFindingMail = true;
+                this.is_not_found = false;
+                axios.post('forgot',{email: this.email, verify_code: this.verify_code}).then((res)=>{
+                    this.isFindingMail = false;
+                    if (!res.data.success){
+                        this.is_not_found = true;
+                        this.sms_alert = "Email not found"
+                        this.isFindingMail = false;
+                    }else{
+                        this.is_found_email = true;
+                    }
+                });
+            }else{
+                this.is_not_found = true;
+                this.sms_alert = "Email should be completed"
+            }
         },
         submitNewPassword(newPwd){
             let new_password = {email: this.email, new_password: newPwd}
             axios.post('resetForgot',new_password).then((res)=>{
-                console.log(res);
                 this.$router.push({name: 'login'})
             });
         },
