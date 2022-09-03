@@ -64,7 +64,6 @@ export default({
                 random_string += chars.substring(rnum, rnum + 1);
             }
             this.verify_code = random_string;
-            console.log(this.verify_code);
             this.isFindingMail = true;
             axios.post('forgot',{email: this.email, verify_code: this.verify_code}).then((res)=>{
                 let status = res.data;

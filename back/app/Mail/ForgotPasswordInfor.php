@@ -30,6 +30,7 @@ class ForgotPasswordInfor extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.reset_password');
+        return $this->view('emails.reset_password')
+        ->subject('Password Reset');
     }
 }
