@@ -21,8 +21,9 @@
                             <search-bar @update-keyword="updateKeyword" />
                         </div>
 
-                        <div class="w-10 rounded bg-green-500 hover:bg-green-600" @click="downloadFile">
-                            <img src="../../../assets/excel.svg" alt="" class="p-2 cursor-pointer">
+                        <div class="w-10 relative rounded bg-green-500 hover:bg-green-600" >
+                            <img src="../../../assets/excel.svg" alt="" class="p-2 excel-icon cursor-pointer" @click="downloadFile">
+                            <p class="downlaod opacity-0 inline-block bg-[#ddd] left-2 -top-12 text-center w-40 p-2 absolute rounded">Download as excel</p>
                         </div>
                         <div class="w-32 flex justify-end">
                             <button class="text-white bg-orange-500 hover:bg-orange-600 py-2 px-4 rounded border-none"
@@ -193,3 +194,20 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+    .downlaod:before{
+        position: absolute;
+        content: "";
+        height: 12px;
+        width: 12px;
+        background: #ddd;
+        left: 14px;
+        top: 33px;
+        transform: translateX(-50%) rotate(45deg);
+    }
+    .excel-icon:hover + .downlaod{
+        opacity: 100;
+        transition: all .3s ease-in-out;
+    }
+</style>

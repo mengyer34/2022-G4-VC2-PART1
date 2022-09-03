@@ -55,6 +55,7 @@
                         id="phone" type="text" maxlength="10" placeholder="Tel..."
                         :class="{ 'border-red-500 bg-red-100': is_phone }" v-model="phone" @change="is_phone = false">
                 </div>
+                <div class="text-red-500 text-sm mb-2">{{sms_error_phone_number}}</div>
 
                 <div class=" flex">
                     <div class="w-[50%] m-1 relative">
@@ -149,7 +150,8 @@ export default {
             is_personal_id: false,
             sms_error_email: "",
             sms_error: "",
-            list_users: []
+            list_users: [],
+            sms_error_phone_number: ""
         }
     },
     computed: {
@@ -181,34 +183,39 @@ export default {
             let availableId = this.checkBatchAndPersonalId(this.batch,this.personal_id);
             if (this.checkFormValidation()) {
                 this.generatePassword();
-                if (availableId){
-                    const linkToNotification = new URL(location.href).origin
-                    var newStudent = {
-                        first_name: this.toCapitalize(this.first_name),
-                        last_name: this.toCapitalize(this.last_name),
-                        personal_id: this.personal_id,
-                        gender: this.gender,
-                        email: this.email,
-                        password: this.password,
-                        batch: this.batch,
-                        class: this.choose_class,
-                        phone: this.phone,
-                        linkTo: linkToNotification
-                    };
-                    try{
-                        axios.post('/account/register', newStudent);
-                        this.$emit('add-student');
-                    } catch(err){
-                        let error = err.response.data
-                        let sms = "The email has already been taken." 
-                        if (error.message == sms || error.message == sms + ' (and 1 more error)' || error == "Your email has existed"){
-                            this.sms_error_email = sms
-                            this.is_email = true;
+                if(this.filterPhoneNumber()){
+                    if (availableId){
+                        const linkToNotification = new URL(location.href).origin
+                        var newStudent = {
+                            first_name: this.toCapitalize(this.first_name),
+                            last_name: this.toCapitalize(this.last_name),
+                            personal_id: this.personal_id,
+                            gender: this.gender,
+                            email: this.email,
+                            password: this.password,
+                            batch: this.batch,
+                            class: this.choose_class,
+                            phone: this.phone,
+                            linkTo: linkToNotification
+                        };
+                        try{
+                            axios.post('/account/register', newStudent);
+                            this.$emit('add-student');
+                        } catch(err){
+                            let error = err.response.data
+                            let sms = "The email has already been taken." 
+                            if (error.message == sms || error.message == sms + ' (and 1 more error)' || error == "Your email has existed"){
+                                this.is_email = true;
+                                this.sms_error_email = sms
+                            }
                         }
+                    }else{
+                        this.sms_error = "Personal id has already been token";
+                        this.is_personal_id = true;
                     }
                 }else{
-                    this.sms_error = "Personal id has already been token";
-                    this.is_personal_id = true;
+                    this.is_phone = true;
+                    this.sms_error_phone_number = "The phone has already been taken.";
                 }
             }
         },
@@ -250,7 +257,7 @@ export default {
                 this.sms_error_email = "Email must be passerellesnumeriques"
             }
             var message = true
-            if (this.is_email || this.is_first_name || this.is_last_name || this.is_generation || this.is_gender  || this.is_choose_class || this.is_phone) {
+            if (this.is_email || this.is_first_name || this.is_last_name || this.is_generation || this.is_gender  || this.is_choose_class || this.is_phone || this.is_personal_id) {
                 message = false
             }
             return message
@@ -259,6 +266,14 @@ export default {
             let newStudent = this.list_users.find(student=>student.batch == batch && student.personal_id == id);
             let sms = false;
             if (newStudent == undefined){
+                sms = true;
+            }
+            return sms;
+        },
+        filterPhoneNumber(){
+            let phoneNumber = this.list_users.find(student=>student.phone == this.phone);
+            let sms = false;
+            if (phoneNumber == undefined){
                 sms = true;
             }
             return sms;
