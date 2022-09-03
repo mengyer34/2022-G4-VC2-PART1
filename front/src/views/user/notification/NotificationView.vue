@@ -1,35 +1,43 @@
 <template>
-    <div class=" w-full h-full pt-[100px]">
-        <div v-if="!isLoadingNotifications && dataOfImformation.length > 0" class="card w-9/12 m-auto rounded shadow bg-white">
+    <div class="w-full pt-[90px]">
+        <div v-if="!isLoadingNotifications && dataOfImformation.length > 0" class="card w-7/12 m-auto rounded shadow bg-white">
             <div class="card-header rounded-tl rounded-tr bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
                 <h1>Notifications</h1>
             </div>
-            <div class="w-[90%] m-auto" v-for="data of dataOfImformation" :key="data">
-                <imformation-requestion :datas="data">
-                    <template #allow>
-                        <div @click="seenNotification(data.id)" :class="{'bg-slate-300 font-semibold': !data.is_user_seen}" class="rounded flex justify-between hover:bg-slate-200">
-                            <div class="p-2 w-[85%]">
-                                <p class="text-[22px] text-start">
-                                    Your request <span class="text-orange-400">{{ data.reason.substring(0, 35) }}{{ data.reason.length > 35 ? '...' : '' }}</span> has been <span :class="{'text-red-500': data.status == 'Rejected', 'text-green-500': data.status == 'Approved'}">{{ data.status }}</span>
-                                </p>
-                                <p class="text-[12px] text-[#AAAAAA] flex justify-start">{{ data.updated_at }}</p>
+            <div class="overflow-auto h-[70vh] scroll-bar">
+                <div class="w-[98%] m-auto" v-for="data of dataOfImformation" :key="data">
+                    <imformation-requestion :datas="data">
+                        <template #allow>
+                            <div @click="seenNotification(data.id)" :class="{'bg-slate-100 font-semibold': !data.is_user_seen}" class="flex justify-between hover:bg-slate-100 p-2">
+                                <div class="flex items-center relative">
+                                    <span :class="{'w-[10px] h-[10px] rounded-full bg-[#23C552] absolute right-0 mb-4': !data.is_user_seen}"></span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[30px] h-[30px]">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                    </svg>
+                                </div>
+                                <div class="p-2 w-[85%]">
+                                    <p class="text-[18px] text-start">
+                                        Your request <span class="text-orange-400">{{ data.reason.substring(0, 35) }}{{ data.reason.length > 35 ? '...' : '' }}</span> has been <span :class="{'text-red-500': data.status == 'Rejected', 'text-green-500': data.status == 'Approved'}">{{ data.status }}</span>
+                                    </p>
+                                    <p class="text-[11px] text-[#7d7d7d] flex justify-start">{{ data.updated_at }}</p>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-[30px] w-[30px] m-3 bg-[#7BE77B]  rounded-full px-1 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                    v-if="data.status === 'Approved'">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-[30px] w-[30px] bg-[#FF0000]  rounded-full m-3 p-1 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                    v-if="data.status === 'Rejected'">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
                             </div>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-[40px] w-[40px] m-3 bg-[#7BE77B]  rounded-full px-1 text-white" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                v-if="data.status === 'Approved'">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-[40px] w-[40px] bg-[#FF0000]  rounded-full m-3 p-1 text-white" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                v-if="data.status === 'Rejected'">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </div>
-                    </template>
-                </imformation-requestion>
-                <p class="text-[12px] text-[#AAAAAA] flex justify-end pb-2">From: Socail Affair</p>
+                        </template>
+                    </imformation-requestion>
+                    <hr>
+                </div>
             </div>
         </div>
 

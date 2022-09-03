@@ -10,7 +10,7 @@
           </router-view>
         </div>
 
-    <footer class="mt-14 text-center  text-sm">
+    <footer class="mt-5 text-center text-sm">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved. 
     </footer>
   </div>
@@ -28,6 +28,10 @@ export default {
       if(this.$cookies.get('slms')){
         const result = await axios.get('/account/find')
         const data = await result.data.data;
+        if(data == null){
+          this.$store.dispatch('logout')
+          this.$router.push('/login')
+        }
         this.$store.state.userId = data.id;
         this.$store.state.userEmail = data.email;
         this.$store.state.role = data.role;
@@ -42,9 +46,19 @@ export default {
 
 </script>
 <style>
-body{
-  background: #dddd;
-}
+  *::-webkit-scrollbar:horizontal {
+  height: 1px;
+  }
+  *::-webkit-scrollbar {
+      width: 3px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #0081CA;
+    border-radius: 20px;
+  }
+  body{
+    background: #dddd;
+  }
 
   .fade-enter-from, 
   .fade-leave-to{

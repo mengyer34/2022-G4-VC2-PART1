@@ -22,32 +22,6 @@ class AdminController extends Controller
         return Response()->json($response, 200);
     }
 
-
-    public function store(Request $request)
-    {
-        $isExist = Admin::where('role', '=', 'admin')->first()->email;
-        if($isExist){
-            return Response()->json('Admin already exist', 409);
-        }
-        $admin = new Admin();
-        $admin->username = $request->username;
-        $admin->email = $request->email;
-        $admin->password = Hash::make($request->password);
-        $admin->profile_image = 'admin.jpg';
-
-        $admin->save();
-        $token = $admin->createToken('myToken')->plainTextToken;
-        
-        $response = [
-            'success' => true,
-            'data' => $admin,
-            'status' => 200,
-            'message' => 'Create admin successfully',
-            'token' => $token
-        ];
-        return Response()->json($response, 200);
-    }
-
     public function show(Admin $admin)
     {
         $response = [

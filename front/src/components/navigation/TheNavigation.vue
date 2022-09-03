@@ -65,8 +65,8 @@
                         </svg>
                     </router-link>
                 </li>
-                <li @click="show=!show" class="flex flex-col items-end min-w-[9rem] space-x-2 cursor-pointer">
-                    <div v-if="isReady" class="flex justify-center items-center">
+                <li v-if="isReady" @click="show=!show" class="flex flex-col items-end min-w-[9rem] space-x-2 cursor-pointer">
+                    <div class="flex justify-center items-center">
                         <div class="w-8 h-8 mr-2">
                             <img v-if="user.profile_image != undefined" :src="getImage" alt="" class=" w-[30px] h-[30px] rounded-full">
                             <img v-else src="../../assets/avatar.png" alt="" class=" w-[30px] h-[30px] rounded-full">
@@ -76,11 +76,6 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </div>
-
-                    <div v-else class="flex justify-center items-center">
-                        <div class="rounded-full bg-slate-300 h-[2rem] w-[2rem] mr-2"></div>
-                        <div class="h-6 w-40 bg-slate-300 rounded-xl"></div>
                     </div>
 
                     <div v-if="show" class="py-1 rounded-md shadow-xs absolute bg-gray-200 mt-10 right-0">
@@ -98,6 +93,11 @@
                         </div>
                     </div>
                 </li>
+                <div v-else class="flex justify-center items-center">
+                    <div class="rounded-full bg-slate-300 h-[2rem] w-[2rem] mr-2"></div>
+                    <div class="h-6 w-40 bg-slate-300 rounded-xl"></div>
+                </div>
+                
             </ul>
         </nav>
         
@@ -130,7 +130,6 @@ export default {
     methods: {
         submitLogout(){
             this.isLoggingOut = true;
-            let dataToDel = {token: 'slms', role: 'role'}
             setTimeout(() => {
                 this.isLoggingOut = false;
                 this.$store.dispatch('logout')

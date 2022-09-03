@@ -126,11 +126,15 @@ export default {
         }, 
 
         viewStudent(){
-            this.$router.push({name: "students"})
+            if (!this.isGettingResources) {
+                this.$router.push({name: "students"})
+            }
         },
         
         viewLeaves(status){
-            this.$router.push("leaves?filter="+status);
+            if (!this.isGettingResources) {
+                this.$router.push("leaves?filter="+status);
+            }
         },
     },
     mounted() {
