@@ -13,12 +13,14 @@
                         <th class="font-bold text-center pl-10">Request Date</th>
                     </tr>
                 </thead>
+                
+                <tr v-if="isUpdating" class="w-full bg-orange-300">
+                    <td colspan="7">
+                        <updating-data>Updating data...</updating-data>
+                    </td>
+                </tr>
+
                 <tbody v-if="leavesstatus.length > 0" class="w-full">
-                    <tr v-if="isUpdating" class="w-full bg-orange-300">
-                        <td colspan="7">
-                            <updating-data>Updating data...</updating-data>
-                        </td>
-                    </tr>
 
                     <tr  v-for="leave of leavesstatus" :key="leave" tabindex="0" class="focus:outline-none h-20 text-sm leading-none text-gray-800 bg-white border-b border-t border-gray-100">
                         <td class="pl-4 text-center">

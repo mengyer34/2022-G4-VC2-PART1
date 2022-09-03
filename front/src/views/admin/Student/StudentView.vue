@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="w-10 rounded bg-green-500 hover:bg-green-600" @click="downloadFile">
-                            <img src="../../../assets/excel.svg" alt="" class="p-2 ">
+                            <img src="../../../assets/excel.svg" alt="" class="p-2 cursor-pointer">
                         </div>
                         <div class="w-32 flex justify-end">
                             <button class="text-white bg-orange-500 hover:bg-orange-600 py-2 px-4 rounded border-none"
@@ -168,17 +168,23 @@ export default {
                 })
             }
             const data = datas;
-            const fileName ="Batch "+ this.batch;
-            const exportType = exportFromJSON.types.csv;
-
-            if (data) exportFromJSON({ data, fileName, exportType });
+            if(this.batch !== "All"){
+                const fileName ="Student Batch " + this.batch;
+                const exportType = exportFromJSON.types.csv;
+                if (data) exportFromJSON({ data, fileName, exportType });
+            }
+            if(this.batch == "All"){
+                const fileName ="Student All Batch ";
+                const exportType = exportFromJSON.types.csv;
+                if (data) exportFromJSON({ data, fileName, exportType });
+            }
         },
 
         successAlert() {
             this.isCreatedSuccess = true;
             setTimeout(() => {
                 this.isCreatedSuccess = false;
-            }, 1500);
+            }, 2500);
         },
 
     },
