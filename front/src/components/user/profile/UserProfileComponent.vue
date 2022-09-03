@@ -73,7 +73,7 @@
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Leaves</div>
 
-                                    <div v-if="amountOfLeaves" class="ml-20 inline-block text-gray-500">{{amountOfLeaves}}</div>
+                                    <div v-if="amountOfLeaves >= 0" class="ml-20 inline-block text-gray-500">{{amountOfLeaves}}</div>
                                     <loading-text class="ml-20" v-else />
                                 </div>
                                 
