@@ -31,6 +31,6 @@ class RejectApproveMail extends Mailable
     public function build()
     {
         return $this->view('emails.email_reject_approve')
-        ->subject('Leave Request Notification');;
+        ->subject('Leave Request Notification');
     }
 }

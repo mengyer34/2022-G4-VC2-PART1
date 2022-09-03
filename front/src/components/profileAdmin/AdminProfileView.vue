@@ -11,6 +11,7 @@
                         </label>
                         <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
                             <div class="w-32 h-32 flex items-center justify-center m-auto">
+                                <img v-if="isReloadingProfile" src="./../../assets/loading_circle.png" class="animate-spin absolute h-8 w-8">
                                 <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-blue-400">
                                 <downloading-image class="rounded-full w-32 h-32 object-fill border-2 border-blue-400" v-else></downloading-image>
                             </div>
@@ -86,7 +87,7 @@
             'downloading-image': DownloadingImage,
             'loading-text': LoadingText,
         },
-        props: ['user'],
+        props: ['user', 'isReloadingProfile'],
         emits: ['getUser'],
         data(){
             return {
@@ -135,8 +136,9 @@
 
                 this.onClosePopup();
                 axios.post("admins/reset_profile/" + this.user.id, formData).then((res)=>{
-                    this.$emit('update-nav');
+                    this.$emit('reload-profile');
                     this.$emit('getUser');
+                    this.$emit('update-nav');
                     this.successAlert();
                 })
             },
