@@ -38,10 +38,8 @@ Route::get('/logout', [UserController::class, 'logout'])->middleware(['auth:sanc
 Route::post('/forgot',[AuthenticationController::class, 'forgotPassword']);
 Route::post('/resetForgot',[AuthenticationController::class, 'resetForgotPassword']);
 Route::post('/verifyCode', [AuthenticationController::class, 'getVerifyCode']);
-// Admin Controller 
-Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
-// Route::post('/admins', [AdminController::class, 'store']); /* The route to create a new admin (By admin) */
 
+// Admin Controller 
 Route::group(['middleware'=> ['auth:sanctum', 'type.admin']], function(){
     Route::get('/admins', [AdminController::class, 'index']); /* The route to index the user */ 
     Route::get('/admins/logout', [AdminController::class, 'logout']); /* The route to logout account of the user */
