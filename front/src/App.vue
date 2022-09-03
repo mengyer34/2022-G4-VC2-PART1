@@ -28,6 +28,10 @@ export default {
       if(this.$cookies.get('slms')){
         const result = await axios.get('/account/find')
         const data = await result.data.data;
+        if(data == null){
+          this.$store.dispatch('logout')
+          this.$router.push('/login')
+        }
         this.$store.state.userId = data.id;
         this.$store.state.userEmail = data.email;
         this.$store.state.role = data.role;
