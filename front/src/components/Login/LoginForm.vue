@@ -17,7 +17,7 @@
                             @change="is_not_fill_email=false"
                             v-model="email"
                             id="email" type="email" placeholder="Email...">
-                            <svg v-if="isInValid" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                            <svg v-if="is_not_fill_email" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                             </svg>
                         <div class="mb-1 relative">
@@ -30,11 +30,11 @@
                                 :class="{'bg-red-100 border-red-400':is_not_fill_password}"
                                 v-model="password"
                                 id="password" type="password" placeholder="Password...">
-                            <svg v-if="isInValid" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                            <svg v-if="is_not_fill_password" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                             </svg>
                         </div>
-                        <div v-if="isInValid" class="text-sm text-red-500 mb-2 bg-red-300 p-2 rounded">
+                        <div v-if="isInValid" class="text-sm text-red-500 mb-2 bg-red-200 border border-red-500 p-2 rounded">
                             Invalid login       
                         </div>
                             <router-link class="inline-block cursor-pointer align-baseline text-sm text-blue-500 hover:text-blue-800" to="forgot">
@@ -89,8 +89,6 @@ export default {
                 } catch(err){
                     this.isLoggingIn = false;
                     this.isInValid = true;
-                    this.is_not_fill_email = true;
-                    this.is_not_fill_password = true;
                 }
             }
         },
