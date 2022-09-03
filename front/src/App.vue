@@ -10,7 +10,7 @@
           </router-view>
         </div>
 
-    <footer class="mt-14 text-center  text-sm">
+    <footer class="mt-5 text-center text-sm">
       Copyright © 2022 Passerelles Numériques SLMS - All rights reserved. 
     </footer>
   </div>
@@ -42,9 +42,19 @@ export default {
 
 </script>
 <style>
-body{
-  background: #dddd;
-}
+  *::-webkit-scrollbar:horizontal {
+  height: 1px;
+  }
+  *::-webkit-scrollbar {
+      width: 3px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #0081CA;
+    border-radius: 20px;
+  }
+  body{
+    background: #dddd;
+  }
 
   .fade-enter-from, 
   .fade-leave-to{
