@@ -50,7 +50,7 @@
             </div>
         </div>
         <loading-show v-if="isResetting">
-                Verifying...
+                Resetting password...
         </loading-show>
     </div>
 </template>

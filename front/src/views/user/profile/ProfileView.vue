@@ -1,7 +1,7 @@
 <template>
     <div>
         <success-alert v-if="sms_success" :content="'Reset password successfully'" />
-        <user-profile @update-nav="getProfileInfo(); $emit('update-nav')" @resetPassword="toggleFormReset = true" :user_id="user_id" :user="user" :amountOfLeaves="amountOfLeaves"/>
+        <user-profile :isReloadingProfile="isReloadingProfile" @reload-profile="isReloadingProfile = true" @update-nav="getProfileInfo(); $emit('update-nav')" @resetPassword="toggleFormReset = true" :user_id="user_id" :user="user" :amountOfLeaves="amountOfLeaves"/>
         <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :user_id="user_id" @save-change="saveChange"/>
     </div>
 </template>
@@ -24,7 +24,8 @@ export default {
             toggleFormReset: false,
             amountOfLeaves: 0,
             user: {},
-            sms_success: false
+            sms_success: false,
+            isReloadingProfile: false,
         }
     },
 
@@ -34,6 +35,7 @@ export default {
                 this.user = res.data.data;
                 this.password = this.user.password
                 this.amountOfLeaves = this.user.leaves.length;
+                this.isReloadingProfile = false;
             })
         },
         saveChange(){

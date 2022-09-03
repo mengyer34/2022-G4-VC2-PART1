@@ -2,9 +2,9 @@
     <div class="bg-white w-full fixed top-0 z-50">
         <nav :class="{'bg-white animate-pulse': !isReady, 'bg-primary': isReady}" class="flex w-full p-2 text-white justify-between items-center px-4">
             <ul @click="show=false">
-                <li class="flex items-center space-x-2">
-                    <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
-                    <span :class="{'text-black': !isReady}" class="text-2xl font-semibold">SLMS</span>
+                <li class="flex items-center space-x-2 ">
+                        <img src="../../assets/pnc_logo.png" alt="logo" class="w-[50px]">
+                        <span :class="{'text-black': !isReady}" class="text-2xl font-semibold">SLMS</span>
                 </li>
             </ul>
             <ul @click="show=false" id="animation" class="flex">

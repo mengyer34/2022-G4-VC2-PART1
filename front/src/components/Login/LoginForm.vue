@@ -13,15 +13,13 @@
                         </label>
                         <input
                             class="appearance-none border border-gray-400  rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
-                            :class="{'bg-red-100 border-red-400':is_not_fill_email}" @change="is_not_fill_email=false"
-                            v-model="email" id="email" type="email" placeholder="Email...">
-                        <svg v-if="isInValid" xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                clip-rule="evenodd" />
-                        </svg>
+                            :class="{'bg-red-100 border-red-400':is_not_fill_email}"
+                            @change="is_not_fill_email=false"
+                            v-model="email"
+                            id="email" type="email" placeholder="Email...">
+                            <svg v-if="is_not_fill_email" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute top-[40px] right-3 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
                         <div class="mb-1 relative">
                             <label class="block  text-gray-700 text-lg  mb-1" for="username">
                                 Password *
@@ -122,8 +120,6 @@ export default {
                 } catch(err){
                     this.isLoggingIn = false;
                     this.isInValid = true;
-                    this.is_not_fill_email = true;
-                    this.is_not_fill_password = true;
                 }
             }
         },
