@@ -154,7 +154,9 @@ export default {
                 students = this.students.filter(student => student.batch == this.batch);
             }
             students = students.sort((a, b) => {
-                return a.personal_id - b.personal_id;
+                if(a.personal_id < b.personal_id) { return -1; }
+                if(a.personal_id > b.personal_id) { return 1; }
+                return 0;
             })
             for (let student of students) {
                 datas.push({

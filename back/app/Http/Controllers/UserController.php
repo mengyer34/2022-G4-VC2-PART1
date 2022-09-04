@@ -226,7 +226,7 @@ class UserController extends Controller
             'gender' => 'required|string|max:1',
             'email' => 'required|unique:users|max:255|email',
             'password' => 'required|min:8',
-            'batch' => 'required|string|max:4',
+            'batch' => 'required|max:4',
             'class' => 'required|string|max:8',
             'phone' => 'required|unique:users'
         ]);

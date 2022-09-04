@@ -26,17 +26,6 @@
                 isReloadingProfile: false,
             }
         },
-
-        computed: {
-            getImage() {
-                if (this.user.profile_image != undefined) {
-                    return 'http://127.0.0.1:8000/api/' +'storage/image/' + this.user.profile_image;
-                } else {
-                    return "";
-                }
-            },
-        },
-
         methods: {
             getUser() {
                 axios.get('account/find').then(res=> {

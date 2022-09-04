@@ -50,7 +50,7 @@
                     <label class="block text-gray-700 text-[15px]  mb-1" for="number">
                         Phone
                     </label>
-                    <input
+                    <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                         class="shadow appearance-none border  rounded w-full px-2 py-2.5 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                         id="phone" type="text" maxlength="10" placeholder="Tel..."
                         :class="{ 'border-red-500 bg-red-100': is_phone }" v-model="phone" @change="is_phone = false">
@@ -60,7 +60,7 @@
                 <div class=" flex">
                     <div class="w-[50%] m-1 relative">
                         <label class="block text-gray-700 text-[15px] mb-1">Batch</label>
-                        <input type="text" placeholder="e.g: 2022" 
+                        <input type="number" min="2020" placeholder="e.g: 2022" 
                             class="shadow appearance-none border rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                             :class="{ 'border-red-500 bg-red-100': is_generation }" v-model="batch"
                             @change="is_generation = false">
@@ -75,9 +75,9 @@
                     <div class="w-[50%] m-1">
                         <label class="block text-gray-700 text-[15px] mb-1">Personal ID:
                         </label>
-                        <input
+                        <input 
                             class="shadow appearance-none border  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
-                            id="number" type="text" placeholder="ID..."
+                            id="number" type="number" min="1" placeholder="ID..."
                             :class="{ 'border-red-500 bg-red-100': is_personal_id }" v-model="personal_id"
                             @change="is_personal_id = false">
                     </div>
@@ -186,10 +186,16 @@ export default {
                     if(this.filterPhoneNumber() ){
                         if (availableId){
                             const linkToNotification = new URL(location.href).origin
+                            let id = '_';
+                            if (this.personal_id < 10) {
+                                id += '00';
+                            }else if (this.personal_id < 100) {
+                                id += '0';
+                            }
                             var newStudent = {
                                 first_name: this.toCapitalize(this.first_name),
                                 last_name: this.toCapitalize(this.last_name),
-                                personal_id: this.personal_id,
+                                personal_id: 'PNC'+ this.batch + id + this.personal_id,
                                 gender: this.gender,
                                 email: this.email,
                                 password: this.password,
@@ -233,7 +239,7 @@ export default {
                 this.is_last_name = true
             }
                 this.is_personal_id = false
-            if (this.personal_id.trim() == '') {
+            if (this.personal_id == '') {
                 this.is_personal_id = true
             }
                 this.is_gender = false
@@ -241,7 +247,7 @@ export default {
                 this.is_gender = true
             }
                 this.is_generation = false
-            if (this.batch.trim() == '') {
+            if (this.batch == '') {
                 this.is_generation = true
             }
                 this.is_choose_class = false
@@ -267,7 +273,15 @@ export default {
             return message
         },
         checkBatchAndPersonalId(batch,id){
-            let newStudent = this.list_users.find(student=>student.batch == batch && student.personal_id == id);
+            let student_id = 'PNC' + batch;
+            if (id < 10) {
+                student_id += '_00' + id;
+            }else if (id < 100) {
+                student_id += '_0' + id;
+            }else {
+                student_id += '_' + id;
+            }
+            let newStudent = this.list_users.find(student=>student.batch == batch && student.personal_id == student_id);
             let sms = false;
             if (newStudent == undefined){
                 sms = true;

@@ -184,6 +184,7 @@ export default ({
     methods: {
         editStudent(){
             this.isClickEdit = true;
+            let id = this.detail_student_list.personal_id.substr(8,3);
             this.student_edit = {
                 first_name: this.detail_student_list.first_name,
                 last_name: this.detail_student_list.last_name,
@@ -192,8 +193,11 @@ export default ({
                 class: this.detail_student_list.class,
                 batch: this.detail_student_list.batch,
                 phone: this.detail_student_list.phone,
-                personal_id: this.detail_student_list.personal_id
+                personal_id: id
             }
+        },
+        toCapitalize(string) {
+            return string[0].toUpperCase() + string.slice(1).toLowerCase();
         },
         saveEditStudent(id){
             let student_edited = this.student_edit;
@@ -205,15 +209,24 @@ export default ({
                         if (this.filterStudentId()){
                             this.isInvalidPhoneNumber = false;
                             this.isClickEdit = false;
+                            let student_id = 'PNC'+ student_edited.batch;
+                            let id_student = parseInt(student_edited.personal_id); 
+                            if (id_student < 10) {
+                                student_id += '_00' + id_student;
+                            }else if (id_student < 100) {
+                                student_id += '_0' + id_student;
+                            }else {
+                                student_id += '_' + id_student;
+                            }
                             let new_update = {
-                                first_name: student_edited.first_name,
-                                last_name: student_edited.last_name,
+                                first_name: this.toCapitalize(student_edited.first_name),
+                                last_name: this.toCapitalize(student_edited.last_name),
                                 gender: student_edited.gender,
                                 email: student_edited.email,
-                                class: student_edited.class,
+                                class: student_edited.class.toUpperCase(),
                                 batch: student_edited.batch,
                                 phone: student_edited.phone,
-                                personal_id: student_edited.personal_id
+                                personal_id: student_id
                             }
                             this.detail_student_list = new_update;
                             this.successAlert()
@@ -260,7 +273,15 @@ export default ({
         },
         filterStudentId(){
             let generation = this.student_edit.batch;
-            let id = this.student_edit.personal_id
+            let id = 'PNC' + this.student_edit.batch + '_';
+            let student_id = parseInt(this.student_edit.personal_id);
+            if (student_id < 10) {
+                id += '00' + student_id;
+            }else if (student_id < 100) {
+                id += '0' + student_id;
+            }else {
+                id += student_id 
+            }
             let find = this.students.find(student=>( (student.personal_id == id) && (this.student_detail.id != student.id) && student.batch == generation));
             let sms = false
             if (find == undefined){
