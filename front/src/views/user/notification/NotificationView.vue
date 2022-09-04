@@ -74,6 +74,7 @@ export default {
             axios.get('users_leaves/' + this.user_id).then((res) => {
                 this.datas = res.data.data.leaves.reverse();
                 this.isLoadingNotifications = false;
+                this.timer();
             })
         },
 
@@ -89,6 +90,13 @@ export default {
                     this.$emit('update-nav');
                 }
             });
+        },
+
+        timer() {
+            let refreshDuration = setTimeout(() => {
+                this.getData();
+                clearTimeout(refreshDuration);
+            }, 10000);
         }
     },
 

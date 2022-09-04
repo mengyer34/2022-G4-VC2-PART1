@@ -124,6 +124,7 @@ export default {
             leaves: [],
             isLoggingOut: false,
             ringing: true,
+            previousCountNotif: 0,
         };
     },
     
@@ -154,8 +155,16 @@ export default {
                         this.leaves = res.data.data;
                     })
                 }
+                this.timer();
             }
         },
+
+        timer() {
+            let refreshDuration = setTimeout(() => {
+                this.getLeaves();
+                clearTimeout(refreshDuration);
+            }, 10000);
+        }
     },
 
     computed: {
@@ -196,9 +205,13 @@ export default {
         },
         
         countUnseenNotification(newValue) {
+            if (newValue > this.previousCountNotif) {
+                this.ringing = true;
+                this.previousCountNotif = newValue;
+            }
             setTimeout(() => {
-                    this.ringing = false;
-                }, 5000)
+                this.ringing = false;
+            }, 5000);
         }
     },
 
