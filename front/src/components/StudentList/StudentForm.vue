@@ -173,7 +173,6 @@ export default {
                 random_string += chars.substring(rnum, rnum + 1);
             }
             this.password = random_string;
-            console.log(this.password);
         },
         toCapitalize(string) {
             return string[0].toUpperCase() + string.slice(1).toLowerCase();

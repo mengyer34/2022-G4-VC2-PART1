@@ -35,12 +35,12 @@
                             <div class=" w-[49%] h-auto">
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">First name</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-14 inline-block p-2 rounded shadow w-[60%] border border-gray-300 focus:shadow-outline focus:outline-[#0081CA]" v-model="student_edit.first_name" >
+                                    <input v-if="isClickEdit" type="text" class="ml-14 inline-block p-2 rounded shadow w-[60%] border border-gray-300 focus:shadow-outline focus:outline-[#0081CA]" v-model="student_edit.first_name" @input="emailUser">
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.first_name}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Last name</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-14 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.last_name" >
+                                    <input v-if="isClickEdit" type="text" class="ml-14 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-[60%] border border-gray-300 " v-model="student_edit.last_name" @input="emailUser">
                                     <div v-else class="ml-12 inline-block text-gray-500">{{detail_student_list.last_name}}</div>
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
@@ -258,14 +258,10 @@ export default ({
             }, 3000);
         },
         filterStudentId(){
-            console.log(this.student_detail.personal_id);
-            console.log(this.student_edit.personal_id);
-            console.log(this.student_detail.batch)
             let generation = this.student_edit.batch;
             let id = this.student_edit.personal_id
             let find = this.students.find(student=>( (student.personal_id == id) && (this.student_detail.id != student.id) && student.batch == generation));
             let sms = false
-            console.log(find, 'di');
             if (find == undefined){
                 sms = true
             }
@@ -274,14 +270,15 @@ export default ({
         filterStudentEmail(email){
             let find = this.students.find((student)=>student.email == email && student.email != this.student_detail.email);
             let sms = true
-            console.log(find,' email');
             if (find != undefined){
                 sms = false
             }
             return sms
         },
+        emailUser() {
+            this.student_edit.email = this.student_edit.first_name.toLowerCase() + '.' + this.student_edit.last_name.toLowerCase() + '@student.passerellesnumeriques.org';
+        }
     },
-
     created() {
         setTimeout(() => {
             this.isGettingResources = false;

@@ -1,8 +1,8 @@
 <template>
     <div>
         <success-alert v-if="sms_success" :content="'Reset password successfully'" />
-        <user-profile :isReloadingProfile="isReloadingProfile" @reload-profile="isReloadingProfile = true" @update-nav="getProfileInfo(); $emit('update-nav')" @resetPassword="toggleFormReset = true" :user_id="user_id" :user="user" :amountOfLeaves="amountOfLeaves"/>
-        <form-resetPD v-if="toggleFormReset" @hideForm="toggleFormReset = false" :user_id="user_id" @save-change="saveChange"/>
+        <user-profile :isReloadingProfile="isReloadingProfile" @reload-profile="isReloadingProfile = true"  @update-nav="getProfileInfo(); $emit('update-nav')" @resetPassword="toggleFormReset = true" :user_id="user_id" :user="user" :amountOfLeaves="amountOfLeaves"/>
+        <form-resetPD v-if="toggleFormReset" :role="role" @hideForm="toggleFormReset = false" :user_id="user_id" @save-change="saveChange"/>
     </div>
 </template>
 <script>
@@ -17,7 +17,7 @@ export default {
         'success-alert': successAlert
     },
 
-    props: ['user_id'],
+    props: ['user_id','role'],
 
     data() {
         return {
