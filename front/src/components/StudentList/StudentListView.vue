@@ -80,9 +80,10 @@
 </template>
 
 <script>
-const url = 'http://127.0.0.1:8000/api/'
 import GettingResources from './../animations/GettingResources.vue';
 import UpdatingData from './../animations/UpdatingData.vue';
+import axios from "../../axios-http"
+
 export default {
     components: {
         'getting-resources': GettingResources,
@@ -96,7 +97,7 @@ export default {
     },
     methods: {
         getImage(imageName) {
-            return url +'storage/image/' + imageName;
+            return axios.defaults.baseURL + "/storage/image/" + imageName;
         }
     }
 }
