@@ -3,7 +3,7 @@
     <nav-component :role="this.$store.state.role" :user_id="this.$store.state.userId" ref="navigation" />
 
         <div>
-          <router-view :user_id="this.$store.state.userId" :user_email="this.$store.state.userEmail" @update-nav="$refs.navigation.getData(); $refs.navigation.getLeaves()" v-slot="{Component}">
+          <router-view :user_id="this.$store.state.userId" :role="this.$store.state.role"  :user_email="this.$store.state.userEmail" @update-nav="$refs.navigation.getData(); $refs.navigation.getLeaves()" v-slot="{Component}">
             <transition name="fade">
               <component :is="Component" />
             </transition>
