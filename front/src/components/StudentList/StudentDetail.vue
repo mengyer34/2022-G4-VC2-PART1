@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Tel</div>
-                                    <input v-if="isClickEdit" type="text" class="ml-28 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-full border border-gray-300 " v-model="student_edit.phone">
+                                    <input v-if="isClickEdit" type="text" class="ml-28 focus:shadow-outline focus:outline-[#0081CA]  inline-block p-2 rounded shadow w-full border border-gray-300 " maxlength="10" v-model="student_edit.phone">
                                     <div v-else class="ml-[100px] inline-block text-gray-500">{{detail_student_list.phone}}</div>
                                 </div>
                                 <p v-if="isInvalidPhoneNumber" class="text-red-500 text-center mb-2 ml-14 text-sm">Invalid phone number</p>
@@ -227,7 +227,7 @@ export default ({
                     this.isInvalidPhoneNumber = true;
                 }
             }else{
-                alert("All requirements should be completed")
+                alert("All requirements should be completed");
             }
         },
         checkForm (){

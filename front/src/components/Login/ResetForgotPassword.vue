@@ -5,7 +5,7 @@
                 <div class="text-center rounded-t-md bg-primary p-2 px-4 text-white ">
                     <p class="text-2xl ">Reset Forgot Password</p>
                 </div>
-                <form class="p-5 bg-white rounded-b-md" @submit.prevent="saveChange" @keyup.enter="submit">
+                <form class="p-5 bg-white rounded-b-md" @submit.prevent="saveChange">
                     <div class="mb-2 relative">
                         <label class="block text-gray-700 text-lg  mb-1" for="username">
                             New password
@@ -42,7 +42,7 @@
                         <div v-if="isMatch" class="text-red-500">Confirm password not match</div>
                     </div>
                     <div class="flex text-right justify-end">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline" type="button">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline" type="submit">
                             Submit
                         </button>
                     </div>

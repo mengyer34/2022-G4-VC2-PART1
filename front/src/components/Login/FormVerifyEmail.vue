@@ -4,7 +4,7 @@
             <div class="text-center rounded-t-md bg-primary p-2 px-4 text-white ">
                 <p class="text-2xl ">Verification</p>
             </div>
-            <form class="p-5 bg-white rounded-b-md" @submit.prevent="confirmVerifyEmail" @keyup.enter="confirmVerifyEmail">
+            <form class="p-5 bg-white rounded-b-md" @submit.prevent="confirmVerifyEmail">
                 <p>Verification code has been sent to your email</p>
                 <p>Please check your email to get it</p>
                 <div class="mb-2 mt-2 relative">
