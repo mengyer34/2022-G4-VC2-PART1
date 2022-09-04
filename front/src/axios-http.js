@@ -1,11 +1,13 @@
 import axios from "axios";
 import getCookie from "./helper/getCookie";
+import decryptData from "./helper/dencryptData";
 
 export default axios.create({
-  baseURL: "http://localhost:8000/api",
+  // baseURL: "http://localhost:8000/api",
+  baseURL: "http://192.168.22.11:8181/api",
   headers: {
     "Content-type": "application/json",
-    'Authorization': 'Bearer ' +  getCookie('slms')
+    'Authorization': 'Bearer ' +  decryptData(getCookie('slms'), 'my_token')
   }
 });
 

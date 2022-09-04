@@ -1,12 +1,13 @@
 import { createStore } from 'vuex';
 import getCookie from '../helper/getCookie'
 import axios from '../axios-http'
+import decryptData from '../helper/dencryptData';
 
 
 export const store = new createStore({
   state: {
-    role: getCookie('role'),
-    token: getCookie('slms'),
+    role: decryptData(getCookie('role'), 'my_role'),
+    token: decryptData(getCookie('slms'), 'my_token'),
     userId: null,
     userEmail: null,
   },
