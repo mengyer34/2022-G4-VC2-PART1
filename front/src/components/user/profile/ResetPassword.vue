@@ -77,12 +77,19 @@
             </form>
 
         </div>
+
+        <loading-show v-if="isChecking">Resetting Password...</loading-show>
     </div>
 </template>
 
 <script>
 import axios from '../../../axios-http';
+import LoadingShow from "./../../animations/LoadingShow.vue";
 export default ({
+    components: {
+        'loading-show': LoadingShow,
+    },
+
     props: {
         user_id: Number,
         role: String,
@@ -103,7 +110,8 @@ export default ({
             is_fill_confirm_password: false,
             is_correct_pwd: null,
             error_status: null,
-            sms_alert: ''
+            sms_alert: '',
+            isChecking: false,
         }
     },
     methods: {
@@ -127,17 +135,20 @@ export default ({
                 this.isMatch = true
             }
             if (this.checkFormValidation() && !this.isMatch){
+                this.isChecking = true;
                 var new_password = {confirm_old_password: this.current_password, new_password: this.new_password};
                 let URL = 'users/reset_password/';
                 if (this.role == 'admin') {
                     URL = 'admins/reset_password/';
                 }
+                this.error_status = ""
                 axios.put( URL +  this.user_id,new_password).then((res)=>{
                     this.is_correct_pwd = res.data.success
                     this.error_status = res.data.error
                     if (this.is_correct_pwd){
                         return this.$emit("save-change");
                     }
+                    this.isChecking = false;
                 })
             }
 
