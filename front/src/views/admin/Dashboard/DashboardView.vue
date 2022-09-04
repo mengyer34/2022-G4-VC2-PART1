@@ -7,7 +7,7 @@
                     <h1 class="font-bold text-3xl">Welcome to Students Leave Management System!!</h1>
                     <p class="mt-2 text-lg">Manage your student by using this application</p>
                 </div>
-                <img class="w-[20%]" src="../../../assets/banner_img.jpg" alt="">
+                <img class="w-[20%]" src="../../../assets/banner_img.png" alt="">
             </div>
             <div>
                 <div class="mt-3">
