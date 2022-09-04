@@ -20,9 +20,9 @@
                             First Name
                         </label>
                         <input
-                            class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
+                            class="shadow appearance-none border  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                             type="text" placeholder="First name..."
-                            :class="{ 'border-red-500 bg-red-100': is_first_name }" v-model="first_name"
+                            :class="{'border-red-500 bg-red-100': is_first_name }" v-model="first_name"
                             @change="is_first_name = false">
                     </div>
                     <div class="w-[49%] m-1">
@@ -30,7 +30,7 @@
                             Last Name
                         </label>
                         <input
-                            class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
+                            class="shadow appearance-none border  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                             type="text" placeholder="Last name..."
                             :class="{ 'border-red-500 bg-red-100': is_last_name }" v-model="last_name"
                             @change="is_last_name = false">
@@ -41,7 +41,7 @@
                         Email *
                     </label>
                     <input
-                        class="shadow appearance-none border border-gray-400  rounded w-full px-2 py-2.5 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
+                        class="shadow appearance-none border  rounded w-full px-2 py-2.5 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                         id="email" type="email" placeholder="Email..." required
                         :class="{ 'border-red-500 bg-red-100': is_email }" v-model="emailUser" @change="is_email = false" >
                 </div>
@@ -51,7 +51,7 @@
                         Phone
                     </label>
                     <input
-                        class="shadow appearance-none border border-gray-400  rounded w-full px-2 py-2.5 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
+                        class="shadow appearance-none border  rounded w-full px-2 py-2.5 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                         id="phone" type="text" maxlength="10" placeholder="Tel..."
                         :class="{ 'border-red-500 bg-red-100': is_phone }" v-model="phone" @change="is_phone = false">
                 </div>
@@ -61,14 +61,14 @@
                     <div class="w-[50%] m-1 relative">
                         <label class="block text-gray-700 text-[15px] mb-1">Batch</label>
                         <input type="text" placeholder="e.g: 2022" 
-                            class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
+                            class="shadow appearance-none border rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                             :class="{ 'border-red-500 bg-red-100': is_generation }" v-model="batch"
                             @change="is_generation = false">
                         
                     </div>
                     <div class="w-[50%] m-1 relative">
                         <label class="block text-gray-700 text-[15px] mb-1">Class</label>
-                        <input class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline" type="text" placeholder="e.g: WEB A "
+                        <input class="shadow appearance-none border  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline" type="text" placeholder="e.g: WEB A "
                             :class="{ 'border-red-500 bg-red-100': is_choose_class }" v-model="choose_class"
                             @change="is_choose_class = false">
                     </div>
@@ -76,7 +76,7 @@
                         <label class="block text-gray-700 text-[15px] mb-1">Personal ID:
                         </label>
                         <input
-                            class="shadow appearance-none border border-gray-400  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
+                            class="shadow appearance-none border  rounded w-full py-2.5 px-2 text-l text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
                             id="number" type="text" placeholder="ID..."
                             :class="{ 'border-red-500 bg-red-100': is_personal_id }" v-model="personal_id"
                             @change="is_personal_id = false">
@@ -108,7 +108,7 @@
                 <div class="flex ">
                     <div class="flex justify-end w-full ">
                         <button
-                            class="bg-red-500 hover:bg-red-600  text-white p-2 px-6 rounded focus:outline-none focus:shadow-outline"
+                            class="bg-red-500 hover:bg-red-600  text-white p-2 px-3  rounded focus:outline-none focus:shadow-outline"
                             type="button" @click="$emit('close-popup')">
                             Cancel
                         </button>
@@ -182,40 +182,45 @@ export default {
             let availableId = this.checkBatchAndPersonalId(this.batch,this.personal_id);
             if (this.checkFormValidation()) {
                 this.generatePassword();
-                if(this.filterPhoneNumber()){
-                    if (availableId){
-                        const linkToNotification = new URL(location.href).origin
-                        var newStudent = {
-                            first_name: this.toCapitalize(this.first_name),
-                            last_name: this.toCapitalize(this.last_name),
-                            personal_id: this.personal_id,
-                            gender: this.gender,
-                            email: this.email,
-                            password: this.password,
-                            batch: this.batch,
-                            class: this.choose_class.toUpperCase(),
-                            phone: this.phone,
-                            linkTo: linkToNotification
-                        };
-                        try{
-                            axios.post('/account/register', newStudent);
-                            this.$emit('add-student');
-                        } catch(err){
-                            let error = err.response.data
-                            let sms = "The email has already been taken." 
-                            if (error.message == sms || error.message == sms + ' (and 1 more error)' || error == "Your email has existed"){
-                                this.is_email = true;
-                                this.sms_error_email = sms
+                if (this.phone[1] != '0' && this.phone[0] == '0' && this.phone.length >=9){
+                    if(this.filterPhoneNumber() ){
+                        if (availableId){
+                            const linkToNotification = new URL(location.href).origin
+                            var newStudent = {
+                                first_name: this.toCapitalize(this.first_name),
+                                last_name: this.toCapitalize(this.last_name),
+                                personal_id: this.personal_id,
+                                gender: this.gender,
+                                email: this.email,
+                                password: this.password,
+                                batch: this.batch,
+                                class: this.choose_class,
+                                phone: this.phone,
+                                linkTo: linkToNotification
+                            };
+                            try{
+                                axios.post('/account/register', newStudent);
+                                this.$emit('add-student');
+                            } catch(err){
+                                let error = err.response.data
+                                let sms = "The email has already been taken." 
+                                if (error.message == sms || error.message == sms + ' (and 1 more error)' || error == "Your email has existed"){
+                                    this.is_email = true;
+                                    this.sms_error_email = sms
+                                }
                             }
+                        }else{
+                            this.sms_error = "Personal id has already been token";
+                            this.is_personal_id = true;
                         }
                     }else{
-                        this.sms_error = "Personal id has already been token";
-                        this.is_personal_id = true;
+                        this.is_phone = true;
+                        this.sms_error_phone_number = "The phone has already been taken.";
                     }
                 }else{
-                    this.is_phone = true;
-                    this.sms_error_phone_number = "The phone has already been taken.";
-                }
+                        this.is_phone = true;
+                        this.sms_error_phone_number = "Invalid phone number";
+                    }
             }
         },
         checkFormValidation() {
@@ -244,7 +249,7 @@ export default {
                 this.is_choose_class = true
             }
                 this.is_phone = false
-            if (this.phone.trim() == '') {
+            if (this.phone.trim() == ''  ) {
                 this.is_phone = true
             }
                 this.is_email = false
