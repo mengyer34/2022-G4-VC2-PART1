@@ -3,7 +3,7 @@
         <h1 class="text-2xl font-semibold my-9">STUDENT LEAVES</h1>
         
         <div class="mt-6">
-            <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded">
+            <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded bg-opacity-40">
                 <h1 class="font-bold text-lg mb-5">REQUEST LIST</h1>
                 <div class="flex justify-between mb-2">
                     <!-- search bar -->
@@ -32,7 +32,7 @@
                 </div>
 
                 <!-- list all leaves -->
-                <student-leave @updateLeave="updateLeave" :isUpdating="isUpdating" @start-updating="isUpdating = true" :isGettingResources="isGettingResources" :leaves="filterLeaves" @get-leaves="getLeaves" @update-nav="$emit('update-nav')" />
+                <student-leave :isUpdating="isUpdating" @start-updating="isUpdating = true" :isGettingResources="isGettingResources" :leaves="filterLeaves" @get-leaves="getLeaves" @update-nav="$emit('update-nav')" />
 
                 <div v-if="leaves.length <= 0 && !isGettingResources" class="flex flex-col items-center mt-8 mb-3">
                     <img class="w-32" src="./../../../assets/request_empty.png" alt="Image not found">
@@ -99,14 +99,6 @@ export default {
 
         updateKeyword(keyword) {
             this.keyword = keyword;
-        },
-
-        updateLeave(id) {
-            this.leaves.forEach((eachLeave, index) => {
-                if (eachLeave.id == id) {
-                    this.leaves[index].is_admin_seen = true;
-                }
-            });
         },
 
         timer() {

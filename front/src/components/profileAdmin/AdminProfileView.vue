@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="w-10/12 mt-24 bg-gray-100 m-auto rounded shadow p-3 relative " v-cloak>
+        <div class="w-10/12 mt-24 bg-gray-100 m-auto rounded shadow p-3 relative bg-opacity-40" v-cloak>
             <div class=" p-3 ">
-                <div class="rounded shadow bg-white shadow-gray-400 text-center relative p-2">
+                <div class="rounded shadow bg-white shadow-gray-400 text-center relative p-2 bg-opacity-50">
                     <form >
                         <label for="file_input" class="flex justify-end">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer rounded shadow">
@@ -24,12 +24,12 @@
                     <hr class="mt-4 border-gray-400 mb-4">
                     <div class="text-start">
                         <div class="flex justify-around items-center mt-1 p-2 rounded border border-b-gray-300">
-                            <div class="text-lg w-[40%] ml-40">Username</div>
+                            <div class="text-lg w-[40%] ml-40 font-bold">Username</div>
                             <div v-if="user.username" class="w-[40%] inline-block">{{user.username}}</div>
                             <loading-text class="w-[40%] inline-block" v-else />
                         </div>
                         <div class="flex justify-around items-center mt-1 p-2 rounded border border-b-gray-300">
-                            <div class="text-lg w-[40%] ml-40">Email</div>
+                            <div class="text-lg w-[40%] ml-40 font-bold">Email</div>
                             <div v-if="user.email" class="w-[40%] inline-block">{{user.email}}</div>
                             <loading-text class="w-[40%] inline-block" v-else />
                         </div>

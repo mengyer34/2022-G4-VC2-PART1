@@ -3,7 +3,7 @@
         <div class="flex h-full items-center bg-slate-400">
             <img src="../../assets/forgot-password.png" alt="logo" class="w-[30%] m-auto ">
             <div class="rounded mb-4 w-[40%] m-auto mt-[30px] ">
-                <form class="p-5 bg-[#dddddd98] shadow rounded" @submit.prevent="handleSubmit" @keyup.enter="submit">
+                <form class="p-5 bg-[#dddddd98] shadow rounded" @submit.prevent="handleSubmit">
                     <img src="../../assets/pnc_logo.png" alt="logo" class="w-[100px] m-auto">
                     <h1 class="text-1xl font-semibold text-center p-1">Forgot Password</h1>
                     <div class="mb-1 relative">

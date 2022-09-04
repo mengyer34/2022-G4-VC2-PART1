@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="w-full whitespace-nowrap bg-white">
+        <table class="w-full whitespace-nowrap bg-white bg-opacity-50">
             <thead>
                 <tr tabindex="0" class="focus:outline-none h-16 w-full text-sm leading-none text-gray-800 border-b-2 border-primary">
                     <th class="font-bold text-center ">STUDENT NAME</th>
@@ -16,7 +16,7 @@
                         <updating-data>Updating requests...</updating-data>
                     </td>
                 </tr>
-                <tr v-for="leave of leaves" :key="leave" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-100" :class="{'bg-white text-stone-600': leave.is_admin_seen, 'bg-slate-300 font-medium': !leave.is_admin_seen}">
+                <tr v-for="leave of leaves" :key="leave" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-100 bg-opacity-50" :class="{'bg-white text-stone-600 bg-opacity-50': leave.is_admin_seen, 'bg-slate-300 font-medium bg-opacity-50': !leave.is_admin_seen}">
                     <td class="text-center">
                         {{leave.user.last_name}} {{leave.user.first_name}}
                     </td>
@@ -86,7 +86,11 @@ export default {
 
         viewLeaveDetail(id){
             this.leave_detail = this.leaves.find((leave)=>leave.id == id);
-            this.$emit('updateLeave', id);
+            this.leaves.forEach((eachLeave, index) => {
+                if (eachLeave.id == id) {
+                    this.leaves[index].is_admin_seen = true;
+                }
+            });
             this.isViewDetail = true;
             axios.put("leaves/admin_seen/" + id).then(() => {
                 this.$emit('update-nav');
