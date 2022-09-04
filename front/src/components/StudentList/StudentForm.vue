@@ -193,7 +193,7 @@ export default {
                             email: this.email,
                             password: this.password,
                             batch: this.batch,
-                            class: this.choose_class,
+                            class: this.choose_class.toUpperCase(),
                             phone: this.phone,
                             linkTo: linkToNotification
                         };

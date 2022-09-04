@@ -104,7 +104,6 @@ export default {
             }else{
                 this.showpassword = "password"
             }
-            // console.log(this.showpassword)
         },
         async login(){
             if (this.checkFormValidation()){
