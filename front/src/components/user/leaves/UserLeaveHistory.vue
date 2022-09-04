@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="bg-white shadow md:px-5 pt-4 md:pt-7 pb-5 overflow-y-auto">
+        <div class="bg-white shadow md:px-5 pt-4 md:pt-7 pb-5 overflow-y-auto bg-opacity-70">
             <table class="w-full whitespace-nowrap">
                 <thead>
                     <tr tabindex="0" class="focus:outline-none h-16 w-full text-sm leading-none text-gray-800 border-b-2 border-primary">
@@ -22,7 +22,7 @@
 
                 <tbody v-if="leavesstatus.length > 0" class="w-full">
 
-                    <tr  v-for="leave of leavesstatus" :key="leave" tabindex="0" class="focus:outline-none h-20 text-sm leading-none text-gray-800 bg-white border-b border-t border-gray-100">
+                    <tr  v-for="leave of leavesstatus" :key="leave" tabindex="0" class="focus:outline-none h-20 text-sm leading-none text-gray-800 border-b border-t border-gray-100 bg-opacity-70">
                         <td class="pl-4 text-center">
                             <div class="flex items-center justify">
                                 <p :class="{'font-medium truncate w-16 hover:whitespace-pre-wrap  hover:absolute hover:font-normal hover:bg-gray-200 hover:p-3 hover:rounded hover:w-2/12':leave.reason.length > 8}">{{leave.reason}}</p>

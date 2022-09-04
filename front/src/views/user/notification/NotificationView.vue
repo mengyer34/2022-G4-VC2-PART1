@@ -1,14 +1,14 @@
 <template>
     <div class="w-full pt-[90px]">
-        <div v-if="!isLoadingNotifications && dataOfImformation.length > 0" class="card w-7/12 m-auto rounded shadow bg-white">
-            <div class="card-header rounded-tl rounded-tr bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white">
+        <div v-if="!isLoadingNotifications && dataOfImformation.length > 0" class="card w-7/12 m-auto rounded shadow bg-white bg-opacity-70">
+            <div class="card-header rounded-tl rounded-tr bg-[#0081CA] p-1 mb-4 text-center text-[25px] text-white bg-opacity-70">
                 <h1>Notifications</h1>
             </div>
-            <div class="overflow-auto h-[70vh] scroll-bar">
+            <div class="overflow-auto h-[70vh] scroll-bar ">
                 <div class="w-[98%] m-auto" v-for="data of dataOfImformation" :key="data">
                     <imformation-requestion :datas="data">
                         <template #allow>
-                            <div @click="seenNotification(data.id)" :class="{'bg-slate-100 font-semibold': !data.is_user_seen}" class="flex justify-between hover:bg-slate-100 p-2">
+                            <div @click="seenNotification(data.id)" :class="{'bg-slate-100 font-semibold': !data.is_user_seen}" class="flex justify-between hover:bg-slate-100 p-2 ">
                                 <div class="flex items-center relative">
                                     <span :class="{'w-[10px] h-[10px] rounded-full bg-[#23C552] absolute right-0 mb-4': !data.is_user_seen}"></span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[30px] h-[30px]">

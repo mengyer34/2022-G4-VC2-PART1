@@ -55,7 +55,10 @@ export default {
     border-radius: 20px;
   }
   body{
-    background: #dddd;
+    background: url('./assets/Animated_Shape.svg');  
+    background-attachment: fixed;
+    background-position: center;
+
   }
 
   .fade-enter-from, 

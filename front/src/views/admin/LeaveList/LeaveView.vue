@@ -3,7 +3,7 @@
         <h1 class="text-2xl font-semibold my-9">STUDENT LEAVES</h1>
         
         <div class="mt-6">
-            <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded">
+            <div class="bg-white shadow md:px-5 pt-2 md:pt-7 pb-5 overflow-y-auto rounded bg-opacity-40">
                 <h1 class="font-bold text-lg mb-5">REQUEST LIST</h1>
                 <div class="flex justify-between mb-2">
                     <!-- search bar -->

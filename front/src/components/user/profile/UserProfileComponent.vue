@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="home w-10/12 mt-32 bg-gray-100 m-auto rounded shadow p-3 relative " v-cloak>
+        <div class="home w-10/12 mt-32 bg-gray-100 m-auto rounded shadow p-3 relative bg-opacity-40" v-cloak>
             <div class=" p-3 ">
                 <div class="flex mt-3">
-                    <div class="rounded shadow bg-white shadow-gray-400 w-[26%] text-center relative p-2">
+                    <div class="rounded shadow bg-white shadow-gray-400 w-[26%] text-center relative p-2 bg-opacity-50">
                         <form >
                             <label for="file_input" class="flex justify-end">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer rounded shadow">
@@ -22,7 +22,7 @@
                                 </div>
                         </form>
                     </div>  
-                    <div class="ml-4 bg-white shadow-gray-400 shadow rounded  w-[74%] p-2">
+                    <div class="ml-4 bg-white shadow-gray-400 shadow rounded  w-[74%] p-2 bg-opacity-70">
                         <div class="flex justify-between text-center ">
                             <div class=" w-[49%] h-auto">
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">

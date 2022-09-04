@@ -1,5 +1,5 @@
 <template>
-    <table class="w-full whitespace-nowrap bg-white">
+    <table class="w-full whitespace-nowrap bg-white mt-4 bg-opacity-50">
         <thead>
             <tr tabindex="0" class="focus:outline-none h-16 w-full text-sm leading-none text-gray-800 border-b-2 border-primary">
                 <th class="font-bold text-center ">STUDENT</th>
@@ -17,7 +17,7 @@
         </tr>
 
         <tbody v-if="students.length > 0" class="w-full">
-            <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-300">
+            <tr v-for="student of students" :key="student" tabindex="0" class="focus:outline-none h-12 text-sm leading-none text-gray-800 border-b border-t border-gray-300 bg-opacity-50   ">
                 <td class="text-center pl-4">
                     <div class="flex items-center space-x-2 p-2">
                         <img v-if="student.profile_image" class="rounded-full w-14 h-14 border-2 border-primary" :src="getImage(student.profile_image)" alt="">

@@ -1,6 +1,6 @@
 <template>
    <div>
-     <div class="card w-8/12 m-auto mt-40 rounded-xl p-10 bg-white">
+     <div class="card w-8/12 m-auto mt-40 rounded-xl p-10 bg-white bg-opacity-70">
       <div class="card-header">
         <h1 class="text-3xl mb-5 font-bold">Student Leave Management System (SLMS)</h1>
       </div>

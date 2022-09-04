@@ -6,7 +6,7 @@
     <div v-if="showModal"
       class="  overflow-x-hidden bg-[#00000080] overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex ">
       <div class="relative my-6 mx-auto max-w-3xl w-full rounded bg-white z-50" >
-          <div id="print-information" class="bg-white p-2 rounded w-full">
+          <div id="print-information" class="bg-white p-2 rounded w-full ">
             <!--content-->
             <div id="element-to-convert"
               class="relative flex flex-col w-full outline-none focus:outline-none ">

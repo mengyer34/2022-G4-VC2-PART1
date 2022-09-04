@@ -5,8 +5,8 @@
                 class="alert-success p-2 rounded bg-green-600 border  text-white flex items-center justify-between">
                 Student was created successfull
             </div>
-            <h1 class="text-2xl font-semibold my-9">STUDENT INFORMATION</h1>
-            <div class="bg-white mt-4 p-3 rounded">
+            <h1 class="text-2xl font-semibold my-4">STUDENT INFORMATION</h1>
+            <div class="bg-white mt-4 p-3 rounded bg-opacity-70">
                 <div>
                     <label for="filter-status text-sm leading-none text-gray-800"><span
                             class="text-red-600">*</span>Batch:</label><br>
@@ -31,9 +31,9 @@
                         </div>
                     </div>
                 </div>
+                <student-lists :isUpdating= "isUpdating" :allStudents="students" :isGettingResources="isGettingResources" :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
             </div>
             <div>
-                <student-lists :isUpdating="isUpdating" :allStudents="students" :isGettingResources="isGettingResources" :students="batchFilter" @popUp="popUp" @viewDetail="viewStudentDetail"/>      
 
                 <alert-dialog v-if="isPop" @closePopup="isPop=false" @deleteStudent="deleteStudent"/>
                 <form-student v-if="isShow" @close-popup="isShow = false" @add-student="addNewStudent"/>
