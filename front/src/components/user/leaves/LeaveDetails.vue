@@ -110,7 +110,6 @@ export default ({
         },
 
         reject() {
-            let status = {status: "Rejected"};
             this.$emit('update-status', 'rejected');
             this.$emit('hide');
             this.dataToSend.status = "Rejected";

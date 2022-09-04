@@ -12,6 +12,7 @@
                             </label>
                             <input class="hidden w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" @change="onSelectFile">
                                 <div class="w-32 h-32 flex items-center justify-center m-auto">
+                                    <img v-if="isReloadingProfile" src="./../../../assets/loading_circle.png" class="animate-spin absolute h-8 w-8">
                                     <img v-if="user.profile_image != undefined" :src="getImage" alt="" class="rounded-full w-32 h-32 object-fill border-2 border-blue-400">
                                     <downloading-image v-else></downloading-image>
                                 </div>
@@ -73,7 +74,7 @@
                                 <div class="flex items-center mt-1 p-2 rounded border border-b-gray-300">
                                     <div class="text-lg">Leaves</div>
 
-                                    <div v-if="amountOfLeaves >= 0" class="ml-20 inline-block text-gray-500">{{amountOfLeaves}}</div>
+                                    <div v-if="user.leaves != undefined" class="ml-20 inline-block text-gray-500">{{amountOfLeaves}}</div>
                                     <loading-text class="ml-20" v-else />
                                 </div>
                                 
@@ -143,8 +144,9 @@
         },
         props: {
             user_id: Number,
-            user: {},
-            amountOfLeaves: Number
+            user: Object,
+            amountOfLeaves: Number,
+            isReloadingProfile: Boolean
         },
 
         data(){
@@ -194,6 +196,7 @@
 
                 this.onClosePopup();
                 axios.post("users/reset_profile/" + this.user_id, formData).then((res)=>{
+                    this.$emit('reload-profile');
                     this.$emit('update-nav');
                     this.successAlert();
                 })

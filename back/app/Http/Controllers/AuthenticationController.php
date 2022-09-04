@@ -47,7 +47,7 @@ class AuthenticationController extends Controller
         $info = auth('sanctum')->user();
         return Response()->json(['data'=>$info]);
     }
-    public function forgotPassword(Request $request){
+    public function forgotPassword(Request $request){   
         $user = User::where('email', "=", $request->email)->first();
         $admin = Admin::where('email', "=", $request->email)->first();
         if ($user || $admin){

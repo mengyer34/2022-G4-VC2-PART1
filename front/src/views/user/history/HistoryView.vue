@@ -40,7 +40,7 @@
                             <select v-model="type" name="" id="filter-leave-type" class="w-9/12 p-2 border  rounded focus:outline-none focus:border-primary">
                                 <option value="All">All</option>
                                 <option value="Sick">Sick</option>
-                                <option value="Family's events">Family's Event</option>
+                                <option value="Family's event">Family's Event</option>
                             </select>
                         </div>
                         <div class="w-6/12 text-right">

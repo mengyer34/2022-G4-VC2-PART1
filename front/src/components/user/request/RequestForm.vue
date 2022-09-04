@@ -165,7 +165,7 @@
                     this.isEndTime = true
                 }
                 this.isReasonInputted = false
-                if (this.reason == ""){
+                if (this.reason.trim() == ""){
                     this.isReasonInputted = true
                 }
                 this.isDuration = false
