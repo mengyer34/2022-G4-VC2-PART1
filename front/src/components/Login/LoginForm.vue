@@ -3,7 +3,7 @@
         <div class="flex h-full items-center bg-slate-400">
             <img src="../../assets/undraw_mobile_login_re_9ntv.svg" alt="logo" class="w-[30%] m-auto ">
             <div class="rounded mb-4 w-[40%] m-auto mt-[30px]">
-                <form class="p-5 bg-[#dddddd98] rounded" @submit.prevent="login" @keyup.enter="login">
+                <form class="p-5 bg-[#dddddd98] rounded" @submit.prevent="login"    >
                     <img src="../../assets/pnc_logo.png" alt="logo" class="w-[100px] m-auto">
                     <h1 class="text-2xl font-semibold text-center p-1">LOGIN SLMS</h1>
 
@@ -104,7 +104,6 @@ export default {
             }else{
                 this.showpassword = "password"
             }
-            // console.log(this.showpassword)
         },
         async login(){
             if (this.checkFormValidation()){
