@@ -158,9 +158,9 @@ export default {
             })
             for (let student of students) {
                 datas.push({
+                    Personal_id: student.personal_id,
                     FirstName: student.first_name,
                     LastName: student.last_name,
-                    Personal_id: student.personal_id,
                     Gender: student.gender,
                     Email: student.email,
                     Batch: student.batch,

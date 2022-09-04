@@ -124,6 +124,7 @@ export default {
             leaves: [],
             isLoggingOut: false,
             ringing: true,
+            previousCountNotif: 0,
         };
     },
     
@@ -154,8 +155,16 @@ export default {
                         this.leaves = res.data.data;
                     })
                 }
+                this.timer();
             }
         },
+
+        timer() {
+            let refreshDuration = setTimeout(() => {
+                this.getLeaves();
+                clearTimeout(refreshDuration);
+            }, 10000);
+        }
     },
 
     computed: {
@@ -183,7 +192,7 @@ export default {
 
         getImage() {
             if (this.user.profile_image != undefined) {
-                return 'http://127.0.0.1:8000/api/' +'storage/image/' + this.user.profile_image;
+                return axios.defaults.baseURL + "/storage/image/" + this.user.profile_image;
             } else {
                 return "";
             }
@@ -196,9 +205,13 @@ export default {
         },
         
         countUnseenNotification(newValue) {
+            if (newValue > this.previousCountNotif) {
+                this.ringing = true;
+                this.previousCountNotif = newValue;
+            }
             setTimeout(() => {
-                    this.ringing = false;
-                }, 5000)
+                this.ringing = false;
+            }, 5000);
         }
     },
 

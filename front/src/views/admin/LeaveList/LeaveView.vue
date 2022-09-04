@@ -93,6 +93,7 @@ export default {
                 this.leaves = res.data.data.reverse();
                 this.isGettingResources = false;
                 this.isUpdating = false;
+                this.timer();
             })
         },
 
@@ -106,6 +107,13 @@ export default {
                     this.leaves[index].is_admin_seen = true;
                 }
             });
+        },
+
+        timer() {
+            let refreshDuration = setTimeout(() => {
+                this.getLeaves();
+                clearTimeout(refreshDuration);
+            }, 10000);
         }
     },
 
