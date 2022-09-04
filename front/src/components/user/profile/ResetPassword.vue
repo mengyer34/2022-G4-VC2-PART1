@@ -171,6 +171,6 @@ export default ({
             }
             return message
         }
-    }
+    },
 })
 </script>
