@@ -163,7 +163,7 @@
         computed: {
             getImage() {
                 if (this.user.profile_image != undefined) {
-                    return 'http://127.0.0.1:8000/api/' +'storage/image/' + this.user.profile_image;
+                    return axios.defaults.baseURL + "/storage/image/" + this.user.profile_image;
                 } else {
                     return "";
                 }
