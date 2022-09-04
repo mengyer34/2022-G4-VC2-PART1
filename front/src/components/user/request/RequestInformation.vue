@@ -3,8 +3,8 @@
     <button class="w-[100%]" type="button" v-on:click="toggleModal()">
       <slot name="allow"></slot>
     </button>
-    <div v-if="showModal"
-      class="  overflow-x-hidden bg-[#00000080] overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex ">
+    <div v-if="isViewNotifDetail"
+      class="overflow-x-hidden bg-[#00000031] overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex ">
       <div class="relative my-6 mx-auto max-w-3xl w-full rounded bg-white z-50" >
           <div id="print-information" class="bg-white p-2 rounded w-full ">
             <!--content-->
@@ -85,17 +85,15 @@ import html2pdf from "html2pdf.js";
 export default {
   name: "regular-modal",
   props: {
-    'datas': Object
+    'datas': Object,
+    'isViewNotifDetail': Boolean
   },
-  data() {
-    return {
-      showModal: false
-    }
-  },
+
   methods: {
     toggleModal: function () {
-      this.showModal = !this.showModal;
+      this.$emit('isViewNotifDetail');
     },
+
     exportToPDF() {
       html2pdf(document.getElementById("element-to-convert"),
         {

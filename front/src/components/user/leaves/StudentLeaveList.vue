@@ -86,7 +86,11 @@ export default {
 
         viewLeaveDetail(id){
             this.leave_detail = this.leaves.find((leave)=>leave.id == id);
-            this.$emit('updateLeave', id);
+            this.leaves.forEach((eachLeave, index) => {
+                if (eachLeave.id == id) {
+                    this.leaves[index].is_admin_seen = true;
+                }
+            });
             this.isViewDetail = true;
             axios.put("leaves/admin_seen/" + id).then(() => {
                 this.$emit('update-nav');

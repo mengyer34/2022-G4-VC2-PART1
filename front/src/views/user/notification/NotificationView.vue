@@ -6,7 +6,7 @@
             </div>
             <div class="overflow-auto h-[70vh] scroll-bar ">
                 <div class="w-[98%] m-auto" v-for="data of dataOfImformation" :key="data">
-                    <imformation-requestion :datas="data">
+                    <imformation-requestion :datas="data" :isViewNotifDetail="isViewNotifDetail" @isViewNotifDetail="isViewNotifDetail = !isViewNotifDetail">
                         <template #allow>
                             <div @click="seenNotification(data.id)" :class="{'bg-slate-100 font-semibold': !data.is_user_seen}" class="flex justify-between hover:bg-slate-100 p-2 ">
                                 <div class="flex items-center relative">
@@ -66,6 +66,7 @@ export default {
         return {
             datas: [],
             isLoadingNotifications: true,
+            isViewNotifDetail: false,
         }
     },
     
@@ -102,7 +103,25 @@ export default {
 
     computed: {
         dataOfImformation() {
-            return this.datas.filter(data => data.status != "Pending");
+            let leaves = this.datas.filter(data => data.status != "Pending");
+            let numberOfLoop = leaves.length;
+            let orderedLeaves = [];
+
+            for (let i = 0; i < numberOfLoop; i++) {
+                let latestLeaveIndex = 0;
+                let LatestUpdate = leaves[0].updated_at;
+                leaves.forEach((eachLeave, index) => {
+                    if (eachLeave.updated_at > LatestUpdate) {
+                        LatestUpdate = eachLeave.updated_at;
+                        latestLeaveIndex = index;
+                    }
+                })
+
+                orderedLeaves.push(leaves[latestLeaveIndex]);
+                leaves.splice(latestLeaveIndex, 1);
+            }
+
+            return orderedLeaves;
         },
     },
 
