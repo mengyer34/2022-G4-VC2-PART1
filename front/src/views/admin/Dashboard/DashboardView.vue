@@ -19,10 +19,8 @@
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Total Students</p>
                             </div>
-                            <div class="bg-blue-500 w-[20%] flex items-center justify-center rounded-r">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5  text-white" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                                </svg>
+                            <div class=" w-[20%] flex items-center justify-center rounded-r pr-1">
+                                <img class="w-[90%]" src="../../../assets/students_icon.svg">
                             </div>
                         </div>
                         <div @click="viewLeaves('Pending')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
@@ -31,34 +29,28 @@
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Pending Leaves</p>
                             </div>
-                            <div class="bg-blue-500 w-[20%] flex items-center justify-center rounded-r">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                            <div class=" w-[20%] flex items-center justify-center rounded-r">
+                                <img class="w-[70%]" src="../../../assets/pending_icon.svg">
                             </div>
                         </div>
                         <div @click="viewLeaves('Approved')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%]">
-                                <p v-if="!isCounting" class="text-3xl text-green-700 font-semibold">{{getApprovedLeave.length}}</p>
+                                <p v-if="!isCounting" class="text-3xl text-[#62B565] font-semibold">{{getApprovedLeave.length}}</p>
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Approved Leaves</p>
                             </div>
-                            <div class="bg-blue-500 w-[20%] flex items-center justify-center rounded-r">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                                </svg>
+                            <div class="bg-b w-[20%] flex items-center justify-center rounded-r">
+                                <img class="w-[70%]" src="../../../assets/approve_icon.svg">
                             </div>
                         </div>
                         <div @click="viewLeaves('Rejected')" class="flex bg-white shadow w-[24%] rounded cursor-pointer">
                             <div class="p-3 w-[80%] ">
-                                <p v-if="!isCounting" class="text-3xl text-red-600 font-semibold">{{getRejectedLeave.length}}</p>
+                                <p v-if="!isCounting" class="text-3xl text-red-500 font-semibold">{{getRejectedLeave.length}}</p>
                                 <counting-data v-else class="mt-1">Calculating...</counting-data>
                                 <p class="font-bold">Rejected Leaves</p>
                             </div>
-                            <div class="bg-blue-500 w-[20%] rounded-r flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
+                            <div class=" w-[20%] rounded-r flex items-center justify-center">
+                                <img class="w-[70%]" src="../../../assets/reject_icon.svg">
                             </div>
                         </div>
                     </div>
