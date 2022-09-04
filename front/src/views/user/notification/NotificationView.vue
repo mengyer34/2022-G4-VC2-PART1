@@ -6,7 +6,7 @@
             </div>
             <div class="overflow-auto h-[70vh] scroll-bar">
                 <div class="w-[98%] m-auto" v-for="data of dataOfImformation" :key="data">
-                    <imformation-requestion :datas="data">
+                    <imformation-requestion :datas="data" :isViewNotifDetail="isViewNotifDetail" @isViewNotifDetail="isViewNotifDetail = !isViewNotifDetail">
                         <template #allow>
                             <div @click="seenNotification(data.id)" :class="{'bg-slate-100 font-semibold': !data.is_user_seen}" class="flex justify-between hover:bg-slate-100 p-2">
                                 <div class="flex items-center relative">
@@ -66,6 +66,7 @@ export default {
         return {
             datas: [],
             isLoadingNotifications: true,
+            isViewNotifDetail: false,
         }
     },
     
