@@ -19,7 +19,7 @@ class AuthenticationController extends Controller
             return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
         $token = $user->createToken('myToken', ['user'])->plainTextToken;
-        return response()->json(['token'=> $token], 202);
+        return response()->json(['token'=> $token, 'role'=> $user->role], 202);
     }
 
     // Admin login 
@@ -30,7 +30,7 @@ class AuthenticationController extends Controller
             return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
         $token = $admin->createToken('myToken', ['admin'])->plainTextToken;
-        return response()->json(['token'=> $token], 202);
+        return response()->json(['token'=> $token, 'role'=> $admin->role], 202);
     }
 
     // Login Account 

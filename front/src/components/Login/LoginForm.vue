@@ -58,8 +58,8 @@
 
 <script>
 import axios from '../../axios-http'
-
 import LoadingShow from './../animations/LoadingShow.vue';
+import encryptData from '../../helper/encryptData';
 export default {
     components: {
         'loading-show': LoadingShow,
@@ -77,14 +77,17 @@ export default {
     methods: {
         async login(){
             if (this.checkFormValidation()){
-                this.isLoggingIn = true;
+                // this.isLoggingIn = true;
                 this.isInValid = false
                 try {
                     await axios.post('/account/login', {email: this.email, password: this.password})
                     .then(res=>{
+                        // this.isLoggingIn = false;
+                        const token_encrypt = encryptData(res.data.token, 'my_token')
+                        const role_encrypt = encryptData(res.data.role, 'my_role')
+                        this.$cookies.set('slms',token_encrypt);
+                        this.$cookies.set('role',role_encrypt);
                         window.location.reload();
-                        this.isLoggingIn = false;
-                        this.$cookies.set('slms',res.data.token);
                     })
                 } catch(err){
                     this.isLoggingIn = false;
