@@ -3,7 +3,7 @@
         <div class="flex h-full items-center bg-slate-400">
             <img src="../../assets/undraw_mobile_login_re_9ntv.svg" alt="logo" class="w-[30%] m-auto ">
             <div class="rounded mb-4 w-[40%] m-auto mt-[30px]">
-                <form class="p-5 bg-[#dddddd98] rounded" @submit.prevent="login"    >
+                <form class="p-5 bg-[#dddddd98] rounded" @submit.prevent="login"    @keyup.enter="submit">
                     <img src="../../assets/pnc_logo.png" alt="logo" class="w-[100px] m-auto">
                     <h1 class="text-2xl font-semibold text-center p-1">LOGIN SLMS</h1>
 
@@ -26,7 +26,7 @@
                             </label>
                             <input
                                 class="appearance-none border border-gray-400  rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-primary focus:shadow-outline"
-                                @change="is_not_fill_password=false"
+                                @change="is_not_fill_password=false" @input="isInValid=false"
                                 :class="{'bg-red-100 border-red-400':is_not_fill_password}" v-model="password"
                                 id="password" :type="showpassword" placeholder="Password...">
                             <svg v-if="isInValid" xmlns="http://www.w3.org/2000/svg"
@@ -107,12 +107,12 @@ export default {
         },
         async login(){
             if (this.checkFormValidation()){
-                // this.isLoggingIn = true;
+                this.isLoggingIn = true;
                 this.isInValid = false
                 try {
                     await axios.post('/account/login', {email: this.email, password: this.password})
                     .then(res=>{
-                        // this.isLoggingIn = false;
+                        this.isLoggingIn = false;
                         const token_encrypt = encryptData(res.data.token, 'my_token')
                         const role_encrypt = encryptData(res.data.role, 'my_role')
                         this.$cookies.set('slms',token_encrypt);
