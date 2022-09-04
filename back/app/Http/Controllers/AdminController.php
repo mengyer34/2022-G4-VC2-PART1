@@ -10,18 +10,6 @@ use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        $data = Admin::all();
-        $response = [
-            'success' => true,
-            'data' => $data,
-            'status' => 200,
-            'message' => 'Get admins successfully'
-        ];
-        return Response()->json($response, 200);
-    }
-
     public function show(Admin $admin)
     {
         $response = [
@@ -29,43 +17,6 @@ class AdminController extends Controller
             'data' => $admin,
             'status' => 200,
             'message' => 'Get admin successfully'
-        ];
-        return Response()->json($response, 200);
-    }
-
-
-    public function update(Request $request, Admin $admin)
-    {
-        $admin->username = $request->username;
-        $admin->email = $request->email;
-        $admin->password = Hash::make($request->password);
-        $admin->profile_image = 'admin.jpg';
-
-        $admin->save();
-        
-        $response = [
-            'success' => true,
-            'data' => $admin,
-            'status' => 200,
-            'message' => 'updated admin successfully'
-        ];
-        return Response()->json($response, 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
-    {
-        $admin->delete();
-        $response = [
-            'success' => true,
-            'data' => $admin,
-            'status' => 200,
-            'message' => 'Delete admin successfully'
         ];
         return Response()->json($response, 200);
     }

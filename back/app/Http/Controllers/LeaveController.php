@@ -11,23 +11,6 @@ use App\Models\User;
 class LeaveController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $data = Leave::all();
-        $response = [
-            'success' => true,
-            'data' => $data,
-            'status' => 200,
-            'message' => 'Get leaves successfully'
-        ];
-        return Response()->json($response, 200);
-    }
-
-    /**
      * Display a listing of the resource with user.
      *
      * @return \Illuminate\Http\Response
@@ -73,23 +56,6 @@ class LeaveController extends Controller
             'data' => $leave,
             'status' => 200,
             'message' => 'Create leave successfully'
-        ];
-        return Response()->json($response, 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Leave  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Leave $leave)
-    {
-        $response = [
-            'success' => true,
-            'data' => $leave,
-            'status' => 200,
-            'message' => 'Get leave successfully'
         ];
         return Response()->json($response, 200);
     }

@@ -49,23 +49,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        $response = [
-            'success' => true,
-            'data' => $user,
-            'status' => 200,
-            'message' => 'Get user successfully'
-        ];
-        return Response()->json($response, 200);
-    }
-
-    /**
      * Display the specified resource with leaves.
      *
      * @param  int  $id
@@ -280,6 +263,5 @@ class UserController extends Controller
         auth()->user()->tokens()->delete();
         return response()->json(['sms'=>'logged out']);
     }
-
 
 }
