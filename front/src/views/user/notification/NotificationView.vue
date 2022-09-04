@@ -102,7 +102,25 @@ export default {
 
     computed: {
         dataOfImformation() {
-            return this.datas.filter(data => data.status != "Pending");
+            let leaves = this.datas.filter(data => data.status != "Pending");
+            let numberOfLoop = leaves.length;
+            let orderedLeaves = [];
+
+            for (let i = 0; i < numberOfLoop; i++) {
+                let latestLeaveIndex = 0;
+                let LatestUpdate = leaves[0].updated_at;
+                leaves.forEach((eachLeave, index) => {
+                    if (eachLeave.updated_at > LatestUpdate) {
+                        LatestUpdate = eachLeave.updated_at;
+                        latestLeaveIndex = index;
+                    }
+                })
+
+                orderedLeaves.push(leaves[latestLeaveIndex]);
+                leaves.splice(latestLeaveIndex, 1);
+            }
+
+            return orderedLeaves;
         },
     },
 

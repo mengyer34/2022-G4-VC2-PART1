@@ -131,6 +131,7 @@ class LeaveController extends Controller
     */
     public function markAsSeenByUser(Request $request, Leave $leave)
     {
+        $leave->timestamps = false;
         $leave->is_user_seen = true;
         $leave->save();
 
